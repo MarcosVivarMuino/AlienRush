@@ -306,7 +306,7 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 ---
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.024.png)**
+![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.024.png)
 
 
 
