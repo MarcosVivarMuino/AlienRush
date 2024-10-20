@@ -34,8 +34,6 @@
 ---
 ## **ÍNDICE**
 [**INTEGRANTES DEL EQUIPO**](#_z0rh9dzfrvj3)
----
-
 
 [**CONCEPTOS DEL JUEGO**](#_rswfds54woh)
 
@@ -46,8 +44,6 @@
 [3. DESCRIPCIÓN DE LA TEMÁTICA DEL JUEGO](#_16u9vsgr9djr)
 
 [4. PÚBLICO OBJETIVO](#_od1dnss0a0mw)
----
-
 
 [**ASPECTO TÉCNICO DEL JUEGO**](#_v3mlhxbq6d2)
 
@@ -58,8 +54,6 @@
 [2.1. BÁSICAS](#_80u3u6etpek)
 
 [2.2. POTENCIADORES](#_ig5two63km2o)
----
-
 
 [**DISEÑOS Y CONCEPT-ARTS**](#_ipcbhvuykbdn)
 
@@ -84,12 +78,8 @@
 [5. MENÚ DE INICIO](#_olfolzwqujl1)
 
 [6. INTERFAZ DE VICTORIA Y DERROTA](#_4zagq7yyoirj)
----
-
 
 [**MÚSICA Y SONIDOS**](#_atpo95cjn57p)
----
-
 
 [**FLUJOGRAMA**](#_n409q3vvp6wr)
 
