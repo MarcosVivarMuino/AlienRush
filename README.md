@@ -1,1 +1,4 @@
-# AlienRush
+############
+# #AlienRush#
+############
+## CONCEPTOS DEL JUEGO
