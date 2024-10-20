@@ -9,23 +9,23 @@
 ---
 
 
-# GRUPO 10: GG TEAM
+### GRUPO 10: GG TEAM
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.001.png)
-## **INTEGRANTES**
+### **INTEGRANTES**
 
-### Mario Martín Escribano	 
+#### Mario Martín Escribano	 
 
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.003.png)
 
-### Javier Martín García
+#### Javier Martín García
 
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.004.png)
 
-### Daniel Pérez Navarro 
+#### Daniel Pérez Navarro 
 
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.005.jpeg)
 
-### Marcos Vivar Muiño
+#### Marcos Vivar Muiño
 
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.006.jpeg)
 
