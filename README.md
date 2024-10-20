@@ -1,5 +1,5 @@
 ﻿
-GRUPO 10: GG TEAM![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.001.png)
+
 
 
 
@@ -10,8 +10,7 @@ GRUPO 10: GG TEAM![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.001.png)
 
 
 # **INTEGRANTES**
-
-**GG TEAM**
+### GRUPO 10: GG TEAM![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.001.png)
 
 Mario Martín Escribano	 
 
@@ -170,8 +169,9 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 **Puntos**: +1 punto por cada humano abducido.
 
-**Apariencia**: Deberían verse como personas comunes desde una vista cenital, tal vez con diferentes atuendos cotidianos (camisas, pantalones, vestidos).![*Ilustración 1: Idea de humanos normales*](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.007.png)
+**Apariencia**: Deberían verse como personas comunes desde una vista cenital, tal vez con diferentes atuendos cotidianos (camisas, pantalones, vestidos).![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.007.png)
 
+*Ilustración 1: Idea de humanos normales*
 
 ### <a name="_23ov1ras98cn"></a>**1.2. PERSONAJES VACAS**
 **Descripción**: Estos animales son especialmente codiciados, otorgando el doble de puntos que los humanos.
@@ -212,8 +212,6 @@ reconocibles desde la vista cenital.
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.014.png)
 
 
-
-
 *Ilustración 4: Idea de militares*
 ### <a name="_v1gmtfbu50b7"></a>**1.5. PERSONAJES HUMANOS CON ESTEROIDES**
 **Descripción**: Humanos más grandes y fuertes que otorgan un aumento temporal en las habilidades de la nave alienígena.
@@ -223,11 +221,6 @@ reconocibles desde la vista cenital.
 **Apariencia**: Humanos musculosos, con una apariencia más robusta o exagerada en comparación con los humanos normales, para que se distingan fácilmente.
 
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.015.png)
-
-
-
-
-
 
 
 *Ilustración 5: Idea de humano con esteroides*
@@ -268,8 +261,12 @@ En el nivel de la ciudad, será algo parecido a la siguiente imagen, un escenari
 
 Para la playa, será como las siguientes imágenes, un lugar donde se aprecian sombrillas, hamacas o barcos.
 ## ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.020.jpeg)![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.021.jpeg)
-## <a name="_hny94wsh6l5s"></a><a name="_pf56dhm7t7m1"></a>*Ilustración 9: Idea de mapa - Playa*
-1. ## <a name="_8xpebftqo7pc"></a>**LOGO DEL JUEGO**
+*Ilustración 9: Idea de mapa - Playa*
+## <a name="_hny94wsh6l5s"></a><a name="_pf56dhm7t7m1"></a>
+
+## <a name="_8xpebftqo7pc"></a>**LOGO DEL JUEGO**
+
+
 
 ![ref2]
 
@@ -279,9 +276,9 @@ Para la playa, será como las siguientes imágenes, un lugar donde se aprecian s
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.023.png)
 
 *Ilustración 11: Logo vertical*
-1. ## <a name="_olfolzwqujl1"></a>**MENÚ DE INICIO**
+## <a name="_olfolzwqujl1"></a>**MENÚ DE INICIO**
 Esta pantalla incluirá el logo del juego y tres botones adicionales, desde los cuáles podremos jugar, ir a las opciones y acceder a los créditos, que incluirán la información de todos los participantes del proyecto.
-1. ## <a name="_4zagq7yyoirj"></a>**INTERFAZ DE VICTORIA Y DERROTA**
+## <a name="_4zagq7yyoirj"></a>**INTERFAZ DE VICTORIA Y DERROTA**
 Un mensaje de victoria en la pantalla del ganador en la que se especifique los puntos obtenidos y el motivo de victoria.
 
 Un mensaje de derrota en la pantalla del perdedor en la que se especifique los puntos obtenidos y el motivo de la derrota.
