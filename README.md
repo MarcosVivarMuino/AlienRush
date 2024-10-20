@@ -4,7 +4,7 @@
 
 
 ---
-# **“Alien Rush!”**
+# **Alien Rush!**
 ![](IMAGENES/titulo.png)
 ---
 
