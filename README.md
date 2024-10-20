@@ -1,16 +1,15 @@
 ﻿
-**GRUPO 10: GG TEAM![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.001.png)**
+GRUPO 10: GG TEAM![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.001.png)
 
 
 
-
-**“Alien Rush!”**
-
+---
+# **“Alien Rush!”**
+---
 ![ref1]
-**
 
 
-**INTEGRANTES**
+# **INTEGRANTES**
 
 **GG TEAM**
 
@@ -31,9 +30,9 @@ Marcos Vivar Muiño
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.006.jpeg)
 
 
-**ÍNDICE**
+# **ÍNDICE**
 
-[**ÍNDICE DE FIGURAS	5**](#_1taw0petnxov)**
+[**ÍNDICE DE FIGURAS	5**](#_1taw0petnxov)
 
 [**INTEGRANTES DEL EQUIPO	6**](#_z0rh9dzfrvj3)
 
@@ -171,9 +170,9 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 **Puntos**: +1 punto por cada humano abducido.
 
-**Apariencia**: Deberían verse como personas comunes desde una vista cenital, tal vez con diferentes atuendos cotidianos (camisas, pantalones, vestidos).![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.007.png)
+**Apariencia**: Deberían verse como personas comunes desde una vista cenital, tal vez con diferentes atuendos cotidianos (camisas, pantalones, vestidos).![*Ilustración 1: Idea de humanos normales*](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.007.png)
 
-*Ilustración 1: Idea de humanos normales*
+
 ### <a name="_23ov1ras98cn"></a>**1.2. PERSONAJES VACAS**
 **Descripción**: Estos animales son especialmente codiciados, otorgando el doble de puntos que los humanos.
 
