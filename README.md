@@ -14,22 +14,21 @@
 
 **GG TEAM**
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.003.png)![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.004.png)
+Mario Martín Escribano	 
 
+![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.003.png)
 
+Javier Martín García
 
+![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.004.png)
 
-
-`     `Mario Martín Escribano	          Javier Martín García
+Daniel Pérez Navarro 
 
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.005.jpeg)
 
+Marcos Vivar Muiño
+
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.006.jpeg)
-
-`       `Daniel Pérez Navarro 		  Marcos Vivar Muiño
-
-
-
 
 
 **ÍNDICE**
