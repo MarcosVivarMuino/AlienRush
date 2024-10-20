@@ -130,18 +130,18 @@ Un juego estilo Cartoon animado y ciencia ficción, en el que naves de diferente
 - **Humano con esteroides**: No confundir con asteroides. Un humano mejorado genéticamente que puede ofrecer poderosos beneficios a la nave. Dan un potenciador aleatorio.
 - **Militar**: A pesar de no ser más que ovejitas que pastan por su mundo, los humanos han conseguido desarrollar ciertos instintos de supervivencia y fruto de dichos instintos nacieron los militares. Colar uno en tu nave puede ser desastroso para la misión. Se pierde automáticamente.
 ## <a name="_od1dnss0a0mw"></a>**4. PÚBLICO OBJETIVO**
-   `	`El juego estaría enfocado a aquellos jugadores que buscan entretenimiento rápido y sencillo. Al no requerir grandes cantidades de tiempo ni esfuerzo, ***Alien Rush!*** se postula como una gran opción para aquellos jugadores que quieren pasar el tiempo entre viajes o relajarse de la rutina diaria con un pasatiempo casual.
+El juego estaría enfocado a aquellos jugadores que buscan entretenimiento rápido y sencillo. Al no requerir grandes cantidades de tiempo ni esfuerzo, ***Alien Rush!*** se postula como una gran opción para aquellos jugadores que quieren pasar el tiempo entre viajes o relajarse de la rutina diaria con un pasatiempo casual.
 
 ---
 # <a name="_v3mlhxbq6d2"></a>**ASPECTO TÉCNICO DEL JUEGO**
 ## <a name="_4we2zljfae7t"></a>**1. CONDICIONES DE VICTORIA Y DERROTA**
-`	`Existirán diversas condiciones de victoria y derrota que amenizarán el juego y darán variedad a la hora de desarrollar diferentes partidas, entre estas condiciones estarán:
+Existirán diversas condiciones de victoria y derrota que amenizarán el juego y darán variedad a la hora de desarrollar diferentes partidas, entre estas condiciones estarán:
 
 - Cada partida tendrá un tiempo estimado de 2 minutos, al final del tiempo de juego, el jugador que haya obtenido más abducciones ganará la partida.
 - Las naves tendrán un medidor de vida de 5 puntos y existirán objetos que si se abducen, restarán vida a la nave del jugador, de esta forma si alguno de los jugadores deja su nave sin vida, perderá la partida instantáneamente por no poder continuar.
 ## <a name="_ox1n7mdz8l68"></a>**2. MECÁNICAS**
 ### <a name="_80u3u6etpek"></a>**2.1. BÁSICAS**
-`	`El juego consistirá en abducir al mayor número de personas posibles, intentando obtener una puntuación superior a la del rival al final de la partida. De esta forma, el juego tratará de mover una nave a lo largo de un mapa, interactuando con las personas y objetos que aparecen por él para abducirlos, pudiendo ser objetos de puntuación, potenciadores u objetos que producen daño a la nave, por lo que las mecánicas quedan resumidas en:
+El juego consistirá en abducir al mayor número de personas posibles, intentando obtener una puntuación superior a la del rival al final de la partida. De esta forma, el juego tratará de mover una nave a lo largo de un mapa, interactuando con las personas y objetos que aparecen por él para abducirlos, pudiendo ser objetos de puntuación, potenciadores u objetos que producen daño a la nave, por lo que las mecánicas quedan resumidas en:
 
 - Movimiento: movimiento libre de la nave por el tablero para buscar personas.
 - Abducción: es la mecánica necesaria para conseguir puntos y ganar la partida.
@@ -255,7 +255,7 @@ En **Alien Rush!** podrás escoger en qué mapa juegas contando con 3 distintos,
 
 Para la granja, se escogerá un mapa en el que podremos ver elementos como tractores, campos de cultivo, un granero o incluso establos. Algo de este estilo:
 
-` `![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.017.jpeg)
+![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.017.jpeg)
 
 *Ilustración 7: Idea de mapa - Granja*
 
