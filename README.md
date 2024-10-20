@@ -204,7 +204,8 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 **Apariencia**: Soldados o militares con uniformes, cascos y armas, fácilmente 
 
-reconocibles desde la vista cenital.![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.013.png)
+reconocibles desde la vista cenital.
+![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.013.png)
 
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.014.png)
 
@@ -217,7 +218,8 @@ reconocibles desde la vista cenital.![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9
 
 **Efecto**: Aumentan las habilidades de tu nave o disminuye las del rival (como más velocidad de movimiento, duplicidad de puntos en un tiempo determinado…).
 
-**Apariencia**: Humanos musculosos, con una apariencia más robusta o exagerada en comparación con los humanos normales, para que se distingan fácilmente.![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.015.png)
+**Apariencia**: Humanos musculosos, con una apariencia más robusta o exagerada en comparación con los humanos normales, para que se distingan fácilmente.
+![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.015.png)
 
 
 
@@ -229,7 +231,8 @@ reconocibles desde la vista cenital.![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9
 1. ## <a name="_hnluayo0zj7t"></a>**NAVE**
 Como personaje jugable tendrá cada jugador un OVNI con un marciano, que será el que deberemos controlar para poder abducir a los ya nombrados anteriormente.
 
-La idea es que sea una vista cenital donde se aprecie justo debajo la zona habilitada para poder abducir a los terrestres.![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.016.png)
+La idea es que sea una vista cenital donde se aprecie justo debajo la zona habilitada para poder abducir a los terrestres.
+![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.016.png)
 
 
 
