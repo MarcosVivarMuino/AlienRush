@@ -105,7 +105,7 @@
 **Javier Martín García**
 
 - Correo oficial: j.martinga.2021@alumnos.urjc.es
-- Cuenta GitHub: ReiXx03
+- Cuenta GitHub: mjaavi
 
 **Marcos Vivar Muiño**
 
