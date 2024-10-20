@@ -180,7 +180,9 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 **Puntos**: +2 puntos por cada vaca abducida.
 
-**Apariencia**: Vacas de gran tamaño visibles desde la vista cenital, con manchas negras y blancas típicas.![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.008.png)
+**Apariencia**: Vacas de gran tamaño visibles desde la vista cenital, con manchas negras y blancas típicas.
+
+![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.008.png)
 
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.009.png)
 
