@@ -5,29 +5,29 @@
 
 ---
 # **“Alien Rush!”**
-![ref1]
+![](IMAGENES/titulo.png)
 ---
 
 
 ### GRUPO 10: GG TEAM
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.001.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.001.png)
 ### **INTEGRANTES**
 
 #### Mario Martín Escribano	 
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.003.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.003.png)
 
 #### Javier Martín García
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.004.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.004.png)
 
 #### Daniel Pérez Navarro 
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.005.jpeg)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.005.jpeg)
 
 #### Marcos Vivar Muiño
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.006.jpeg)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.006.jpeg)
 
 
 
@@ -176,7 +176,7 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 **Puntos**: +1 punto por cada humano abducido.
 
-**Apariencia**: Deberían verse como personas comunes desde una vista cenital, tal vez con diferentes atuendos cotidianos (camisas, pantalones, vestidos).![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.007.png)
+**Apariencia**: Deberían verse como personas comunes desde una vista cenital, tal vez con diferentes atuendos cotidianos (camisas, pantalones, vestidos).![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.007.png)
 
 *Ilustración 1: Idea de humanos normales*
 
@@ -187,9 +187,9 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 **Apariencia**: Vacas de gran tamaño visibles desde la vista cenital, con manchas negras y blancas típicas.
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.008.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.008.png)
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.009.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.009.png)
 
 *Ilustración 2: Idea de vacas*
 
@@ -200,7 +200,7 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 **Apariencia**: Trozos de chatarra como coches rotos, electrodomésticos viejos o restos metálicos.
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.010.png)![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.011.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.010.png)![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.011.png)
 
 *Ilustración 3: Idea de chatarra*
 
@@ -212,11 +212,11 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 **Apariencia**: Soldados o militares con uniformes, cascos y armas, fácilmente 
 reconocibles desde la vista cenital.
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.012.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.012.png)
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.013.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.013.png)
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.014.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.014.png)
 
 
 *Ilustración 4: Idea de militares*
@@ -227,7 +227,7 @@ reconocibles desde la vista cenital.
 
 **Apariencia**: Humanos musculosos, con una apariencia más robusta o exagerada en comparación con los humanos normales, para que se distingan fácilmente.
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.015.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.015.png)
 
 
 *Ilustración 5: Idea de humano con esteroides*
@@ -236,7 +236,7 @@ Como personaje jugable tendrá cada jugador un OVNI con un marciano, que será e
 
 La idea es que sea una vista cenital donde se aprecie justo debajo la zona habilitada para poder abducir a los terrestres.
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.016.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.016.png)
 
 
 
@@ -251,7 +251,7 @@ En **Alien Rush!** podrás escoger en qué mapa juegas contando con 3 distintos,
 
 Para la granja, se escogerá un mapa en el que podremos ver elementos como tractores, campos de cultivo, un granero o incluso establos. Algo de este estilo:
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.017.jpeg)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.017.jpeg)
 
 *Ilustración 7: Idea de mapa - Granja*
 
@@ -259,7 +259,7 @@ Para la granja, se escogerá un mapa en el que podremos ver elementos como tract
 
 En el nivel de la ciudad, será algo parecido a la siguiente imagen, un escenario que represente una pequeña ciudad donde se representan elementos visuales que puedan servir en ella como coches, carreteras o edificios. 
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.018.jpeg)![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.019.jpeg)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.018.jpeg)![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.019.jpeg)
 
 *Ilustración 8: Idea de mapa - Ciudad*
 
@@ -267,7 +267,7 @@ En el nivel de la ciudad, será algo parecido a la siguiente imagen, un escenari
 ### **3.3. Nivel 3:  Playa**
 
 Para la playa, será como las siguientes imágenes, un lugar donde se aprecian sombrillas, hamacas o barcos.
-## ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.020.jpeg)![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.021.jpeg)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.020.jpeg)![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.021.jpeg)
 *Ilustración 9: Idea de mapa - Playa*
 ## <a name="_hny94wsh6l5s"></a><a name="_pf56dhm7t7m1"></a>
 
@@ -280,7 +280,7 @@ Para la playa, será como las siguientes imágenes, un lugar donde se aprecian s
 *Ilustración 10: Logo horizontal*
 
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.023.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.023.png)
 
 *Ilustración 11: Logo vertical*
 ## <a name="_olfolzwqujl1"></a>**5. MENÚ DE INICIO**
@@ -302,10 +302,10 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 ---
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.024.png)
+![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.024.png)
 
 
 
 
-[ref1]: Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
-[ref2]: Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.022.png
+[ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
+[ref2]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.022.png
