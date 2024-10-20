@@ -34,59 +34,55 @@
 ---
 ## **ÍNDICE**
 
-[**ÍNDICE DE FIGURAS	5**](#_1taw0petnxov)
+[**INTEGRANTES DEL EQUIPO**](#_z0rh9dzfrvj3)
 
-[**INTEGRANTES DEL EQUIPO	6**](#_z0rh9dzfrvj3)
+[**CONCEPTOS DEL JUEGO**](#_rswfds54woh)
 
-[**CONCEPTOS DEL JUEGO	7**](#_rswfds54woh)
-
-[1. NOMBRE DEL JUEGO Y DESCRIPCIÓN	7](#_kyz1vo4wggnz)
+[1. NOMBRE DEL JUEGO Y DESCRIPCIÓN](#_kyz1vo4wggnz)
 
 [2. HISTORIA	7](#_wt7dt2kgyo7g)
 
-[3. DESCRIPCIÓN DE LA TEMÁTICA DEL JUEGO	7](#_16u9vsgr9djr)
+[3. DESCRIPCIÓN DE LA TEMÁTICA DEL JUEGO](#_16u9vsgr9djr)
 
-[4. PÚBLICO OBJETIVO	8](#_od1dnss0a0mw)
+[4. PÚBLICO OBJETIVO](#_od1dnss0a0mw)
 
-[**ASPECTO TÉCNICO DEL JUEGO	9**](#_v3mlhxbq6d2)
+[**ASPECTO TÉCNICO DEL JUEGO**](#_v3mlhxbq6d2)
 
-[1. CONDICIONES DE VICTORIA Y DERROTA	9](#_4we2zljfae7t)
+[1. CONDICIONES DE VICTORIA Y DERROTA](#_4we2zljfae7t)
 
-[2. MECÁNICAS	9](#_ox1n7mdz8l68)
+[2. MECÁNICAS](#_ox1n7mdz8l68)
 
-[2.1. BÁSICAS	9](#_80u3u6etpek)
+[2.1. BÁSICAS](#_80u3u6etpek)
 
-[2.2. POTENCIADORES	9](#_ig5two63km2o)
+[2.2. POTENCIADORES](#_ig5two63km2o)
 
-[**DISEÑOS Y CONCEPT-ARTS	11**](#_ipcbhvuykbdn)
+[**DISEÑOS Y CONCEPT-ARTS**](#_ipcbhvuykbdn)
 
-[1. PERSONAJES	11](#_wdmtdubkpk0m)
+[1. PERSONAJES](#_wdmtdubkpk0m)
 
-[1.1. PERSONAJES HUMANOS	11](#_a9lqf8fpogrj)
+[1.1. PERSONAJES HUMANOS](#_a9lqf8fpogrj)
 
-[1.2. PERSONAJES VACAS	11](#_23ov1ras98cn)
+[1.2. PERSONAJES VACAS](#_23ov1ras98cn)
 
-[1.3. CHATARRA	12](#_4rsemzwoct82)
+[1.3. CHATARRA](#_4rsemzwoct82)
 
-[1.4. MILITAR	12](#_owkp6x4oowal)
+[1.4. MILITAR](#_owkp6x4oowal)
 
-[1.5. PERSONAJES HUMANOS CON ESTEROIDES	13](#_v1gmtfbu50b7)
+[1.5. PERSONAJES HUMANOS CON ESTEROIDES](#_v1gmtfbu50b7)
 
-[2. NAVE	13](#_hnluayo0zj7t)
+[2. NAVE](#_hnluayo0zj7t)
 
-[3. ESCENARIOS	14](#_ofghojrc3ozq)
+[3. ESCENARIOS](#_ofghojrc3ozq)
 
-[Ilustración 9: Idea de mapa - Playa	15](#_pf56dhm7t7m1)
+[4. LOGO DEL JUEGO](#_8xpebftqo7pc)
 
-[4. LOGO DEL JUEGO	15](#_8xpebftqo7pc)
+[5. MENÚ DE INICIO](#_olfolzwqujl1)
 
-[5. MENÚ DE INICIO	16](#_olfolzwqujl1)
+[6. INTERFAZ DE VICTORIA Y DERROTA](#_4zagq7yyoirj)
 
-[6. INTERFAZ DE VICTORIA Y DERROTA	16](#_4zagq7yyoirj)
+[**MÚSICA Y SONIDOS**](#_atpo95cjn57p)
 
-[**MÚSICA Y SONIDOS	17**](#_atpo95cjn57p)
-
-[**FLUJOGRAMA	17**](#_n409q3vvp6wr)
+[**FLUJOGRAMA**](#_n409q3vvp6wr)
 
 # <a name="_tdri2rht144i"></a>
 
