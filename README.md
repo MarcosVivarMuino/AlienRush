@@ -173,7 +173,7 @@ Las teclas “W”, “A”, “S” y “D” para el movimiento por el tablero
 
 ---
 # <a name="_ipcbhvuykbdn"></a>**DISEÑOS Y CONCEPT-ARTS**
-1. ## <a name="_wdmtdubkpk0m"></a>**1. PERSONAJES**
+## <a name="_wdmtdubkpk0m"></a>**1. PERSONAJES**
 Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de ellos tienen desempeñan acciones y resultados diferentes al obtenerlos.
 ### <a name="_a9lqf8fpogrj"></a>**1.1. PERSONAJES HUMANOS** 
 **Descripción**: Los humanos comunes y corrientes que son el objetivo principal de las abducciones.
