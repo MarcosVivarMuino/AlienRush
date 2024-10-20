@@ -200,12 +200,12 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 ### <a name="_owkp6x4oowal"></a>**1.4. MILITAR**
 **Descripción**: Personajes militares que son un peligro mortal. Si los abduces por error, pierdes inmediatamente.
 
-![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.012.png)
-
 **Efecto**: Pérdida instantánea de la partida.
 
 **Apariencia**: Soldados o militares con uniformes, cascos y armas, fácilmente 
 reconocibles desde la vista cenital.
+
+![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.012.png)
 
 ![](Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.013.png)
 
