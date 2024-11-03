@@ -1,0 +1,129 @@
+body{
+    background-image: url("assets/Background/fondo1.avif");
+}
+
+.centrarImagen{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.introduccion{
+    display: grid;
+    grid-template-columns: 50% 50%; 
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-bottom: 20px;
+}
+
+.historia{
+    margin-top: 2%;
+    margin-right: 20px;
+    padding-bottom: 20px;
+    background-image: url(assets/Background/fondoTexto.png);
+    background-repeat: no-repeat;
+    background-size: 850px 380px;
+}
+
+.controlesCuadro{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 30px;
+    padding: 4%;
+    background-image: url(assets/Background/fondoTexto2.png);
+    background-repeat: no-repeat;
+    background-size: 1850px 450px;   
+}
+
+.controles{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.tematica{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 50px;
+    padding: 4%;
+    background-image: url(assets/Background/fondoTexto.png);
+    background-repeat: no-repeat;
+    background-size: 850px 380px;
+}
+
+.personajesCuadro{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 30px;
+    padding: 4%;
+    background-image: url(assets/Background/fondoTexto3.png);
+    background-repeat: no-repeat;
+    background-size: 1850px 1260px; 
+}
+
+.powerUpsCuadro{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 30px;
+    padding: 4%;
+    background-image: url(assets/Background/fondoTexto.png);
+    background-repeat: no-repeat;
+    background-size: 1850px 650px; 
+   
+}
+
+.escenariosCuadro{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 30px;
+    padding: 4%;
+    background-image: url(assets/Background/fondoTexto2.png);
+    background-repeat: no-repeat;
+    background-size: 1850px 750px; 
+   
+}
+
+.escenarios{
+    display: grid;
+    grid-template-columns: 33% 33% 33%; 
+}
+
+.powerUps{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%; 
+}
+
+.personajes{
+    display: grid;
+    grid-template-columns: 33% 33% 33%; 
+}
+
+
+
+h1{
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+}
+
+h2{
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+
+}
+
+p{
+    text-align: left;
+    font-size: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+
+}
+
+.powerUps p{  
+    text-align: center;
+    font-size: 20px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
