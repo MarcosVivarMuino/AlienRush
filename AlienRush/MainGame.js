@@ -43,52 +43,59 @@ var MainGame = new Phaser.Class({
         // Partida
         this.load.image('Player1','assets/AssetsMainGame/Personajes/Player1.png');
         this.load.image('Player2','assets/AssetsMainGame/Personajes/Player2.png');
+        this.load.image('Humano','assets/AssetsMainGame/Personajes/Humano_PH.png');
+        this.load.image('Vaca','assets/AssetsMainGame/Personajes/Vaca_PH.png');
         //Sonidos 
     },
 
     create: function() {
     ///////////////////////////////////////////////////////////////INSTANCIACION////////////////////////////////////////////////////////////////////
-        coins = []; // Crea el grupo de monedas
+        Vacas = []; // Crea el grupo de monedas
         PowerUps= [];
-        breakW = [];
-        pinchos = [];
-        PSaltos = [];
+        Humanos = [];
         paused = false;
 
-        this.physics.world.bounds.width = 1800; // Limite al tamaño del mundo
-        this.physics.world.bounds.height = 1000;
-        this.cameras.main.setBounds(0, 0,1800,1000); // Define los limites de la camara
+        this.physics.world.bounds.width = 1750; // Limite al tamaño del mundo
+        this.physics.world.bounds.height = 880;
+        this.cameras.main.setBounds(0, 0,1750,880); // Define los limites de la camara
         
-        this.add.image(1062, 590, 'fondo').setScale(1).setOrigin(0.125,0.59); // Creacion del fondo
-
-        // Instanciacion de los jugadores
-        player1 = this.physics.add.sprite(800, 130, 'Player1').setScale(0.3);
-        player1.tipoPU = -1;
-        player1.vel = 250;
-        player1.score = 0;
-
-        player1.setBounce(0.2); // Limites del jugador
-        player1.setCollideWorldBounds(true);
-
-        player2 = this.physics.add.sprite(400, 720, 'Player2').setScale(0.3);
-        player2.tipoPU = -1;
-        player2.vel = 250;
-        player2.score = 0;
-
-        player2.setBounce(0.2); // Limites del jugador
-        player2.setCollideWorldBounds(true);
-
-        // Instanciacion Interactuables
+        this.add.image(875, 440, 'fondo').setScale(1); // Creacion del fondo
 
         // Instanciacion sonidos
-        // Pinchos
-
+        // Instanciacion Humanos
+        for (let i = 0; i < 4; i++) { 
+            let x = Phaser.Math.Between(0, 1750); // Coordenada x aleatoria
+            let y = Phaser.Math.Between(0, 880); // Coordenada y aleatoria
+            let humano = this.add.image(x, y, 'Humano');
+            Humanos.push(humano);
+        }
         //Instanciacion decoracion
 
-        // Instanciacion texto
+        // Instanciacion de los jugadores
+        player1 = this.physics.add.sprite(800, 130, 'Player1').setScale(1.2);
+        player1.tipoPU = -1;
+        player1.score = 0;
+        player1.alpha = 0.8
+
+        player1.setBounce(1); // Limites del jugador
+        player1.setCollideWorldBounds(true);
+
+        player2 = this.physics.add.sprite(400, 720, 'Player2').setScale(1.2);
+        player2.tipoPU = -1;
+        player2.score = 0;
+        player2.alpha = 0.8
+
+        player2.setBounce(1); // Limites del jugador
+        player2.setCollideWorldBounds(true);
 
 //////////////////////////////////////////////////////////////////ANIMACIONES///////////////////////////////////////////////////////////////////////////
-
+// Mover los humanos aleatoriamente cada cierto tiempo
+this.time.addEvent({
+    delay: 1000, // Cambiar la dirección cada 1 segundo
+    callback: moverHumanosAleatoriamente,
+    callbackScope: this,
+    loop: true
+});
 //////////////////////////////////////////////////////////////////////COLISIONES////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////INTERACCIONES///////////////////////////////////////////////////////////////////////////
@@ -111,7 +118,27 @@ var MainGame = new Phaser.Class({
         // Menu de Pause
         this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 ///////////////////////////////////////////////////////////////////////FUNCIONES////////////////////////////////////////////////////////////////////////////
-    },
+function moverHumanosAleatoriamente() {
+    // Mover cada humano en una dirección aleatoria
+    Humanos.forEach((humano) => {
+        let nuevaX = humano.x + Phaser.Math.Between(-100, 100); // Cambiar aleatoriamente entre -50 y 50 píxeles
+        let nuevaY = humano.y + Phaser.Math.Between(-100, 100);
+
+        // Asegúrate de que los humanos no salgan de los límites de la pantalla
+        nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
+        nuevaY = Phaser.Math.Clamp(nuevaY, 80, 800);
+
+        // Usar un tween para animar el movimiento
+        this.tweens.add({
+            targets: humano,
+            x: nuevaX,
+            y: nuevaY,
+            duration: 500,
+            ease: 'Power1'
+        });
+    });
+}    
+},
 
     // Update
     update: function() {
@@ -120,34 +147,34 @@ var MainGame = new Phaser.Class({
     ////////////////////////////////////////////////////////////CONTROLES////////////////////////////////////////////////////////////////////////////////////
     // Controles player 2
     if (this.keyJ.isDown){  // Interacciones J-K-L-I (player2)
-        player2.setVelocityX(-player2.vel);
+        player2.body.position.x-=10;
     }
     else if (this.keyL.isDown){
-        player2.setVelocityX(player2.vel);
+        player2.body.position.x+=10;
     }
     else if (this.keyI.isDown){
-        player2.setVelocityX(player2.vel);
+        player2.body.position.y-=10;
     }else if (this.keyK.isDown){
-        player2.setVelocityX(player2.vel);
+        player2.body.position.y+=10;
     }
 
     // Controles player 1
     if (this.keyA.isDown){  // Interacciones W-A-S-D (player2)
-        player1.setVelocityX(-player1.vel);
+        player1.body.position.x-=10;
     }
     else if (this.keyD.isDown){
-        player1.setVelocityX(player1.vel);
+        player1.body.position.x+=10;
     }
     else if (this.keyW.isDown){
-        player1.setVelocityX(player1.vel);
+        player1.body.position.y-=10;
     }else if (this.keyS.isDown){
-        player1.setVelocityX(player1.vel);
+        player1.body.position.y+=10;
     }
 
     if(Phaser.Input.Keyboard.JustDown(this.keyESC)){ // Menu de pausa
         if(!paused){
-            pauseText1 = this.add.text(800, 400, 'PAUSADO', { fontSize: '100px', color: "#000000",fontStyle: "bold"});
-            pauseText2 = this.add.text(800, 600, '<PULSA ESC PARA REANUDAR>', { fontSize: '100px', color: "#000000",fontStyle: "bold"});
+            pauseText1 = this.add.text(750, 200, 'PAUSADO', { fontSize: '50px', color: "#000000",fontStyle: "bold"});
+            pauseText2 = this.add.text(500, 350, '<PULSA ESC PARA REANUDAR>', { fontSize: '50px', color: "#000000",fontStyle: "bold"});
             player1.body.moves = false;
             player2.body.moves = false;
             paused=true;

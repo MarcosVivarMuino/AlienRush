@@ -221,11 +221,10 @@
             height: 880,
             autoCenter: Phaser.Scale.CENTER_BOTH,
             mode: Phaser.Scale.FIT,
-            scene: [MenuScene, Creditos, Ajustes, MainGame, Victoria, Derrota],
+            scene: [MainGame, Creditos, Ajustes, MenuScene, Victoria, Derrota],
             physics: {
                 default: 'arcade',
                 arcade: {
-                    gravity: { y: 300 },
                     debug: false
                 }
             },
