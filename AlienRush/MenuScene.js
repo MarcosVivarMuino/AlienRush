@@ -14,7 +14,7 @@ var MenuScene = new Phaser.Class({
     },
 
     preload: function() {
-        this.load.image('fondoMenu','assets/Menu/fondoMenu.jpg');
+        this.load.image('fondoMenu','assets/Menu/fondoMenu.png');
         this.load.image('play','assets/Menu/BotonJugar.png');
         this.load.image('ajustes','assets/Menu/BotonAjustes.png');
         this.load.image('creditos','assets/Menu/BotonCreditos.png');
@@ -24,7 +24,7 @@ var MenuScene = new Phaser.Class({
     create: function() {
         /************************* FONDO *************************/
         //IMAGEN
-        this.add.image(875, 440, 'fondoMenu').setScale(5, 3.5);
+        this.add.image(875, 440, 'fondoMenu');
         //AUDIO
         if (!this.musicaFondo) {
             // Inicializa la música solo si aún no está creada
@@ -33,9 +33,9 @@ var MenuScene = new Phaser.Class({
         } 
         
         /************************* VARIABLES *************************/
-        let play = this.add.image(875, 560, 'play');        
-        let ajustes = this.add.image(875, 680, 'ajustes');
-        let creditos = this.add.image(875, 800, 'creditos');
+        let play = this.add.image(1470, 360, 'play');        
+        let ajustes = this.add.image(1470, 500, 'ajustes');
+        let creditos = this.add.image(1470, 640, 'creditos');
 
         
         /************************* BOTONES *************************/
