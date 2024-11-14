@@ -117,6 +117,8 @@ var MainGame = new Phaser.Class({
 
         // Menu de Pause
         this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.paused = false;  // Estado de pausa
+
         ///////////////////////////////////////////////////////////////////////FUNCIONES////////////////////////////////////////////////////////////////////////////
         function moverHumanosAleatoriamente() {
             // Mover cada humano en una dirección aleatoria
@@ -181,6 +183,7 @@ var MainGame = new Phaser.Class({
                 this.paused = true;
             }
         }
+
         ///////////////////////////////////////////////////////////////COMPROBACIONES///////////////////////////////////////////////////////////////////////////
         if (this.keyE.isDown) { // Accion jugador 1
         }
@@ -248,5 +251,10 @@ var MainGame = new Phaser.Class({
             player2.clearTint();
             player2.fuerza = 5;
         }
+    },
+
+    onResume: function() {
+        console.log("Reanudando MainGame...");
+        this.paused = false; // Cambiar el estado de pausa a falso al reanudar
     }
 });
