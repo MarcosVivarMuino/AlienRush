@@ -61,7 +61,10 @@ var MainGame = new Phaser.Class({
 
         this.add.image(875, 440, 'fondo').setScale(1); // Creacion del fondo
 
-        // Instanciacion sonidos
+         // Instanciacion temporizador
+         this.tiempoRestante = 300; // 5 minutos en segundos
+         this.textoTemporizador = this.add.text(10, 30, 'Tiempo: 5:00', { fontSize: '16px', color: '#ffffff' });
+
         // Instanciacion Humanos
         for (let i = 0; i < 4; i++) {
             let x = Phaser.Math.Between(0, 1750); // Coordenada x aleatoria
@@ -96,6 +99,14 @@ var MainGame = new Phaser.Class({
             callbackScope: this,
             loop: true
         });
+
+        // Evento de tiempo que se ejecuta cada segundo
+        this.temporizadorEvento = this.time.addEvent({
+            delay: 1000, // 1 segundo
+            callback: actualizarTemporizador,
+            callbackScope: this,
+            loop: true
+        });
         //////////////////////////////////////////////////////////////////////COLISIONES////////////////////////////////////////////////////////////////////////////
 
         ////////////////////////////////////////////////////////////////////INTERACCIONES///////////////////////////////////////////////////////////////////////////
@@ -104,7 +115,7 @@ var MainGame = new Phaser.Class({
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A); // Izquierda
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D); // Derecha
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S); // Abajo
-        this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E); // Power Up
+        this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Power Up
         this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q); // Interactuar
 
         // Controles Jugador 2
@@ -112,7 +123,7 @@ var MainGame = new Phaser.Class({
         this.keyJ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);  // Izquierda
         this.keyL = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);  // Derecha
         this.keyK = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);  // Derecha
-        this.keyU = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.U);  // Interactuar
+        this.keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);  // Interactuar
         this.keyO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);  // Power Up
 
         // Menu de Pause
@@ -140,12 +151,38 @@ var MainGame = new Phaser.Class({
                 });
             });
         }
+
+        function actualizarTemporizador() {
+            // Reducir el tiempo restante
+            this.tiempoRestante--;
+    
+            // Actualizar el texto del temporizador
+            let minutos = Math.floor(this.tiempoRestante / 60);
+            let segundos = this.tiempoRestante % 60;
+            let textoSegundos = segundos < 10 ? '0' + segundos : segundos;
+            this.textoTemporizador.setText(`Tiempo: ${minutos}:${textoSegundos}`);
+    
+            // Si el tiempo se agota, termina la partida
+            if (this.tiempoRestante <= 0) {
+                this.finDePartida();
+            }
+        }
+    
+        function finDePartida() {
+            // Detener el temporizador
+            this.temporizadorEvento.remove();
+    
+            // Mostrar un mensaje de fin de partida
+            this.add.text(400, 300, '¡Se acabó el tiempo!', { fontSize: '32px', color: '#ff0000' }).setOrigin(0.5);
+    
+            // Detener el movimiento del jugador y cualquier otra lógica de juego
+            this.jugador.setVisible(false); // Por ejemplo, ocultar el jugador
+            this.scene.pause(); // Pausar la escena
+        }
     },
 
     // Update
     update: function () {
-        var cam = this.cameras.main;
-        var scene = this.scene;
         ////////////////////////////////////////////////////////////CONTROLES////////////////////////////////////////////////////////////////////////////////////
         // Controles player 2
         if (this.keyJ.isDown) {  // Interacciones J-K-L-I (player2)
@@ -185,10 +222,14 @@ var MainGame = new Phaser.Class({
         }
 
         ///////////////////////////////////////////////////////////////COMPROBACIONES///////////////////////////////////////////////////////////////////////////
-        if (this.keyE.isDown) { // Accion jugador 1
+        // Detectar si se presiona el espacio y está sobre un humano // Player 1
+        if (Phaser.Input.Keyboard.JustDown(this.keySPC)) {
+            absorberHumano(player1);
         }
 
-        if (this.keyO.isDown) { // Accion Jugador 2
+        // Detectar si se presiona el espacio y está sobre un humano // Player 2
+        if (Phaser.Input.Keyboard.JustDown(this.keyENTER)) {
+            absorberHumano(player2);
         }
 
         // Comprueba si el jugador rompe el muro y lo actualiza en consecuencia
@@ -250,6 +291,28 @@ var MainGame = new Phaser.Class({
         function desinflado() {
             player2.clearTint();
             player2.fuerza = 5;
+        }
+
+        function generarHumano(humano){
+            let x = Phaser.Math.Between(0, 1750);
+            let y = Phaser.Math.Between(0, 880);
+
+            humano.x = x
+            humano.y = y
+        }
+    
+        function absorberHumano(player){
+            // Verificar si el jugador está sobre algún humano
+            Humanos.forEach((humano) => {
+                let distancia = Phaser.Math.Distance.Between(player.x, player.y, humano.x, humano.y);
+
+                if (distancia < 75) { // Distancia de absorción (ajusta este valor según sea necesario)
+                    // Sumar puntos al jugador
+                    player.score += 10;   
+                    // Generar un nuevo humano
+                    generarHumano(humano);
+                }
+            });
         }
     },
 
