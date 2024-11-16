@@ -61,10 +61,6 @@ var MainGame = new Phaser.Class({
 
         this.add.image(875, 440, 'fondo').setScale(1); // Creacion del fondo
 
-         // Instanciacion temporizador
-         this.tiempoRestante = 300; // 5 minutos en segundos
-         this.textoTemporizador = this.add.text(10, 30, 'Tiempo: 5:00', { fontSize: '16px', color: '#ffffff' });
-
         // Instanciacion Humanos
         for (let i = 0; i < 4; i++) {
             let x = Phaser.Math.Between(0, 1750); // Coordenada x aleatoria
@@ -90,6 +86,14 @@ var MainGame = new Phaser.Class({
 
         player2.setBounce(1); // Limites del jugador
         player2.setCollideWorldBounds(true);
+
+        // Instanciacion temporizador
+        this.tiempoRestante = 300; // 5 minutos en segundos
+        this.textoTemporizador = this.add.text(720, 30, 'Tiempo: 5:00', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
+
+        // Instanciacion temporizador
+        Score1 = this.add.text(10, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy'});
+        Score2 = this.add.text(1400, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy'});
 
         //////////////////////////////////////////////////////////////////ANIMACIONES///////////////////////////////////////////////////////////////////////////
         // Mover los humanos aleatoriamente cada cierto tiempo
@@ -164,7 +168,7 @@ var MainGame = new Phaser.Class({
     
             // Si el tiempo se agota, termina la partida
             if (this.tiempoRestante <= 0) {
-                this.finDePartida();
+                finDePartida();
             }
         }
     
@@ -308,16 +312,22 @@ var MainGame = new Phaser.Class({
 
                 if (distancia < 75) { // Distancia de absorción (ajusta este valor según sea necesario)
                     // Sumar puntos al jugador
-                    player.score += 10;   
+                    player.score += 10;
+                    actuScore()
                     // Generar un nuevo humano
                     generarHumano(humano);
                 }
             });
         }
+
+        function actuScore(){
+            Score1.setText(`Puntos: ${player1.score}`);
+            Score2.setText(`Puntos: ${player2.score}`);
+        }
     },
 
     onResume: function() {
         console.log("Reanudando MainGame...");
-        this.paused = false; // Cambiar el estado de pausa a falso al reanudar
+        this.paused = false; 
     }
 });
