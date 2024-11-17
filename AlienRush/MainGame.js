@@ -53,6 +53,7 @@ var MainGame = new Phaser.Class({
         Vacas = []; // Crea el grupo de monedas
         PowerUps = [];
         Humanos = [];
+        Vacas = [];
         paused = false;
 
         this.physics.world.bounds.width = 1750; // Limite al tamaño del mundo
@@ -62,11 +63,19 @@ var MainGame = new Phaser.Class({
         this.add.image(875, 440, 'fondo').setScale(1); // Creacion del fondo
 
         // Instanciacion Humanos
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 3; i++) {
             let x = Phaser.Math.Between(0, 1750); // Coordenada x aleatoria
             let y = Phaser.Math.Between(0, 880); // Coordenada y aleatoria
             let humano = this.add.image(x, y, 'Humano');
             Humanos.push(humano);
+        }
+
+        // Instanciacion Vacas
+        for (let i = 0; i < 2; i++) {
+            let x = Phaser.Math.Between(0, 1750); // Coordenada x aleatoria
+            let y = Phaser.Math.Between(0, 880); // Coordenada y aleatoria
+            let vaca = this.add.image(x, y, 'Vaca');
+            Vacas.push(vaca);
         }
         //Instanciacion decoracion
 
@@ -100,6 +109,14 @@ var MainGame = new Phaser.Class({
         this.time.addEvent({
             delay: 1000, // Cambiar la dirección cada 1 segundo
             callback: moverHumanosAleatoriamente,
+            callbackScope: this,
+            loop: true
+        });
+
+        // Mover las vacas aleatoriamente cada cierto tiempo
+        this.time.addEvent({
+            delay: 1000, // Cambiar la dirección cada 1 segundo
+            callback: moverVacasAleatoriamente,
             callbackScope: this,
             loop: true
         });
@@ -148,6 +165,27 @@ var MainGame = new Phaser.Class({
                 // Usar un tween para animar el movimiento
                 this.tweens.add({
                     targets: humano,
+                    x: nuevaX,
+                    y: nuevaY,
+                    duration: 500,
+                    ease: 'Power1'
+                });
+            });
+        }
+
+        function moverVacasAleatoriamente() {
+            // Mover cada humano en una dirección aleatoria
+            Vacas.forEach((vaca) => {
+                let nuevaX = vaca.x + Phaser.Math.Between(-150, 150); // Cambiar aleatoriamente entre -50 y 50 píxeles
+                let nuevaY = vaca.y + Phaser.Math.Between(-150, 150);
+
+                // Asegúrate de que los humanos no salgan de los límites de la pantalla
+                nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
+                nuevaY = Phaser.Math.Clamp(nuevaY, 80, 800);
+
+                // Usar un tween para animar el movimiento
+                this.tweens.add({
+                    targets: vaca,
                     x: nuevaX,
                     y: nuevaY,
                     duration: 500,
@@ -228,12 +266,12 @@ var MainGame = new Phaser.Class({
         ///////////////////////////////////////////////////////////////COMPROBACIONES///////////////////////////////////////////////////////////////////////////
         // Detectar si se presiona el espacio y está sobre un humano // Player 1
         if (Phaser.Input.Keyboard.JustDown(this.keySPC)) {
-            absorberHumano(player1);
+            absorberObjeto(player1);
         }
 
         // Detectar si se presiona el espacio y está sobre un humano // Player 2
         if (Phaser.Input.Keyboard.JustDown(this.keyENTER)) {
-            absorberHumano(player2);
+            absorberObjeto(player2);
         }
 
         // Comprueba si el jugador rompe el muro y lo actualiza en consecuencia
@@ -304,18 +342,35 @@ var MainGame = new Phaser.Class({
             humano.x = x
             humano.y = y
         }
-    
-        function absorberHumano(player){
-            // Verificar si el jugador está sobre algún humano
+
+        function generarVaca(vaca){
+            let x = Phaser.Math.Between(0, 1750);
+            let y = Phaser.Math.Between(0, 880);
+
+            vaca.x = x
+            vaca.y = y
+        }
+
+        function absorberObjeto(player) {
+            // Verificar si el jugador está sobre un humano    
             Humanos.forEach((humano) => {
                 let distancia = Phaser.Math.Distance.Between(player.x, player.y, humano.x, humano.y);
-
-                if (distancia < 75) { // Distancia de absorción (ajusta este valor según sea necesario)
-                    // Sumar puntos al jugador
-                    player.score += 10;
+    
+                if (distancia < 75) { // Distancia de absorción
+                    player.score += 10; // Puntos por absorber un humano
                     actuScore()
-                    // Generar un nuevo humano
-                    generarHumano(humano);
+                    generarHumano(humano)
+                }
+            });
+    
+            // Verificar si el jugador está sobre una vaca
+            Vacas.forEach((vaca) => {
+                let distancia = Phaser.Math.Distance.Between(player.x, player.y, vaca.x, vaca.y);
+    
+                if (distancia < 100) { // Distancia de absorción
+                    player.score += 30; // Puntos por absorber una vaca
+                    actuScore()
+                    generarVaca(vaca)
                 }
             });
         }
