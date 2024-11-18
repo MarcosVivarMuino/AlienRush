@@ -50,7 +50,7 @@ var MainGame = new Phaser.Class({
 
     create: function () {
         ///////////////////////////////////////////////////////////////INSTANCIACION////////////////////////////////////////////////////////////////////
-        Vacas = []; // Crea el grupo de monedas
+        Vacas = []; 
         PowerUps = [];
         Humanos = [];
         Vacas = [];
