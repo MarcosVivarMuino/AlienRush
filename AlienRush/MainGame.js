@@ -6,7 +6,9 @@ var MainGame = new Phaser.Class({
         Phaser.Scene.call(this, { "key": "MainGame" });
     },
 
-    init: function () { },
+    init: function (data) {
+        this.musicaMenu = data.musicaMenu; // Recibimos la música del menú
+    },
 
     preload: function () {
         // Pantalla de carga
@@ -46,11 +48,29 @@ var MainGame = new Phaser.Class({
         this.load.image('Humano', 'assets/AssetsMainGame/Personajes/Humano_PH.png');
         this.load.image('Vaca', 'assets/AssetsMainGame/Personajes/Vaca_PH.png');
         //Sonidos 
+        this.load.audio('musicaJuego', 'audio/musicaJuego.mp3');
+
     },
 
     create: function () {
+        //AUDIO
+        // Inicializar música del juego si no existe
+        if (!GlobalMusic.musicaJuego) {
+            GlobalMusic.musicaJuego = this.sound.add('musicaJuego', { loop: true });
+        }
+
+        // Reproducir música solo si está activada
+        if (GlobalMusic.musicaActiva && !GlobalMusic.musicaJuego.isPlaying) {
+            GlobalMusic.musicaJuego.play();
+        }
+
+        // Detener la música del menú
+        if (GlobalMusic.musicaMenu && GlobalMusic.musicaMenu.isPlaying) {
+            GlobalMusic.musicaMenu.stop();
+        }
+
         ///////////////////////////////////////////////////////////////INSTANCIACION////////////////////////////////////////////////////////////////////
-        Vacas = []; 
+        Vacas = [];
         PowerUps = [];
         Humanos = [];
         Vacas = [];
@@ -101,8 +121,8 @@ var MainGame = new Phaser.Class({
         this.textoTemporizador = this.add.text(720, 30, 'Tiempo: 5:00', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
 
         // Instanciacion temporizador
-        Score1 = this.add.text(10, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy'});
-        Score2 = this.add.text(1400, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy'});
+        Score1 = this.add.text(10, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
+        Score2 = this.add.text(1400, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
 
         //////////////////////////////////////////////////////////////////ANIMACIONES///////////////////////////////////////////////////////////////////////////
         // Mover los humanos aleatoriamente cada cierto tiempo
@@ -149,7 +169,7 @@ var MainGame = new Phaser.Class({
 
         // Menu de Pause
         this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-        this.paused = false;  // Estado de pausa
+        this.paused = false;
 
         ///////////////////////////////////////////////////////////////////////FUNCIONES////////////////////////////////////////////////////////////////////////////
         function moverHumanosAleatoriamente() {
@@ -197,26 +217,26 @@ var MainGame = new Phaser.Class({
         function actualizarTemporizador() {
             // Reducir el tiempo restante
             this.tiempoRestante--;
-    
+
             // Actualizar el texto del temporizador
             let minutos = Math.floor(this.tiempoRestante / 60);
             let segundos = this.tiempoRestante % 60;
             let textoSegundos = segundos < 10 ? '0' + segundos : segundos;
             this.textoTemporizador.setText(`Tiempo: ${minutos}:${textoSegundos}`);
-    
+
             // Si el tiempo se agota, termina la partida
             if (this.tiempoRestante <= 0) {
                 finDePartida();
             }
         }
-    
+
         function finDePartida() {
             // Detener el temporizador
             this.temporizadorEvento.remove();
-    
+
             // Mostrar un mensaje de fin de partida
             this.add.text(400, 300, '¡Se acabó el tiempo!', { fontSize: '32px', color: '#ff0000' }).setOrigin(0.5);
-    
+
             // Detener el movimiento del jugador y cualquier otra lógica de juego
             this.jugador.setVisible(false); // Por ejemplo, ocultar el jugador
             this.scene.pause(); // Pausar la escena
@@ -252,13 +272,11 @@ var MainGame = new Phaser.Class({
             player1.body.position.y += 10;
         }
 
-
-
         if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
             if (!this.paused) {
-                console.log("Pausando MainGame y lanzando PauseMenu...");
-                this.scene.launch('MenuPausa', { musica: this.musicaFondo });
-                this.scene.pause('MainGame');  // Pausa el juego actual
+                console.log("Pausando MainGame y lanzando MenuPausa...");
+                this.scene.launch('MenuPausa');
+                this.scene.pause();
                 this.paused = true;
             }
         }
@@ -335,7 +353,7 @@ var MainGame = new Phaser.Class({
             player2.fuerza = 5;
         }
 
-        function generarHumano(humano){
+        function generarHumano(humano) {
             let x = Phaser.Math.Between(0, 1750);
             let y = Phaser.Math.Between(0, 880);
 
@@ -343,7 +361,7 @@ var MainGame = new Phaser.Class({
             humano.y = y
         }
 
-        function generarVaca(vaca){
+        function generarVaca(vaca) {
             let x = Phaser.Math.Between(0, 1750);
             let y = Phaser.Math.Between(0, 880);
 
@@ -355,18 +373,18 @@ var MainGame = new Phaser.Class({
             // Verificar si el jugador está sobre un humano    
             Humanos.forEach((humano) => {
                 let distancia = Phaser.Math.Distance.Between(player.x, player.y, humano.x, humano.y);
-    
+
                 if (distancia < 75) { // Distancia de absorción
                     player.score += 10; // Puntos por absorber un humano
                     actuScore()
                     generarHumano(humano)
                 }
             });
-    
+
             // Verificar si el jugador está sobre una vaca
             Vacas.forEach((vaca) => {
                 let distancia = Phaser.Math.Distance.Between(player.x, player.y, vaca.x, vaca.y);
-    
+
                 if (distancia < 100) { // Distancia de absorción
                     player.score += 30; // Puntos por absorber una vaca
                     actuScore()
@@ -375,14 +393,14 @@ var MainGame = new Phaser.Class({
             });
         }
 
-        function actuScore(){
+        function actuScore() {
             Score1.setText(`Puntos: ${player1.score}`);
             Score2.setText(`Puntos: ${player2.score}`);
         }
     },
 
-    onResume: function() {
+    onResume: function () {
         console.log("Reanudando MainGame...");
-        this.paused = false; 
+        this.paused = false;
     }
 });

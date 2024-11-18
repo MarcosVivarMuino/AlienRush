@@ -7,8 +7,10 @@ var Ajustes = new Phaser.Class({
     },
 
     init: function (data) {
-        this.musica = data.musica;  // Recibimos la música desde el menú principal
+        this.musicaMenu = data.musica;
+        this.musicasAdicionales = data.musicas || []; // Lista de músicas adicionales
     },
+
 
     preload: function () {
         this.load.image('fondoAjustes', 'assets/Ajustes/fondoAjustes.png');
@@ -27,36 +29,51 @@ var Ajustes = new Phaser.Class({
         this.add.image(875, 440, 'fondoAjustes');
 
         /************************* VARIABLES *************************/
-        let botonSi = this.add.image(1300, 430, this.musica.isPlaying ? 'BotonAjustesSiPulsado' : 'BotonAjustesSiSinPulsar').setInteractive();
-        let botonNo = this.add.image(1450, 430, !this.musica.isPlaying ? 'BotonAjustesNoPulsado' : 'BotonAjustesNoSinPulsar').setInteractive();
+        let botonSi = this.add.image(1300, 430, GlobalMusic.musicaActiva ? 'BotonAjustesSiPulsado' : 'BotonAjustesSiSinPulsar').setInteractive();
+        let botonNo = this.add.image(1450, 430, !GlobalMusic.musicaActiva ? 'BotonAjustesNoPulsado' : 'BotonAjustesNoSinPulsar').setInteractive();
         let BotonVolver = this.add.image(1470, 750, 'BotonVolver');
 
         /************************* BOTONES *************************/
         //MUSICA
         // Lógica para el botón "Sí"
         botonSi.on('pointerdown', () => {
-            if (!this.musica.isPlaying) {
-                this.musica.resume(); // Reanudar la música
-                botonSi.setTexture('BotonAjustesSiPulsado'); // Cambiar la imagen a "Sí pulsado"
-                botonNo.setTexture('BotonAjustesNoSinPulsar'); // Cambiar la imagen a "No sin pulsar"
+            if (!GlobalMusic.musicaActiva) {
+                GlobalMusic.musicaActiva = true;
+                botonSi.setTexture('BotonAjustesSiPulsado');
+                botonNo.setTexture('BotonAjustesNoSinPulsar');
+    
+                // Reanudar música dependiendo de la escena actual
+                if (this.scene.isActive('MenuScene') && GlobalMusic.musicaMenu) {
+                    GlobalMusic.musicaMenu.play();
+                } else if (this.scene.isActive('MainGame') && GlobalMusic.musicaJuego) {
+                    GlobalMusic.musicaJuego.play();
+                }
             }
         });
 
         botonSi.on("pointerover", () => { botonSi.setScale(1.5); });
         botonSi.on("pointerout", () => { botonSi.setScale(1); });
 
-        // Lógica para el botón "No"
+        // Lógica para desactivar la música (Botón "No")
         botonNo.on('pointerdown', () => {
-            if (this.musica.isPlaying) {
-                this.musica.pause(); // Pausar la música
-                botonSi.setTexture('BotonAjustesSiSinPulsar'); // Cambiar la imagen a "Sí sin pulsar"
-                botonNo.setTexture('BotonAjustesNoPulsado'); // Cambiar la imagen a "No pulsado"
+            if (GlobalMusic.musicaActiva) {
+                GlobalMusic.musicaActiva = false;
+                botonSi.setTexture('BotonAjustesSiSinPulsar');
+                botonNo.setTexture('BotonAjustesNoPulsado');
+    
+                // Pausar ambas músicas
+                if (GlobalMusic.musicaMenu && GlobalMusic.musicaMenu.isPlaying) {
+                    GlobalMusic.musicaMenu.stop();
+                }
+                if (GlobalMusic.musicaJuego && GlobalMusic.musicaJuego.isPlaying) {
+                    GlobalMusic.musicaJuego.stop();
+                }
             }
         });
-    
+
         botonNo.on("pointerover", () => { botonNo.setScale(1.5); });
         botonNo.on("pointerout", () => { botonNo.setScale(1); });
-
+        
         //VOLVER
         BotonVolver.setInteractive();
         BotonVolver.on("pointerdown", () => {
