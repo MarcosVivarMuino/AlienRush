@@ -47,6 +47,8 @@ var MainGame = new Phaser.Class({
         this.load.image('Player2', 'assets/AssetsMainGame/Personajes/Player2.png');
         this.load.image('Humano', 'assets/AssetsMainGame/Personajes/Humano_PH.png');
         this.load.image('Vaca', 'assets/AssetsMainGame/Personajes/Vaca_PH.png');
+        this.load.image('Vida', 'assets/AssetsMainGame/Personajes/Corazon_PH.png');
+        this.load.image('Escombro', 'assets/AssetsMainGame/Personajes/Escombro_PH.png');
         //Sonidos 
         this.load.audio('musicaJuego', 'audio/musicaJuego.mp3');
 
@@ -74,6 +76,9 @@ var MainGame = new Phaser.Class({
         PowerUps = [];
         Humanos = [];
         Vacas = [];
+        corazones1 = []
+        corazones2 = []
+        Escombros = []
         paused = false;
 
         this.physics.world.bounds.width = 1750; // Limite al tamaño del mundo
@@ -84,26 +89,33 @@ var MainGame = new Phaser.Class({
 
         // Instanciacion Humanos
         for (let i = 0; i < 3; i++) {
-            let x = Phaser.Math.Between(0, 1750); // Coordenada x aleatoria
-            let y = Phaser.Math.Between(0, 880); // Coordenada y aleatoria
+            let x = Phaser.Math.Between(10, 1750); // Coordenada x aleatoria
+            let y = Phaser.Math.Between(20, 880); // Coordenada y aleatoria
             let humano = this.add.image(x, y, 'Humano');
             Humanos.push(humano);
         }
 
         // Instanciacion Vacas
         for (let i = 0; i < 2; i++) {
-            let x = Phaser.Math.Between(0, 1750); // Coordenada x aleatoria
-            let y = Phaser.Math.Between(0, 880); // Coordenada y aleatoria
+            let x = Phaser.Math.Between(10, 1750); // Coordenada x aleatoria
+            let y = Phaser.Math.Between(20, 880); // Coordenada y aleatoria
             let vaca = this.add.image(x, y, 'Vaca');
             Vacas.push(vaca);
         }
-        //Instanciacion decoracion
+        //Instanciacion Escombros
+        for (let i = 0; i < 3; i++) {
+            let x = Phaser.Math.Between(10, 1700); // Coordenada x aleatoria
+            let y = Phaser.Math.Between(20, 800); // Coordenada y aleatoria
+            let escombro = this.add.image(x, y, 'Escombro');
+            Escombros.push(escombro);
+        }
 
         // Instanciacion de los jugadores
         player1 = this.physics.add.sprite(800, 130, 'Player1').setScale(1.2);
         player1.tipoPU = -1;
         player1.score = 0;
         player1.alpha = 0.8
+        player1.vidas = 5
 
         player1.setBounce(1); // Limites del jugador
         player1.setCollideWorldBounds(true);
@@ -112,18 +124,30 @@ var MainGame = new Phaser.Class({
         player2.tipoPU = -1;
         player2.score = 0;
         player2.alpha = 0.8
+        player2.vidas = 5
 
         player2.setBounce(1); // Limites del jugador
         player2.setCollideWorldBounds(true);
 
-        // Instanciacion temporizador
-        //this.tiempoRestante = 300; // 5 minutos en segundos
-        this.tiempoRestante = 5; // 5 minutos en segundos
-        this.textoTemporizador = this.add.text(720, 30, 'Tiempo: 5:00', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
+        // Instanciacion vidas
+        for (let i = 0; i < player1.vidas; i++) {
+            let corazon = this.add.image(30 + i * 60, 140, 'Vida').setScale(0.5);
+            corazones1.push(corazon);
+        }
+
+        for (let i = 0; i < player2.vidas; i++) {
+            let corazon = this.add.image(1450 + i * 60, 140, 'Vida').setScale(0.5);
+            corazones2.push(corazon);
+        }
 
         // Instanciacion temporizador
+        this.tiempoRestante = 300; // 5 minutos en segundos
+        //this.tiempoRestante = 5; // 5 minutos en segundos
+        this.textoTemporizador = this.add.text(720, 30, 'Tiempo: 5:00', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
+
+        // Instanciacion Puntos
         Score1 = this.add.text(10, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
-        Score2 = this.add.text(1400, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
+        Score2 = this.add.text(1450, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
 
         //////////////////////////////////////////////////////////////////ANIMACIONES///////////////////////////////////////////////////////////////////////////
         // Mover los humanos aleatoriamente cada cierto tiempo
@@ -157,8 +181,8 @@ var MainGame = new Phaser.Class({
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A); // Izquierda
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D); // Derecha
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S); // Abajo
-        this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Power Up
-        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q); // Interactuar
+        this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Interactuar
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q); // Power Up
 
         // Controles Jugador 2
         this.keyI = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);  // Arriba
@@ -242,11 +266,11 @@ var MainGame = new Phaser.Class({
                 }
             }
         }
-
     },
 
     // Update
     update: function () {
+        var scene = this.scene
         ////////////////////////////////////////////////////////////CONTROLES////////////////////////////////////////////////////////////////////////////////////
         // Controles player 2
         if (this.keyJ.isDown) {  // Interacciones J-K-L-I (player2)
@@ -345,30 +369,29 @@ var MainGame = new Phaser.Class({
             player1.clearTint();
             player1.vel = 300;
         }
-        function esteroides() {
-            tirarPU.play();
-            player2.setTint(0x00FFFF);
-            player2.fuerza = 10;
-        }
-        function desinflado() {
-            player2.clearTint();
-            player2.fuerza = 5;
-        }
 
         function generarHumano(humano) {
-            let x = Phaser.Math.Between(0, 1750);
-            let y = Phaser.Math.Between(0, 880);
+            let x = Phaser.Math.Between(20, 1700);
+            let y = Phaser.Math.Between(30, 800);
 
             humano.x = x
             humano.y = y
         }
 
         function generarVaca(vaca) {
-            let x = Phaser.Math.Between(0, 1750);
-            let y = Phaser.Math.Between(0, 880);
+            let x = Phaser.Math.Between(20, 1700);
+            let y = Phaser.Math.Between(30, 800);
 
             vaca.x = x
             vaca.y = y
+        }
+
+        function generarEscombro(escombro) {
+            let x = Phaser.Math.Between(20, 1700);
+            let y = Phaser.Math.Between(30, 800);
+
+            escombro.x = x
+            escombro.y = y
         }
 
         function absorberObjeto(player) {
@@ -393,6 +416,39 @@ var MainGame = new Phaser.Class({
                     generarVaca(vaca)
                 }
             });
+            
+            //Verificar si el jugador esta sobre un escombro
+            Escombros.forEach((escombro) => {
+                let distancia = Phaser.Math.Distance.Between(player.x, player.y, escombro.x, escombro.y);
+    
+                if (distancia < 75) { // Distancia de colisión
+                    perderVida(player); // Restar una vida al jugador
+                    generarEscombro(escombro);
+                }
+            }); 
+        }
+
+        function perderVida(player) {
+            if (player.vidas > 0) {
+                player.vidas--;
+                if(player == player1){
+                    corazones1[player.vidas].destroy(); // Eliminar un corazón de la pantalla
+                }else{
+                    corazones2[player.vidas].destroy(); // Eliminar un corazón de la pantalla
+                }
+            }
+    
+            if (player.vidas <= 0) {
+                if (player == player1){
+                    scene.start("Victoria1", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                }else{
+                    scene.start("Victoria2", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                }
+            }
         }
 
         function actuScore() {
