@@ -45,8 +45,10 @@ var MainGame = new Phaser.Class({
         // Partida
         this.load.image('Player1', 'assets/AssetsMainGame/Personajes/Player1.png');
         this.load.image('Player2', 'assets/AssetsMainGame/Personajes/Player2.png');
-        this.load.image('Humano', 'assets/AssetsMainGame/Personajes/Humano_PH.png');
-        this.load.image('Vaca', 'assets/AssetsMainGame/Personajes/Vaca_PH.png');
+        this.load.image('Humano', 'assets/AssetsMainGame/Personajes/humanos.png');
+        this.load.image('Vaca', 'assets/AssetsMainGame/Personajes/vacas.png');
+        this.load.image('Vida', 'assets/AssetsMainGame/Personajes/Corazon_PH.png');
+        this.load.image('Escombro', 'assets/AssetsMainGame/Personajes/chatarra.png');
         //Sonidos 
         this.load.audio('musicaJuego', 'audio/musicaJuego.mp3');
 
@@ -393,6 +395,39 @@ var MainGame = new Phaser.Class({
                     generarVaca(vaca)
                 }
             });
+
+            //Verificar si el jugador esta sobre un escombro
+            Escombros.forEach((escombro) => {
+                let distancia = Phaser.Math.Distance.Between(player.x, player.y, escombro.x, escombro.y);
+    
+                if (distancia < 75) { // Distancia de colisión
+                    perderVida(player); // Restar una vida al jugador
+                    generarEscombro(escombro);
+                }
+            }); 
+        }
+
+        function perderVida(player) {
+            if (player.vidas > 0) {
+                player.vidas--;
+                if(player == player1){
+                    corazones1[player.vidas].destroy(); // Eliminar un corazón de la pantalla
+                }else{
+                    corazones2[player.vidas].destroy(); // Eliminar un corazón de la pantalla
+                }
+            }
+    
+            if (player.vidas <= 0) {
+                if (player == player1){
+                    scene.start("Victoria2", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                }else{
+                    scene.start("Victoria1", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                }
+            }
         }
 
         function actuScore() {

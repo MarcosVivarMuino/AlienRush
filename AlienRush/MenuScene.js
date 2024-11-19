@@ -48,7 +48,7 @@ var MenuScene = new Phaser.Class({
         play.on("pointerdown", () => {
             this.scene.start("MainGame");
         })
-        play.on("pointerover", () => { play.setScale(1.5); })
+        play.on("pointerover", () => { play.setScale(1.2); })
         play.on("pointerout", () => { play.setScale(1); })
 
         //AJUSTES
@@ -59,7 +59,7 @@ var MenuScene = new Phaser.Class({
                 musicas: [GlobalMusic.musicaMenu, GlobalMusic.musicaJuego]
             });
         })
-        ajustes.on("pointerover", () => { ajustes.setScale(1.5); })
+        ajustes.on("pointerover", () => { ajustes.setScale(1.2); })
         ajustes.on("pointerout", () => { ajustes.setScale(1); })
 
         //CREDITOS
@@ -67,7 +67,7 @@ var MenuScene = new Phaser.Class({
         creditos.on("pointerdown", () => {
             this.scene.start("Creditos");
         })
-        creditos.on("pointerover", () => { creditos.setScale(1.5); })
+        creditos.on("pointerover", () => { creditos.setScale(1.2); })
         creditos.on("pointerout", () => { creditos.setScale(1); })
     },
 

@@ -24,7 +24,7 @@ var Creditos = new Phaser.Class({
         BotonVolver.on("pointerdown", () => {
             this.scene.start("MenuScene", { musicaFondo: this.musica });
         })
-        BotonVolver.on("pointerover", () => { BotonVolver.setScale(1.5); })
+        BotonVolver.on("pointerover", () => { BotonVolver.setScale(1.2); })
         BotonVolver.on("pointerout", () => { BotonVolver.setScale(1); })
 
     },

@@ -41,7 +41,7 @@ var Victoria2 = new Phaser.Class({
             this.scene.stop('MainGame');
             this.scene.start('MenuScene');  // Volver al menú principal
         });
-        botonMenu.on("pointerover", () => { botonMenu.setScale(1.5); });
+        botonMenu.on("pointerover", () => { botonMenu.setScale(1.2); });
         botonMenu.on("pointerout", () => { botonMenu.setScale(1); });
 
     }
