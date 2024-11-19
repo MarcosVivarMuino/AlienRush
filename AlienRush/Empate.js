@@ -17,22 +17,17 @@ var Empate = new Phaser.Class({
 
     create: function () {
         /************************* FONDO *************************/
-        this.add.image(875, 440, 'fondoEmpate').setScale(0.5);
+        this.add.image(875, 440, 'fondoEmpate');
         
-        this.add.text(700, 440, `Jugador 1: ${this.player1Score} puntos`, {
-            fontSize: '30px',
-            color: '#000',
+        this.add.text(875, 300, `${this.player1Score}`, {
+            fontSize: '60px',
+            color: '#FFFFFF',
             fontFamily: 'Impact, fantasy'
         }).setOrigin(0.5);
 
-        this.add.text(700, 540, `Jugador 2: ${this.player2Score} puntos`, {
-            fontSize: '30px',
-            color: '#000',
-            fontFamily: 'Impact, fantasy'
-        }).setOrigin(0.5);
 
         /************************* VARIABLES *************************/
-        let botonMenu = this.add.image(875, 740, 'botonMenu')
+        let botonMenu = this.add.image(875, 540, 'botonMenu')
 
         /************************* BOTONES *************************/
         //MENU       

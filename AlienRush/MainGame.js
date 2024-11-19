@@ -118,7 +118,7 @@ var MainGame = new Phaser.Class({
 
         // Instanciacion temporizador
         //this.tiempoRestante = 300; // 5 minutos en segundos
-        this.tiempoRestante = 10; // 5 minutos en segundos
+        this.tiempoRestante = 5; // 5 minutos en segundos
         this.textoTemporizador = this.add.text(720, 30, 'Tiempo: 5:00', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
 
         // Instanciacion temporizador
