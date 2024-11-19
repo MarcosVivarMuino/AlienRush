@@ -43,7 +43,7 @@ var MenuPausa = new Phaser.Class({
             this.scene.get('MainGame').onResume();
             this.scene.stop('MenuPausa');
         });
-        botonReanudar.on("pointerover", () => { botonReanudar.setScale(1.5); });
+        botonReanudar.on("pointerover", () => { botonReanudar.setScale(1.2); });
         botonReanudar.on("pointerout", () => { botonReanudar.setScale(1); });
 
         //MENU       
@@ -53,7 +53,7 @@ var MenuPausa = new Phaser.Class({
             this.scene.stop('MainGame');
             this.scene.start('MenuScene');  // Volver al menú principal
         });
-        botonMenu.on("pointerover", () => { botonMenu.setScale(1.5); });
+        botonMenu.on("pointerover", () => { botonMenu.setScale(1.2); });
         botonMenu.on("pointerout", () => { botonMenu.setScale(1); });
 
         // Lógica para el botón "Sí"
@@ -73,7 +73,7 @@ var MenuPausa = new Phaser.Class({
             }
         });
 
-        botonSi.on("pointerover", () => { botonSi.setScale(1.5); });
+        botonSi.on("pointerover", () => { botonSi.setScale(1.2); });
         botonSi.on("pointerout", () => { botonSi.setScale(1); });
 
         // Lógica para desactivar la música (Botón "No")
@@ -93,7 +93,7 @@ var MenuPausa = new Phaser.Class({
             }
         });
 
-        botonNo.on("pointerover", () => { botonNo.setScale(1.5); });
+        botonNo.on("pointerover", () => { botonNo.setScale(1.2); });
         botonNo.on("pointerout", () => { botonNo.setScale(1); });
     }
 });

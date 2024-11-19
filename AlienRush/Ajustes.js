@@ -51,7 +51,7 @@ var Ajustes = new Phaser.Class({
             }
         });
 
-        botonSi.on("pointerover", () => { botonSi.setScale(1.5); });
+        botonSi.on("pointerover", () => { botonSi.setScale(1.2); });
         botonSi.on("pointerout", () => { botonSi.setScale(1); });
 
         // Lógica para desactivar la música (Botón "No")
@@ -71,7 +71,7 @@ var Ajustes = new Phaser.Class({
             }
         });
 
-        botonNo.on("pointerover", () => { botonNo.setScale(1.5); });
+        botonNo.on("pointerover", () => { botonNo.setScale(1.2); });
         botonNo.on("pointerout", () => { botonNo.setScale(1); });
         
         //VOLVER
@@ -79,7 +79,7 @@ var Ajustes = new Phaser.Class({
         BotonVolver.on("pointerdown", () => {
             this.scene.start("MenuScene", { musicaFondo: this.musica });
         })
-        BotonVolver.on("pointerover", () => { BotonVolver.setScale(1.5); })
+        BotonVolver.on("pointerover", () => { BotonVolver.setScale(1.2); })
         BotonVolver.on("pointerout", () => { BotonVolver.setScale(1); })
 
 
