@@ -117,7 +117,8 @@ var MainGame = new Phaser.Class({
         player2.setCollideWorldBounds(true);
 
         // Instanciacion temporizador
-        this.tiempoRestante = 300; // 5 minutos en segundos
+        //this.tiempoRestante = 300; // 5 minutos en segundos
+        this.tiempoRestante = 10; // 5 minutos en segundos
         this.textoTemporizador = this.add.text(720, 30, 'Tiempo: 5:00', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
 
         // Instanciacion temporizador
@@ -226,21 +227,22 @@ var MainGame = new Phaser.Class({
 
             // Si el tiempo se agota, termina la partida
             if (this.tiempoRestante <= 0) {
-                finDePartida();
+                if (player1.score > player2.score) {
+                    this.scene.start("Victoria1", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                } else if (player2.score > player1.score) {
+                    this.scene.start("Victoria2", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                } else {
+                    this.scene.start("Empate", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                }
             }
         }
 
-        function finDePartida() {
-            // Detener el temporizador
-            this.temporizadorEvento.remove();
-
-            // Mostrar un mensaje de fin de partida
-            this.add.text(400, 300, '¡Se acabó el tiempo!', { fontSize: '32px', color: '#ff0000' }).setOrigin(0.5);
-
-            // Detener el movimiento del jugador y cualquier otra lógica de juego
-            this.jugador.setVisible(false); // Por ejemplo, ocultar el jugador
-            this.scene.pause(); // Pausar la escena
-        }
     },
 
     // Update
