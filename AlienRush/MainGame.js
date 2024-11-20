@@ -41,14 +41,19 @@ var MainGame = new Phaser.Class({
 
         // Archivos
         this.load.image('fondo', 'assets/AssetsMainGame/Fondo_PlaceHolder.png');
-        // Terreno
+        // HUD
+        this.load.image('Vida1', 'assets/AssetsMainGame/HUD/Vida1.png');
+        this.load.image('Vida2', 'assets/AssetsMainGame/HUD/Vida2.png');
+        this.load.image('hud1', 'assets/AssetsMainGame/HUD/hud1.png');
+        this.load.image('hud2', 'assets/AssetsMainGame/HUD/hud2.png');
         // Partida
         this.load.image('Player1', 'assets/AssetsMainGame/Personajes/Player1.png');
         this.load.image('Player2', 'assets/AssetsMainGame/Personajes/Player2.png');
-        this.load.image('Humano', 'assets/AssetsMainGame/Personajes/humanos.png');
-        this.load.image('Vaca', 'assets/AssetsMainGame/Personajes/vacas.png');
-        this.load.image('Vida', 'assets/AssetsMainGame/Personajes/Corazon_PH.png');
-        this.load.image('Escombro', 'assets/AssetsMainGame/Personajes/chatarra.png');
+        this.load.image('Humano', 'assets/AssetsMainGame/Personajes/Humano_PH.png');
+        this.load.image('Vaca', 'assets/AssetsMainGame/Personajes/Vaca_PH.png');
+        this.load.image('Escombro', 'assets/AssetsMainGame/Personajes/Escombro_PH.png');
+        this.load.image('Militar', 'assets/AssetsMainGame/Personajes/Militar_PH.png');
+        this.load.image('PU_Human', 'assets/AssetsMainGame/Personajes/PowerUp_PH.png');
         //Sonidos 
         this.load.audio('musicaJuego', 'audio/musicaJuego.mp3');
 
@@ -110,6 +115,20 @@ var MainGame = new Phaser.Class({
             Escombros.push(escombro);
         }
 
+        //Instanciacion Militar
+        for (let i = 0; i < 1; i++) {
+            let x = Phaser.Math.Between(10, 1700); // Coordenada x aleatoria
+            let y = Phaser.Math.Between(20, 800); // Coordenada y aleatoria
+            Militar = this.add.image(x, y, 'Militar').setScale(0.5);
+        }
+
+        //Instanciacion Humano Militar
+        for (let i = 0; i < 1; i++) {
+            let x = Phaser.Math.Between(10, 1700); // Coordenada x aleatoria
+            let y = Phaser.Math.Between(20, 800); // Coordenada y aleatoria
+            PUHuman = this.add.image(x, y, 'PU_Human').setScale(1);
+        }
+
         // Instanciacion de los jugadores
         player1 = this.physics.add.sprite(800, 130, 'Player1').setScale(1.2);
         player1.tipoPU = -1;
@@ -130,13 +149,17 @@ var MainGame = new Phaser.Class({
         player2.setCollideWorldBounds(true);
 
         // Instanciacion vidas
+        this.add.image(150, 90, 'hud1').setScale(0.5);
+        this.add.text(80, 90, 'Jugador 1', { fontSize: '25px', color: '#ffffff'});
         for (let i = 0; i < player1.vidas; i++) {
-            let corazon = this.add.image(30 + i * 60, 140, 'Vida').setScale(0.5);
+            let corazon = this.add.image(120 + i * 40, 60 + i * -3, 'Vida1').setScale(0.5);
             corazones1.push(corazon);
         }
 
+        this.add.image(1600, 90, 'hud2').setScale(0.5);
+        this.add.text(1530, 90, 'Jugador 2', { fontSize: '25px', color: '#ffffff' });
         for (let i = 0; i < player2.vidas; i++) {
-            let corazon = this.add.image(1450 + i * 60, 140, 'Vida').setScale(0.5);
+            let corazon = this.add.image(1630 - i * 40, 60 + i * -3, 'Vida2').setScale(0.5);
             corazones2.push(corazon);
         }
 
@@ -146,8 +169,8 @@ var MainGame = new Phaser.Class({
         this.textoTemporizador = this.add.text(720, 30, 'Tiempo: 5:00', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
 
         // Instanciacion Puntos
-        Score1 = this.add.text(10, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
-        Score2 = this.add.text(1450, 30, 'Puntos: 0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
+        Score1 = this.add.text(50, 140, '0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
+        Score2 = this.add.text(1660, 140, '0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
 
         //////////////////////////////////////////////////////////////////ANIMACIONES///////////////////////////////////////////////////////////////////////////
         // Mover los humanos aleatoriamente cada cierto tiempo
@@ -162,6 +185,22 @@ var MainGame = new Phaser.Class({
         this.time.addEvent({
             delay: 1000, // Cambiar la dirección cada 1 segundo
             callback: moverVacasAleatoriamente,
+            callbackScope: this,
+            loop: true
+        });
+
+        // Mover el militar aleatoriamente cada cierto tiempo
+        this.time.addEvent({
+            delay: 1000, // Cambiar la dirección cada 1 segundo
+            callback: moverMilitarAleatoriamente,
+            callbackScope: this,
+            loop: true
+        });
+
+        // Mover el PUHuman aleatoriamente cada cierto tiempo
+        this.time.addEvent({
+            delay: 1000, // Cambiar la dirección cada 1 segundo
+            callback: moverPUHumanAleatoriamente,
             callbackScope: this,
             loop: true
         });
@@ -200,7 +239,7 @@ var MainGame = new Phaser.Class({
         function moverHumanosAleatoriamente() {
             // Mover cada humano en una dirección aleatoria
             Humanos.forEach((humano) => {
-                let nuevaX = humano.x + Phaser.Math.Between(-100, 100); // Cambiar aleatoriamente entre -50 y 50 píxeles
+                let nuevaX = humano.x + Phaser.Math.Between(-100, 100);
                 let nuevaY = humano.y + Phaser.Math.Between(-100, 100);
 
                 // Asegúrate de que los humanos no salgan de los límites de la pantalla
@@ -221,7 +260,7 @@ var MainGame = new Phaser.Class({
         function moverVacasAleatoriamente() {
             // Mover cada humano en una dirección aleatoria
             Vacas.forEach((vaca) => {
-                let nuevaX = vaca.x + Phaser.Math.Between(-150, 150); // Cambiar aleatoriamente entre -50 y 50 píxeles
+                let nuevaX = vaca.x + Phaser.Math.Between(-150, 150);
                 let nuevaY = vaca.y + Phaser.Math.Between(-150, 150);
 
                 // Asegúrate de que los humanos no salgan de los límites de la pantalla
@@ -236,6 +275,44 @@ var MainGame = new Phaser.Class({
                     duration: 500,
                     ease: 'Power1'
                 });
+            });
+        }
+
+        function moverMilitarAleatoriamente() {
+            // Mover cada humano en una dirección aleatoria
+                let nuevaX = Militar.x + Phaser.Math.Between(-80, 80);
+                let nuevaY = Militar.y + Phaser.Math.Between(-80, 80);
+
+                // Asegúrate de que los humanos no salgan de los límites de la pantalla
+                nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
+                nuevaY = Phaser.Math.Clamp(nuevaY, 80, 800);
+
+                // Usar un tween para animar el movimiento
+                this.tweens.add({
+                    targets: Militar,
+                    x: nuevaX,
+                    y: nuevaY,
+                    duration: 500,
+                    ease: 'Power1'
+            });
+        }
+
+        function moverPUHumanAleatoriamente() {
+            // Mover cada humano en una dirección aleatoria
+                let nuevaX = PUHuman.x + Phaser.Math.Between(-80, 80);
+                let nuevaY = PUHuman.y + Phaser.Math.Between(-80, 80);
+
+                // Asegúrate de que los humanos no salgan de los límites de la pantalla
+                nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
+                nuevaY = Phaser.Math.Clamp(nuevaY, 80, 800);
+
+                // Usar un tween para animar el movimiento
+                this.tweens.add({
+                    targets: PUHuman,
+                    x: nuevaX,
+                    y: nuevaY,
+                    duration: 500,
+                    ease: 'Power1'
             });
         }
 
@@ -308,17 +385,16 @@ var MainGame = new Phaser.Class({
         }
 
         ///////////////////////////////////////////////////////////////COMPROBACIONES///////////////////////////////////////////////////////////////////////////
-        // Detectar si se presiona el espacio y está sobre un humano // Player 1
+        // Detectar si se presiona el espacio // Player 1
         if (Phaser.Input.Keyboard.JustDown(this.keySPC)) {
             absorberObjeto(player1);
         }
 
-        // Detectar si se presiona el espacio y está sobre un humano // Player 2
+        // Detectar si se presiona el ENTER // Player 2
         if (Phaser.Input.Keyboard.JustDown(this.keyENTER)) {
             absorberObjeto(player2);
         }
-
-        // Comprueba si el jugador rompe el muro y lo actualiza en consecuencia
+        
         /////////////////////////////////////////////////////////////////ANIMACIONES////////////////////////////////////////////////////////////////////////////
 
         ////////////////////////////////////////////////////////////////////FUNCIONES//////////////////////////////////////////////////////////////////////////
@@ -394,6 +470,14 @@ var MainGame = new Phaser.Class({
             escombro.y = y
         }
 
+        function generarHumanoEspecial() {
+            let x = Phaser.Math.Between(20, 1700);
+            let y = Phaser.Math.Between(30, 800);
+            
+            PUHuman.x = x
+            PUHuman.y = y
+        }
+
         function absorberObjeto(player) {
             // Verificar si el jugador está sobre un humano    
             Humanos.forEach((humano) => {
@@ -425,7 +509,37 @@ var MainGame = new Phaser.Class({
                     perderVida(player); // Restar una vida al jugador
                     generarEscombro(escombro);
                 }
-            }); 
+            });
+            
+            //Verificar si el jugador esta sobre un militar
+            let distanciaMilitar = Phaser.Math.Distance.Between(player.x, player.y, Militar.x, Militar.y);
+            
+            if (distanciaMilitar < 50) { // Distancia de colisión
+                if (player == player1){
+                    scene.start("Victoria2", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                }else{
+                    scene.start("Victoria1", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                }
+            }
+
+            //Verificar si el jugador esta sobre un militar
+            let distanciaPUHuman = Phaser.Math.Distance.Between(player.x, player.y, PUHuman.x, PUHuman.y);
+            
+            if (distanciaPUHuman < 75) { // Distancia de colisión
+                if (player == player1){
+                    scene.start("Victoria2", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                }else{
+                    scene.start("Victoria1", {
+                        player1Score: player1.score, 
+                        player2Score: player2.score});
+                }
+            }
         }
 
         function perderVida(player) {
@@ -452,8 +566,8 @@ var MainGame = new Phaser.Class({
         }
 
         function actuScore() {
-            Score1.setText(`Puntos: ${player1.score}`);
-            Score2.setText(`Puntos: ${player2.score}`);
+            Score1.setText(` ${player1.score}`);
+            Score2.setText(` ${player2.score}`);
         }
     },
 
