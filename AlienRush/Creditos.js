@@ -8,6 +8,7 @@ var Creditos = new Phaser.Class({
 
     preload: function () {
         this.load.image('fondoCreditos', 'assets/Creditos/fondoCreditos.png');
+        this.load.image('BotonVolver', 'assets/Creditos/BotonVolver.png');
 
     },
 

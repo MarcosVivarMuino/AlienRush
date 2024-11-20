@@ -9,6 +9,7 @@
     <!-- ARCHIVOS JS -->
     <script src="phaser.js"></script>
     <script src="MenuScene.js"></script>
+    <script src="ElegirEscenario.js"></script>
     <script src="Creditos.js"></script>
     <script src="Ajustes.js"></script>
     <script src="MainGame.js"></script>
@@ -231,7 +232,7 @@
             height: 880,
             autoCenter: Phaser.Scale.CENTER_BOTH,
             mode: Phaser.Scale.FIT,
-            scene: [MenuScene, MainGame, Creditos, Ajustes, MenuPausa, Victoria1, Victoria2, Empate],
+            scene: [MenuScene, ElegirEscenario, MainGame, Creditos, Ajustes, MenuPausa, Victoria1, Victoria2, Empate],
             physics: {
                 default: 'arcade',
                 arcade: {

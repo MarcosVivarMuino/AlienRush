@@ -13,7 +13,7 @@ var MenuPausa = new Phaser.Class({
 
     preload: function () {
         this.load.image('botonReanudar', 'assets/MenuPausa/BotonReanudar.png');
-        this.load.image('botonMenu', 'assets/MenuPausa/BotonMenu.png');
+        this.load.image('botonMenu', 'assets/MenuPausa/BotonVMP.png');
         this.load.image('fondoPausa', 'assets/MenuPausa/fondoPausa.png');
         
         this.load.image('BotonPausaSiPulsado', 'assets/MenuPausa/BotonPausaSiPulsado.png');
@@ -25,14 +25,14 @@ var MenuPausa = new Phaser.Class({
 
     create: function () {
         /************************* FONDO *************************/
-        this.add.image(875, 440, 'fondoPausa').setScale(3, 3.5);
+        this.add.image(875, 440, 'fondoPausa');
       
 
         /************************* VARIABLES *************************/
-        let botonReanudar = this.add.image(875, 320, 'botonReanudar')
-        let botonMenu = this.add.image(875, 440, 'botonMenu')
-        let botonSi = this.add.image(800, 580, GlobalMusic.musicaActiva ? 'BotonPausaSiPulsado' : 'BotonPausaSiSinPulsar').setInteractive();
-        let botonNo = this.add.image(950, 580, !GlobalMusic.musicaActiva ? 'BotonPausaNoPulsado' : 'BotonPausaNoSinPulsar').setInteractive();
+        let botonReanudar = this.add.image(853, 440, 'botonReanudar')
+        let botonMenu = this.add.image(853, 580, 'botonMenu')
+        let botonSi = this.add.image(780, 780, GlobalMusic.musicaActiva ? 'BotonPausaSiPulsado' : 'BotonPausaSiSinPulsar').setInteractive();
+        let botonNo = this.add.image(923, 780, !GlobalMusic.musicaActiva ? 'BotonPausaNoPulsado' : 'BotonPausaNoSinPulsar').setInteractive();
 
         /************************* BOTONES *************************/
         //REANUDAR

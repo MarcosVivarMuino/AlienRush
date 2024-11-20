@@ -46,7 +46,7 @@ var MenuScene = new Phaser.Class({
         //JUGAR
         play.setInteractive();
         play.on("pointerdown", () => {
-            this.scene.start("MainGame");
+            this.scene.start("ElegirEscenario");
         })
         play.on("pointerover", () => { play.setScale(1.2); })
         play.on("pointerout", () => { play.setScale(1); })
