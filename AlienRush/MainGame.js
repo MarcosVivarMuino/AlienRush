@@ -46,6 +46,11 @@ var MainGame = new Phaser.Class({
         this.load.image('Vida2', 'assets/AssetsMainGame/HUD/Vida2.png');
         this.load.image('hud1', 'assets/AssetsMainGame/HUD/hud1.png');
         this.load.image('hud2', 'assets/AssetsMainGame/HUD/hud2.png');
+        this.load.image('ACPU', 'assets/AssetsMainGame/Potenciadores/AumentoCapacidadPU.png');
+        this.load.image('BPU', 'assets/AssetsMainGame/Potenciadores/BloqueadorPU.png');
+        this.load.image('MRPU', 'assets/AssetsMainGame/Potenciadores/MovimientoRapidoPU.png');
+        this.load.image('MPPU', 'assets/AssetsMainGame/Potenciadores/MultiplicadorPuntosPU.png');
+        this.load.image('RPU', 'assets/AssetsMainGame/Potenciadores/RalentizadorPU.png');
         // Partida
         this.load.image('Player1', 'assets/AssetsMainGame/Personajes/Player1.png');
         this.load.image('Player2', 'assets/AssetsMainGame/Personajes/Player2.png');
@@ -84,6 +89,8 @@ var MainGame = new Phaser.Class({
         corazones1 = []
         corazones2 = []
         Escombros = []
+        Militares = []
+        PUHumanos = []
         paused = false;
 
         this.physics.world.bounds.width = 1750; // Limite al tamaño del mundo
@@ -93,57 +100,65 @@ var MainGame = new Phaser.Class({
         this.add.image(875, 440, 'fondo').setScale(1); // Creacion del fondo
 
         // Instanciacion Humanos
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 25; i++) {
             let x = Phaser.Math.Between(10, 1750); // Coordenada x aleatoria
             let y = Phaser.Math.Between(20, 880); // Coordenada y aleatoria
-            let humano = this.add.image(x, y, 'Humano');
+            let humano = this.add.image(x, y, 'Humano').setScale(0.2);
             Humanos.push(humano);
         }
 
         // Instanciacion Vacas
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 8; i++) {
             let x = Phaser.Math.Between(10, 1750); // Coordenada x aleatoria
             let y = Phaser.Math.Between(20, 880); // Coordenada y aleatoria
-            let vaca = this.add.image(x, y, 'Vaca');
+            let vaca = this.add.image(x, y, 'Vaca').setScale(0.3);
             Vacas.push(vaca);
         }
         //Instanciacion Escombros
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 15; i++) {
             let x = Phaser.Math.Between(10, 1700); // Coordenada x aleatoria
             let y = Phaser.Math.Between(20, 800); // Coordenada y aleatoria
-            let escombro = this.add.image(x, y, 'Escombro');
+            let escombro = this.add.image(x, y, 'Escombro').setScale(0.3);
             Escombros.push(escombro);
         }
 
         //Instanciacion Militar
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 2; i++) {
             let x = Phaser.Math.Between(10, 1700); // Coordenada x aleatoria
             let y = Phaser.Math.Between(20, 800); // Coordenada y aleatoria
-            Militar = this.add.image(x, y, 'Militar').setScale(0.5);
+            let militar = this.add.image(x, y, 'Militar').setScale(0.1);
+            Militares.push(militar);
         }
 
         //Instanciacion Humano Militar
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 2; i++) {
             let x = Phaser.Math.Between(10, 1700); // Coordenada x aleatoria
             let y = Phaser.Math.Between(20, 800); // Coordenada y aleatoria
-            PUHuman = this.add.image(x, y, 'PU_Human').setScale(1);
+            let PUHuman = this.add.image(x, y, 'PU_Human').setScale(0.3);
+            PUHumanos.push(PUHuman);
         }
 
         // Instanciacion de los jugadores
-        player1 = this.physics.add.sprite(800, 130, 'Player1').setScale(1.2);
-        player1.tipoPU = -1;
+        player1 = this.physics.add.sprite(800, 130, 'Player1').setScale(0.9);
+        player1.tipoPU = '';
         player1.score = 0;
-        player1.alpha = 0.8
-        player1.vidas = 5
+        player1.alpha = 0.8;
+        player1.vidas = 5;
+        player1.speed = 10;
+        player1.size = 0.9
+        player1.multiplicador = 1
 
         player1.setBounce(1); // Limites del jugador
         player1.setCollideWorldBounds(true);
 
-        player2 = this.physics.add.sprite(400, 720, 'Player2').setScale(1.2);
-        player2.tipoPU = -1;
+        player2 = this.physics.add.sprite(400, 720, 'Player2').setScale(0.9);
+        player2.tipoPU = '';
         player2.score = 0;
-        player2.alpha = 0.8
-        player2.vidas = 5
+        player2.alpha = 0.8;
+        player2.vidas = 5;
+        player2.speed = 10;
+        player2.size = 0.9
+        player2.multiplicador = 1
 
         player2.setBounce(1); // Limites del jugador
         player2.setCollideWorldBounds(true);
@@ -162,6 +177,13 @@ var MainGame = new Phaser.Class({
             let corazon = this.add.image(1630 - i * 40, 60 + i * -3, 'Vida2').setScale(0.5);
             corazones2.push(corazon);
         }
+
+        //Instanciacion Power Up
+        PowerUp1 = this.add.image(1400, 90, 'ACPU').setScale(0.06);
+        PowerUp2 = this.add.image(350, 90, 'ACPU').setScale(0.06);
+
+        PowerUp1.alpha = 0
+        PowerUp2.alpha = 0
 
         // Instanciacion temporizador
         this.tiempoRestante = 300; // 5 minutos en segundos
@@ -279,9 +301,9 @@ var MainGame = new Phaser.Class({
         }
 
         function moverMilitarAleatoriamente() {
-            // Mover cada humano en una dirección aleatoria
-                let nuevaX = Militar.x + Phaser.Math.Between(-80, 80);
-                let nuevaY = Militar.y + Phaser.Math.Between(-80, 80);
+            Militares.forEach((militar) => {
+                let nuevaX = militar.x + Phaser.Math.Between(-80, 80);
+                let nuevaY = militar.y + Phaser.Math.Between(-80, 80);
 
                 // Asegúrate de que los humanos no salgan de los límites de la pantalla
                 nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
@@ -289,18 +311,19 @@ var MainGame = new Phaser.Class({
 
                 // Usar un tween para animar el movimiento
                 this.tweens.add({
-                    targets: Militar,
+                    targets: militar,
                     x: nuevaX,
                     y: nuevaY,
                     duration: 500,
                     ease: 'Power1'
+                });
             });
         }
 
         function moverPUHumanAleatoriamente() {
-            // Mover cada humano en una dirección aleatoria
-                let nuevaX = PUHuman.x + Phaser.Math.Between(-80, 80);
-                let nuevaY = PUHuman.y + Phaser.Math.Between(-80, 80);
+            PUHumanos.forEach((PUHuman) => {
+                let nuevaX = PUHuman.x + Phaser.Math.Between(-100, 100);
+                let nuevaY = PUHuman.y + Phaser.Math.Between(-100, 100);
 
                 // Asegúrate de que los humanos no salgan de los límites de la pantalla
                 nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
@@ -313,6 +336,7 @@ var MainGame = new Phaser.Class({
                     y: nuevaY,
                     duration: 500,
                     ease: 'Power1'
+                });
             });
         }
 
@@ -351,28 +375,28 @@ var MainGame = new Phaser.Class({
         ////////////////////////////////////////////////////////////CONTROLES////////////////////////////////////////////////////////////////////////////////////
         // Controles player 2
         if (this.keyJ.isDown) {  // Interacciones J-K-L-I (player2)
-            player2.body.position.x -= 10;
+            player2.body.position.x -= player2.speed;
         }
         else if (this.keyL.isDown) {
-            player2.body.position.x += 10;
+            player2.body.position.x += player2.speed;
         }
         else if (this.keyI.isDown) {
-            player2.body.position.y -= 10;
+            player2.body.position.y -= player2.speed;
         } else if (this.keyK.isDown) {
-            player2.body.position.y += 10;
+            player2.body.position.y += player2.speed;
         }
 
         // Controles player 1
         if (this.keyA.isDown) {  // Interacciones W-A-S-D (player2)
-            player1.body.position.x -= 10;
+            player1.body.position.x -= player1.speed;
         }
         else if (this.keyD.isDown) {
-            player1.body.position.x += 10;
+            player1.body.position.x += player1.speed;
         }
         else if (this.keyW.isDown) {
-            player1.body.position.y -= 10;
+            player1.body.position.y -= player1.speed;
         } else if (this.keyS.isDown) {
-            player1.body.position.y += 10;
+            player1.body.position.y += player1.speed;
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
@@ -396,55 +420,8 @@ var MainGame = new Phaser.Class({
         }
         
         /////////////////////////////////////////////////////////////////ANIMACIONES////////////////////////////////////////////////////////////////////////////
-
+        setSize()
         ////////////////////////////////////////////////////////////////////FUNCIONES//////////////////////////////////////////////////////////////////////////
-        function congelado() {
-            tirarPU.play();
-            if (this.keyE.isDown) {
-                player1.setTint(0x0000ff); // pinta al jugador de azul
-                player1.vel = 150;
-            } else if (this.keyO.isDown) {
-                player2.setTint(0x0000ff); // pinta al jugador de azul
-                player2.vel = 150;
-            }
-        }
-        function descongelado() {
-            if (player1.vel == 150) {
-                player1.clearTint(); // pinta al jugador de rojo
-                player1.vel = 250;
-            } else if (player2.vel == 150) {
-                player2.clearTint(); // pinta al jugador de rojo
-                player2.vel = 300;
-            }
-        }
-        function paralizado() {
-            tirarPU.play();
-            if (this.keyE.isDown) {
-                player1.setTint(0xffff00); // pinta al jugador de rojo
-                player1.vel = 0;
-            } else if (this.keyO.isDown) {
-                player2.setTint(0xffff00); // pinta al jugador de rojo
-                player2.vel = 0;
-            }
-        }
-        function desparalizado() {
-            if (player1.vel == 0) {
-                player1.clearTint(); // pinta al jugador de rojo
-                player1.vel = 250;
-            } else if (player2.vel == 0) {
-                player2.clearTint(); // pinta al jugador de rojo
-                player2.vel = 300;
-            }
-        }
-        function correr() {
-            tirarPU.play();
-            player1.setTint(0x00FFFF);
-            player1.vel = 400;
-        }
-        function parar() {
-            player1.clearTint();
-            player1.vel = 300;
-        }
 
         function generarHumano(humano) {
             let x = Phaser.Math.Between(20, 1700);
@@ -470,7 +447,7 @@ var MainGame = new Phaser.Class({
             escombro.y = y
         }
 
-        function generarHumanoEspecial() {
+        function generarHumanoEspecial(PUHuman) {
             let x = Phaser.Math.Between(20, 1700);
             let y = Phaser.Math.Between(30, 800);
             
@@ -484,7 +461,7 @@ var MainGame = new Phaser.Class({
                 let distancia = Phaser.Math.Distance.Between(player.x, player.y, humano.x, humano.y);
 
                 if (distancia < 75) { // Distancia de absorción
-                    player.score += 10; // Puntos por absorber un humano
+                    player.score += 10*player.multiplicador; // Puntos por absorber un humano
                     actuScore()
                     generarHumano(humano)
                 }
@@ -495,7 +472,7 @@ var MainGame = new Phaser.Class({
                 let distancia = Phaser.Math.Distance.Between(player.x, player.y, vaca.x, vaca.y);
 
                 if (distancia < 100) { // Distancia de absorción
-                    player.score += 30; // Puntos por absorber una vaca
+                    player.score += 30*player.multiplicador; // Puntos por absorber una vaca
                     actuScore()
                     generarVaca(vaca)
                 }
@@ -510,36 +487,33 @@ var MainGame = new Phaser.Class({
                     generarEscombro(escombro);
                 }
             });
-            
-            //Verificar si el jugador esta sobre un militar
-            let distanciaMilitar = Phaser.Math.Distance.Between(player.x, player.y, Militar.x, Militar.y);
-            
-            if (distanciaMilitar < 50) { // Distancia de colisión
-                if (player == player1){
-                    scene.start("Victoria2", {
-                        player1Score: player1.score, 
-                        player2Score: player2.score});
-                }else{
-                    scene.start("Victoria1", {
-                        player1Score: player1.score, 
-                        player2Score: player2.score});
-                }
-            }
 
             //Verificar si el jugador esta sobre un militar
-            let distanciaPUHuman = Phaser.Math.Distance.Between(player.x, player.y, PUHuman.x, PUHuman.y);
-            
-            if (distanciaPUHuman < 75) { // Distancia de colisión
-                if (player == player1){
-                    scene.start("Victoria2", {
-                        player1Score: player1.score, 
-                        player2Score: player2.score});
-                }else{
-                    scene.start("Victoria1", {
-                        player1Score: player1.score, 
-                        player2Score: player2.score});
+            Militares.forEach((militar) => {
+                let distancia = Phaser.Math.Distance.Between(player.x, player.y, militar.x, militar.y);
+    
+                if (distancia < 50) { // Distancia de colisión
+                    if (player == player1){
+                        scene.start("Victoria2", {
+                            player1Score: player1.score, 
+                            player2Score: player2.score});
+                    }else{
+                        scene.start("Victoria1", {
+                            player1Score: player1.score, 
+                            player2Score: player2.score});
+                    }
                 }
-            }
+            });
+            
+            //Verificar si el jugador esta sobre un PUHuman
+            PUHumanos.forEach((PUHuman) => {
+                let distancia = Phaser.Math.Distance.Between(player.x, player.y, PUHuman.x, PUHuman.y);
+    
+                if (distancia < 75) { // Distancia de colisión
+                    darPowerUp(player)
+                    generarHumanoEspecial(PUHuman)
+                }
+            });
         }
 
         function perderVida(player) {
@@ -563,6 +537,120 @@ var MainGame = new Phaser.Class({
                         player2Score: player2.score});
                 }
             }
+        }
+
+        function darPowerUp(player){
+            const powerUps = [
+                'AumentoCapacidadPU',
+                'BloqueadorPU',
+                'MovimientoRapido',
+                'MultiplicadorPuntos',
+                'Ralentizador'
+            ];
+
+            player.tipoPU = Phaser.Math.RND.pick(powerUps);
+    
+            switch (player.tipoPU) {
+                case 'AumentoCapacidadPU':
+                    if(player == player1){
+                        PowerUp1.setTexture('ACPU');
+                        PowerUP1.alpha = 1;
+                    }else{
+                        PowerUp2.setTexture('ACPU');
+                        PowerUP2.alpha = 1;
+                    }
+                break;
+                case 'BloqueadorPU':
+                    if(player == player1){
+                        PowerUp1.setTexture('BPU');
+                        PowerUP1.alpha = 1;
+                    }else{
+                        PowerUp2.setTexture('BPU');
+                        PowerUP2.alpha = 1;
+                    }
+                    break;
+                case 'MovimientoRapido':
+                    if(player == player1){
+                        PowerUp1.setTexture('MRPU');
+                        PowerUP1.alpha = 1;
+                    }else{
+                        PowerUp2.setTexture('MRPU');
+                        PowerUP2.alpha = 1;
+                    }
+                    break;
+                case 'MultiplicadorPuntos':
+                    if(player == player1){
+                        PowerUp1.setTexture('MPPU');
+                        PowerUP1.alpha = 1;
+                    }else{
+                        PowerUp2.setTexture('MPPU');
+                        PowerUP2.alpha = 1;
+                    }
+                    break;
+                    case 'Ralentizador':
+                        if(player == player1){
+                            PowerUp1.setTexture('RPU');
+                            PowerUP1.alpha = 1;
+                        }else{
+                            PowerUp2.setTexture('RPU');
+                            PowerUP2.alpha = 1;
+                        }
+                    break;
+            }
+        }
+
+        function usarPU(player){
+            switch (player.tipoPU) {
+                case 'AumentoCapacidadPU':
+                    player.size = 1.5;
+                    this.time.delayedCall(5000, () => {
+                        player.size = 1.2;
+                    });
+                    break;
+                case 'BloqueadorPU':
+                    if(player == player1){
+                        player2.speed = 0
+                        this.time.delayedCall(5000, () => {
+                            player2.speed = 10;
+                        });
+                    }else{
+                        player1.speed = 0
+                        this.time.delayedCall(5000, () => {
+                            player1.speed = 10;
+                        });
+                    }
+                    break;
+                case 'MovimientoRapido':
+                    player.speed = 15;
+                    this.time.delayedCall(5000, () => {
+                        player.speed = 10;
+                    });
+                    break;
+                case 'MultiplicadorPuntos':
+                    player.multiplicador = 1.5;
+                    this.time.delayedCall(5000, () => {
+                        player.multiplicador = 1;
+                    });
+                    break;
+                    case 'Ralentizador':
+                    if(player == player1){
+                        player2.speed = 5
+                        this.time.delayedCall(5000, () => {
+                            player2.speed = 10;
+                        });
+                    }else{
+                        player1.speed = 5
+                        this.time.delayedCall(5000, () => {
+                            player1.speed = 10;
+                        });
+                    }
+                    break;
+            }
+        }
+
+        function setSize(){
+            player1.setScale(player1.size)
+            player2.setScale(player2.size)
         }
 
         function actuScore() {
