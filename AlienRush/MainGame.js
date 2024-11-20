@@ -13,7 +13,6 @@ var MainGame = new Phaser.Class({
     preload: function () {
         // Pantalla de carga
         this.add.image(900, 500, 'fondoCarga');
-
         var percentText = this.make.text({
             x: 1720,
             y: 960,

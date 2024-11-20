@@ -13,6 +13,8 @@ var MenuScene = new Phaser.Class({
         this.load.image('creditos', 'assets/Menu/BotonCreditos.png');
 
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
+        
+        this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
     },
 
     create: function () {
