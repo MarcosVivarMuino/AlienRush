@@ -178,8 +178,8 @@ var MainGame = new Phaser.Class({
         }
 
         //Instanciacion Power Up
-        PowerUp1 = this.add.image(1400, 90, 'ACPU').setScale(0.06);
-        PowerUp2 = this.add.image(350, 90, 'ACPU').setScale(0.06);
+        PowerUp1 = this.add.image(350, 90, 'ACPU').setScale(0.06);
+        PowerUp2 = this.add.image(1400, 90, 'ACPU').setScale(0.06);
 
         PowerUp1.alpha = 0
         PowerUp2.alpha = 0
@@ -242,7 +242,7 @@ var MainGame = new Phaser.Class({
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D); // Derecha
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S); // Abajo
         this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Interactuar
-        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q); // Power Up
+        this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E); // Power Up
 
         // Controles Jugador 2
         this.keyI = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);  // Arriba
@@ -417,6 +417,16 @@ var MainGame = new Phaser.Class({
         if (Phaser.Input.Keyboard.JustDown(this.keyENTER)) {
             absorberObjeto(player2);
         }
+
+        // Detectar si se presiona la E // Player 1
+        if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
+            usarPU(player1, this)
+        }
+
+        // Detectar si se presiona la E // Player 1
+        if (Phaser.Input.Keyboard.JustDown(this.keyO)) {
+            usarPU(player2, this)
+        }
         
         /////////////////////////////////////////////////////////////////ANIMACIONES////////////////////////////////////////////////////////////////////////////
         setSize()
@@ -553,93 +563,117 @@ var MainGame = new Phaser.Class({
                 case 'AumentoCapacidadPU':
                     if(player == player1){
                         PowerUp1.setTexture('ACPU');
-                        PowerUP1.alpha = 1;
+                        PowerUp1.alpha = 1;
                     }else{
                         PowerUp2.setTexture('ACPU');
-                        PowerUP2.alpha = 1;
+                        PowerUp2.alpha = 1;
                     }
                 break;
                 case 'BloqueadorPU':
                     if(player == player1){
                         PowerUp1.setTexture('BPU');
-                        PowerUP1.alpha = 1;
+                        PowerUp1.alpha = 1;
                     }else{
                         PowerUp2.setTexture('BPU');
-                        PowerUP2.alpha = 1;
+                        PowerUp2.alpha = 1;
                     }
                     break;
                 case 'MovimientoRapido':
                     if(player == player1){
                         PowerUp1.setTexture('MRPU');
-                        PowerUP1.alpha = 1;
+                        PowerUp1.alpha = 1;
                     }else{
                         PowerUp2.setTexture('MRPU');
-                        PowerUP2.alpha = 1;
+                        PowerUp2.alpha = 1;
                     }
                     break;
                 case 'MultiplicadorPuntos':
                     if(player == player1){
                         PowerUp1.setTexture('MPPU');
-                        PowerUP1.alpha = 1;
+                        PowerUp1.alpha = 1;
                     }else{
                         PowerUp2.setTexture('MPPU');
-                        PowerUP2.alpha = 1;
+                        PowerUp2.alpha = 1;
                     }
                     break;
                     case 'Ralentizador':
                         if(player == player1){
                             PowerUp1.setTexture('RPU');
-                            PowerUP1.alpha = 1;
+                            PowerUp1.alpha = 1;
                         }else{
                             PowerUp2.setTexture('RPU');
-                            PowerUP2.alpha = 1;
+                            PowerUp2.alpha = 1;
                         }
                     break;
             }
         }
 
-        function usarPU(player){
+        function usarPU(player, escena){
             switch (player.tipoPU) {
                 case 'AumentoCapacidadPU':
-                    player.size = 1.5;
-                    this.time.delayedCall(5000, () => {
-                        player.size = 1.2;
+                    player.tipoPU = ' '
+                    if(player==player1){
+                        PowerUp1.alpha = 0
+                    }else{
+                        PowerUp2.alpha = 0
+                    }
+                    player.size = 1.1;
+                    escena.time.delayedCall(5000, () => {
+                        player.size = 0.9;
                     });
                     break;
                 case 'BloqueadorPU':
+                    player.tipoPU = ''
                     if(player == player1){
+                        PowerUp1.alpha = 0
                         player2.speed = 0
-                        this.time.delayedCall(5000, () => {
+                        escena.time.delayedCall(5000, () => {
                             player2.speed = 10;
                         });
                     }else{
+                        PowerUp2.alpha = 0
                         player1.speed = 0
-                        this.time.delayedCall(5000, () => {
+                        escena.time.delayedCall(5000, () => {
                             player1.speed = 10;
                         });
                     }
                     break;
                 case 'MovimientoRapido':
+                    player.tipoPU = ''
+                    if(player==player1){
+                        PowerUp1.alpha = 0
+                    }else{
+                        PowerUp2.alpha = 0
+                    }
                     player.speed = 15;
-                    this.time.delayedCall(5000, () => {
+                    escena.time.delayedCall(5000, () => {
                         player.speed = 10;
                     });
                     break;
                 case 'MultiplicadorPuntos':
+                    player.tipoPU = ''
+                    if(player==player1){
+                        PowerUp1.alpha = 0
+                    }else{
+                        PowerUp2.alpha = 0
+                    }
                     player.multiplicador = 1.5;
-                    this.time.delayedCall(5000, () => {
+                    escena.time.delayedCall(5000, () => {
                         player.multiplicador = 1;
                     });
                     break;
                     case 'Ralentizador':
+                        player.tipoPU = ''
                     if(player == player1){
+                        PowerUp1.alpha = 0
                         player2.speed = 5
-                        this.time.delayedCall(5000, () => {
+                        escena.time.delayedCall(5000, () => {
                             player2.speed = 10;
                         });
                     }else{
+                        PowerUp2.alpha = 0
                         player1.speed = 5
-                        this.time.delayedCall(5000, () => {
+                        escena.time.delayedCall(5000, () => {
                             player1.speed = 10;
                         });
                     }
