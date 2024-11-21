@@ -146,6 +146,7 @@ var MainGame = new Phaser.Class({
         player1.speed = 10;
         player1.size = 0.9
         player1.multiplicador = 1
+        player1.canPU = true
 
         player1.setBounce(1); // Limites del jugador
         player1.setCollideWorldBounds(true);
@@ -158,6 +159,7 @@ var MainGame = new Phaser.Class({
         player2.speed = 10;
         player2.size = 0.9
         player2.multiplicador = 1
+        player2.canPU = true
 
         player2.setBounce(1); // Limites del jugador
         player2.setCollideWorldBounds(true);
@@ -419,12 +421,12 @@ var MainGame = new Phaser.Class({
         }
 
         // Detectar si se presiona la E // Player 1
-        if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyE) && player1.canPU) {
             usarPU(player1, this)
         }
 
         // Detectar si se presiona la E // Player 1
-        if (Phaser.Input.Keyboard.JustDown(this.keyO)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyO) && player1.canPU) {
             usarPU(player2, this)
         }
         
@@ -558,6 +560,7 @@ var MainGame = new Phaser.Class({
             ];
 
             player.tipoPU = Phaser.Math.RND.pick(powerUps);
+            player.canPU = false
     
             switch (player.tipoPU) {
                 case 'AumentoCapacidadPU':
@@ -620,6 +623,7 @@ var MainGame = new Phaser.Class({
                     player.size = 1.1;
                     escena.time.delayedCall(5000, () => {
                         player.size = 0.9;
+                        player.canPU = true
                     });
                     break;
                 case 'BloqueadorPU':
@@ -629,12 +633,14 @@ var MainGame = new Phaser.Class({
                         player2.speed = 0
                         escena.time.delayedCall(5000, () => {
                             player2.speed = 10;
+                            player.canPU = true
                         });
                     }else{
                         PowerUp2.alpha = 0
                         player1.speed = 0
                         escena.time.delayedCall(5000, () => {
                             player1.speed = 10;
+                            player.canPU = true
                         });
                     }
                     break;
@@ -648,6 +654,7 @@ var MainGame = new Phaser.Class({
                     player.speed = 15;
                     escena.time.delayedCall(5000, () => {
                         player.speed = 10;
+                        player.canPU = true
                     });
                     break;
                 case 'MultiplicadorPuntos':
@@ -660,6 +667,7 @@ var MainGame = new Phaser.Class({
                     player.multiplicador = 1.5;
                     escena.time.delayedCall(5000, () => {
                         player.multiplicador = 1;
+                        player.canPU = true
                     });
                     break;
                     case 'Ralentizador':
@@ -669,12 +677,14 @@ var MainGame = new Phaser.Class({
                         player2.speed = 5
                         escena.time.delayedCall(5000, () => {
                             player2.speed = 10;
+                            player.canPU = true
                         });
                     }else{
                         PowerUp2.alpha = 0
                         player1.speed = 5
                         escena.time.delayedCall(5000, () => {
                             player1.speed = 10;
+                            player.canPU = true
                         });
                     }
                     break;
