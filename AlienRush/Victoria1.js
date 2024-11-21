@@ -12,13 +12,16 @@ var Victoria1 = new Phaser.Class({
 
     preload: function () {
         this.load.image('fondoVictoria1', 'assets/Victoria1/fondoVictoria1.png');
-        this.load.image('botonMenu', 'assets/Victoria1/BotonMenu.png');
+        this.load.image('botonMenu', 'assets/Victoria1/BotonVMP.png');
+        this.load.audio('musicaVictoria', 'audio/victoria.mp3');
     },
 
     create: function () {
         /************************* FONDO *************************/
+        //IMAGEN
         this.add.image(875, 440, 'fondoVictoria1');
-       
+
+        //TEXTO
         this.add.text(415, 610, `${this.player1Score}`, {
             fontSize: '80px',
             color: '#FFFFFF',
@@ -30,6 +33,22 @@ var Victoria1 = new Phaser.Class({
             color: '#FFFFFF',
             fontFamily: 'Impact, fantasy'
         }).setOrigin(0.5);
+        
+        //AUDIO
+        // Inicializar música del juego si no existe
+        if (!GlobalMusic.musicaVictoria) {
+            GlobalMusic.musicaVictoria = this.sound.add('musicaVictoria', { loop: true });
+        }
+
+        // Reproducir música solo si está activada
+        if (GlobalMusic.musicaActiva && !GlobalMusic.musicaVictoria.isPlaying) {
+            GlobalMusic.musicaVictoria.play();
+        }
+
+        // Detener la música del menú
+        if (GlobalMusic.musicaJuego && GlobalMusic.musicaJuego.isPlaying) {
+            GlobalMusic.musicaJuego.stop();
+        }
 
         /************************* VARIABLES *************************/
         let botonMenu = this.add.image(875, 800, 'botonMenu')

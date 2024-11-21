@@ -13,7 +13,6 @@ var MenuScene = new Phaser.Class({
         this.load.image('creditos', 'assets/Menu/BotonCreditos.png');
 
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
-        
         this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
     },
 
@@ -35,7 +34,11 @@ var MenuScene = new Phaser.Class({
         // Asegurarnos de detener la música del juego
         if (GlobalMusic.musicaJuego && GlobalMusic.musicaJuego.isPlaying) {
             GlobalMusic.musicaJuego.stop();
-        }
+        } else if(GlobalMusic.musicaVictoria && GlobalMusic.musicaVictoria.isPlaying) {
+            GlobalMusic.musicaVictoria.stop();
+        } else if(GlobalMusic.musicaEmpate && GlobalMusic.musicaEmpate.isPlaying) {
+            GlobalMusic.musicaEmpate.stop();
+        } 
 
 
         /************************* VARIABLES *************************/
