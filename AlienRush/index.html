@@ -27,193 +27,146 @@
     <!-- PANTALLA DE JUEGO -->
     <div id="game"></div>
     <!-- INFORMACION DEL JUEGO -->
-    <div class="introduccion">
+    <div class="seccion-introduccion">
         <div class="historia">
-            <h1 style="padding-top: 30px;">HISTORIA</h1>
+            <h1>HISTORIA</h1>
             <p>
-                Círculos en campos de maíz, extrañas desapariciones humanas y vacunas, misteriosas luces en los cielos…
-                Signos de una eterna guerra interplanetaria por la obtención del recurso más valioso… HUMANOS FRESCOS y
-                LLENOS DE ENERGÍA,
-                que mejor fuente de recursos que 70 kilos de carbohidratos y vitaminas, listos para ser recolectados
-                cuales rábanos del huerto.
+                Círculos en campos de maíz, extrañas desapariciones humanas, y misteriosas luces en los cielos… 
+                Signos de una eterna guerra interplanetaria por la obtención del recurso más valioso: 
+                <strong>HUMANOS FRESCOS y LLENOS DE ENERGÍA</strong>. 
+                ¿Qué mejor fuente de recursos que 70 kilos de carbohidratos y vitaminas, listos para ser recolectados como rábanos del huerto?
             </p>
             <p>
-                Sin embargo, ninguna de las civilizaciones del cosmos está dispuesta a compartir estos deliciosos
-                rollitos de vitaminas con el resto,
-                por lo que habrá que competir por este escaso recurso.
+                Sin embargo, ninguna civilización del cosmos está dispuesta a compartir estos deliciosos rollitos de vitaminas con el resto.
+                Por lo tanto, ¡habrá que competir ferozmente por este escaso recurso!
             </p>
         </div>
-
+    
         <div class="tematica">
             <h1>TEMÁTICA Y OBJETIVOS</h1>
             <p>
-                Un juego estilo Cartoon animado y ciencia ficción, en el que naves de diferentes civilizaciones
-                extraterrestres compiten entre sí
-                por ver quien es capaz de conseguir el máximo número de seres terrestres.
+                En este juego, estilo **Cartoon animado** y **ciencia ficción**, las naves de distintas civilizaciones extraterrestres 
+                compiten por abducir el máximo número de seres humanos.
             </p>
             <p>
-                El juego trata de 2 jugadores que deben abducir el mayor numero posible de civiles de diferentes tipos
-                que le daran más o menos puntos,
-                diferentes potenciadores o incluso desventajas como pérdidas de vida o eliminaciones de la partida.
+                Es un duelo para dos jugadores: abduce la mayor cantidad de civiles, ¡pero cuidado! Algunos civiles te darán ventajas, 
+                mientras que otros pueden ocasionarte problemas o incluso eliminarte de la partida.
             </p>
         </div>
-
     </div>
+    
 
-    <div class="controlesCuadro">
-        <h1>¿CÓMO JUGAR?</h1>
-        <div class="controles">
-            <div class="j1">
-                <p style="font-style: italic; font-size: 30px; text-align: center;">JUGADOR 1</p>
-                <p style="text-align: center;">
-                    W-A-S-D para moverte por el mapa
-                </p>
-                <p style="text-align: center;">
-                    ESP para abducir
-                </p>
-                <p style="text-align: center;">
-                    E para usar los potenciadores
-                </p>
+    <div class="info-sections">
+        <!-- Controles -->
+        <section class="section-controles">
+            <h1>¿CÓMO JUGAR?</h1>
+            <div class="controles">
+                <div class="j1">
+                    <h2>Jugador 1</h2>
+                    <ul>
+                        <li><b>W-A-S-D</b>: Moverse</li>
+                        <li><b>ESPACIO</b>: Abducir</li>
+                        <li><b>E</b>: Usar potenciadores</li>
+                    </ul>
+                </div>
+                <div class="j2">
+                    <h2>Jugador 2</h2>
+                    <ul>
+                        <li><b>I-J-K-L</b>: Moverse</li>
+                        <li><b>ENTER</b>: Abducir</li>
+                        <li><b>O</b>: Usar potenciadores</li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="j2">
-                <p style="font-style: italic; font-size: 30px; text-align: center;">JUGADOR 2</p>
-                <p style="text-align: center;">
-                    I-J-K-L para moverte por el mapa
-                </p>
-                <p style="text-align: center;">
-                    ENTER para abducir
-                </p>
-                <p style="text-align: center;">
-                    O para usar los potenciadores
-                </p>
+        </section>
+    
+        <!-- Personajes -->
+        <section class="section-personajes">
+            <h1>¡CONOZCAMOS A LOS PERSONAJES!</h1>
+            <div class="personajes-grid">
+                <div class="personaje">
+                    <h2>Humanos</h2>
+                    <img src="assets/Partida/humanos.png" alt="humanos">
+                    <p>Humanos comunes, objetivo principal de las abducciones.</p>
+                    <p><b>Puntos:</b> +1 por humano.</p>
+                </div>
+                <div class="personaje">
+                    <h2>Vacas</h2>
+                    <img src="assets/Partida/vacas.png" alt="vacas">
+                    <p>Otorgan el doble de puntos que los humanos.</p>
+                    <p><b>Puntos:</b> +2 por vaca.</p>
+                </div>
+                <div class="personaje">
+                    <h2>Chatarra</h2>
+                    <img src="assets/Partida/chatarra.png" alt="chatarra">
+                    <p>Objetos inútiles que dañan tu nave.</p>
+                    <p><b>Efecto:</b> -1 punto de vida.</p>
+                </div>
+                <div class="personaje">
+                    <h2>Super Humanos</h2>
+                    <img src="assets/Partida/superHumanos.png" alt="super-humanos">
+                    <p>Aumentan habilidades o disminuyen las del rival.</p>
+                    <p><b>Efecto:</b> Mejora temporal.</p>
+                </div>
+                <div class="personaje">
+                    <h2>Militares</h2>
+                    <img src="assets/Partida/militares.png" alt="militares">
+                    <p>Abducirlos por error termina el juego.</p>
+                    <p><b>Efecto:</b> Derrota instantánea.</p>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div>
-        <h1 style="font-size: 70px; color: white; text-decoration: overline; margin: 20px;">CUIDADO CON QUIENES METES A
-            TU NAVE!!</h1>
-    </div>
-
-    <div class="personajesCuadro">
-        <h1>¡CONOZCAMOS A LOS PERSONAJES!</h1>
-        <div class="personajes">
-            <div class="humanos">
-                <h2>HUMANOS</h2>
-                <img src="assets/Partida/humanos.png" alt="humanos" width="300px" height="300px" class="centrarImagen">
-                <p>
-                    Descripción: Los humanos comunes y corrientes que son el objetivo principal de las abducciones.
-                </p>
-                <p>
-                    Puntos: +1 punto por cada humano abducido.
-                </p>
+        </section>
+    
+        <!-- Power-ups -->
+        <section class="section-powerups">
+            <h1>¡POWER-UPS! ¿PARA QUÉ SIRVEN?</h1>
+            <div class="powerups-grid">
+                <div class="powerup">
+                    <img src="assets/AssetsMainGame/Potenciadores/RalentizadorPU.png" alt="Ralentizador">
+                    <h2>Ralentizador</h2>
+                    <p>Ralentiza al rival por unos segundos.</p>
+                </div>
+                <div class="powerup">
+                    <img src="assets/AssetsMainGame/Potenciadores/MovimientoRapidoPU.png" alt="Movimiento Rápido">
+                    <h2>Movimiento Rápido</h2>
+                    <p>Aumenta tu velocidad temporalmente.</p>
+                </div>
+                <div class="powerup">
+                    <img src="assets/AssetsMainGame/Potenciadores/MultiplicadorPuntosPU.png" alt="Multiplicador de Puntos">
+                    <h2>Multiplicador</h2>
+                    <p>Doble puntuación por abducciones.</p>
+                </div>
+                <div class="powerup">
+                    <img src="assets/AssetsMainGame/Potenciadores/AumentoCapacidadPU.png" alt="Aumento de Capacidad">
+                    <h2>Aumento de Capacidad</h2>
+                    <p>Incrementa el rango de abducción.</p>
+                </div>
+                <div class="powerup">
+                    <img src="assets/AssetsMainGame/Potenciadores/BloqueadorPU.png" alt="Bloqueador">
+                    <h2>Bloqueador</h2>
+                    <p>Bloquea el movimiento del rival.</p>
+                </div>
             </div>
-
-            <div class="vacas">
-                <h2>VACAS</h2>
-                <img src="assets/Partida/vacas.png" alt="vacas" width="500px" height="300px" class="centrarImagen">
-                <p>
-                    Descripción: Estos animales son especialmente codiciados, otorgando el doble de puntos que los
-                    humanos.
-                </p>
-                <p>
-                    Puntos: +2 puntos por cada vaca abducida.
-                </p>
+        </section>
+    
+        <!-- Escenarios -->
+        <section class="section-escenarios">
+            <h1>¡DIFERENTES ESCENARIOS!</h1>
+            <div class="escenarios-grid">
+                <div class="escenario">
+                    <img src="assets/AssetsMainGame/Escenarios/Granja.png" alt="Granja">
+                    <h2>Granja</h2>
+                </div>
+                <div class="escenario">
+                    <img src="assets/Background/ciudad.png" alt="Ciudad">
+                    <h2>Ciudad</h2>
+                </div>
+                <div class="escenario">
+                    <img src="assets/Background/playa.png" alt="Playa">
+                    <h2>Playa</h2>
+                </div>
             </div>
-
-            <div class="chatarra">
-                <h2>CHATARRA</h2>
-                <img src="assets/Partida/chatarra.png" alt="chatarra" width="300px" height="300px"
-                    class="centrarImagen">
-                <p>
-                    Descripción: Objetos de metal o basura que, en lugar de ser útiles, causan daño a la nave
-                    alienígena.
-                </p>
-                <p>
-                    Efecto: -1 punto de vida a la nave alienígena.
-                </p>
-            </div>
-
-            <div class="superHumanos">
-                <h2>SUPER-HUMANOS</h2>
-                <img src="assets/Partida/superHumanos.png" alt="superHumanos" width="300px" height="300px"
-                    class="centrarImagen">
-                <p>
-                    Descripción: Humanos más grandes y fuertes que otorgan un aumento temporal en las habilidades de la
-                    nave alienígena.
-                </p>
-                <p>
-                    Efecto: Aumentan las habilidades de tu nave o disminuye las del rival (como más velocidad de
-                    movimiento,
-                    duplicidad de puntos en un tiempo determinado…)
-                </p>
-            </div>
-
-            <div class="militares">
-                <h2>MILITARES</h2>
-                <img src="assets/Partida/militares.png" alt="militares" width="300px" height="300px"
-                    class="centrarImagen">
-                <p>
-                    Descripción: Personajes militares que son un peligro mortal. Si los abduces por error, pierdes
-                    inmediatamente.
-                </p>
-                <p>
-                    Efecto: Pérdida instantánea de la partida.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="powerUpsCuadro">
-        <h1>POWER-UPS, ¿PARA QUÉ SIRVE CADA UNO?</h1>
-        <div class="powerUps">
-            <div>
-                <img src="assets/AssetsMainGame/Potenciadores/RalentizadorPU.png" width="200px" height="200px" class="centrarImagen">
-                <h2>Ralentizador</h2>
-                <p>Se aplicará sobre el rival, limitando su velocidad de movimiento durante unos segundos</p>
-            </div>
-            <div>
-                <img src="assets/AssetsMainGame/Potenciadores/MovimientoRapidoPU.png" width="170px" height="200px" class="centrarImagen">
-                <h2>Movimiento Rápido</h2>
-                <p>El jugador tendrá una mejora de velocidad que permitirá moverse más rápido por el tablero</p>
-            </div>
-            <div>
-                <img src="assets/AssetsMainGame/Potenciadores/MultiplicadorPuntosPU.png" width="200px" height="200px" class="centrarImagen">
-                <h2>Multiplicador de puntos</h2>
-                <p>La abducción de personas sumará el doble de puntuación que de normal durante un periodo corto de
-                    tiempo.</p>
-            </div>
-            <div>
-                <img src="assets/AssetsMainGame/Potenciadores/AumentoCapacidadPU.png" width="200px" height="200px" class="centrarImagen">
-                <h2>Aumento de capacidad</h2>
-                <p>El rango de abducción aumenta, provocando la posibilidad de abducir a más personas a la vez</p>
-            </div>
-            <div>
-                <img src="assets/AssetsMainGame/Potenciadores/BloqueadorPU.png" width="200px" height="200px" class="centrarImagen">
-                <h2>Bloqueador</h2>
-                <p>Objeto que se podrá utilizar en contra del rival, para bloquear su movimiento durante unos segundos
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="escenariosCuadro">
-        <h1>¡DIFERENTES ESCENARIOS!</h1>
-        <div class="escenarios">
-            <div class="rayo">
-                <img src="assets/Background/granja.png" width="400px" height="400px" class="centrarImagen">
-                <h2>GRANJA</h2>
-            </div>
-            <div>
-                <img src="assets/Background/ciudad.png" width="400px" height="400px" class="centrarImagen">
-                <h2>CIUDAD</h2>
-            </div>
-            <div>
-                <img src="assets/Background/playa.png" width="480px" height="400px" class="centrarImagen">
-                <h2>PLAYA</h2>
-            </div>
-        </div>
+        </section>
     </div>
 
     <!-- SCRIPT GENERAL -->
@@ -221,6 +174,8 @@
         const GlobalMusic = {
             musicaMenu: null,
             musicaJuego: null,
+            musicaVictoria: null,
+            musicaEmpate: null,
             musicaActiva: true,  // Bandera para habilitar/deshabilitar la música
         };
 

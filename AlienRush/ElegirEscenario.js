@@ -33,6 +33,7 @@ var ElegirEscenario = new Phaser.Class({
         // Asegurarnos de detener la música del juego
         if (GlobalMusic.musicaJuego && GlobalMusic.musicaJuego.isPlaying) {
             GlobalMusic.musicaJuego.stop();
+            GlobalMusic.musicaVictoria.stop();
         }
 
 
