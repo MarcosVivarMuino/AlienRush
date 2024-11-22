@@ -156,26 +156,28 @@ var MainGame = new Phaser.Class({
         }
 
         // Instanciacion de los jugadores
-        player1 = this.physics.add.sprite(800, 130, 'Player1').setScale(0.9);
+        player1 = this.physics.add.sprite(800, 130, 'Player1');
         player1.tipoPU = '';
         player1.score = 0;
         player1.alpha = 1;
         player1.vidas = 5;
         player1.speed = 10;
-        player1.size = 0.9
+        player1.size = 0.8
         player1.multiplicador = 1
+        player1.canPU = true
 
         player1.setBounce(1); // Limites del jugador
         player1.setCollideWorldBounds(true);
 
-        player2 = this.physics.add.sprite(400, 720, 'Player2').setScale(0.9);
+        player2 = this.physics.add.sprite(400, 720, 'Player2');
         player2.tipoPU = '';
         player2.score = 0;
         player2.alpha = 0.8;
         player2.vidas = 5;
         player2.speed = 10;
-        player2.size = 0.9
+        player2.size = 0.8
         player2.multiplicador = 1
+        player2.canPU = true
 
         player2.setBounce(1); // Limites del jugador
         player2.setCollideWorldBounds(true);
@@ -279,11 +281,21 @@ var MainGame = new Phaser.Class({
             Humanos.forEach((humano) => {
                 let nuevaX = humano.x + Phaser.Math.Between(-100, 100);
                 let nuevaY = humano.y + Phaser.Math.Between(-100, 100);
-
+        
                 // Asegúrate de que los humanos no salgan de los límites de la pantalla
                 nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
                 nuevaY = Phaser.Math.Clamp(nuevaY, 80, 800);
-
+        
+                // Calcular la dirección de movimiento
+                let velX = nuevaX - humano.x; // Diferencia en X
+                let velY = nuevaY - humano.y; // Diferencia en Y
+        
+                // Calcular el ángulo de rotación hacia la dirección del movimiento
+                let angle = Math.atan2(velY, velX);
+        
+                // Aplicar la rotación antes de animar
+                humano.rotation = angle;
+        
                 // Usar un tween para animar el movimiento
                 this.tweens.add({
                     targets: humano,
@@ -305,6 +317,16 @@ var MainGame = new Phaser.Class({
                 nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
                 nuevaY = Phaser.Math.Clamp(nuevaY, 80, 800);
 
+                // Calcular la dirección de movimiento
+                let velX = nuevaX - vaca.x; // Diferencia en X
+                let velY = nuevaY - vaca.y; // Diferencia en Y
+        
+                // Calcular el ángulo de rotación hacia la dirección del movimiento
+                let angle = Math.atan2(velY, velX);
+        
+                // Aplicar la rotación antes de animar
+                vaca.rotation = angle;
+
                 // Usar un tween para animar el movimiento
                 this.tweens.add({
                     targets: vaca,
@@ -325,6 +347,16 @@ var MainGame = new Phaser.Class({
                 nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
                 nuevaY = Phaser.Math.Clamp(nuevaY, 80, 800);
 
+                // Calcular la dirección de movimiento
+                let velX = nuevaX - militar.x; // Diferencia en X
+                let velY = nuevaY - militar.y; // Diferencia en Y
+        
+                // Calcular el ángulo de rotación hacia la dirección del movimiento
+                let angle = Math.atan2(velY, velX);
+        
+                // Aplicar la rotación antes de animar
+                militar.rotation = angle;
+
                 // Usar un tween para animar el movimiento
                 this.tweens.add({
                     targets: militar,
@@ -344,6 +376,16 @@ var MainGame = new Phaser.Class({
                 // Asegúrate de que los humanos no salgan de los límites de la pantalla
                 nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
                 nuevaY = Phaser.Math.Clamp(nuevaY, 80, 800);
+
+                // Calcular la dirección de movimiento
+                let velX = nuevaX - PUHuman.x; // Diferencia en X
+                let velY = nuevaY - PUHuman.y; // Diferencia en Y
+        
+                // Calcular el ángulo de rotación hacia la dirección del movimiento
+                let angle = Math.atan2(velY, velX);
+        
+                // Aplicar la rotación antes de animar
+                PUHuman.rotation = angle;
 
                 // Usar un tween para animar el movimiento
                 this.tweens.add({
@@ -539,6 +581,7 @@ var MainGame = new Phaser.Class({
                 }
             });
 
+            if(player.canPU){
             //Verificar si el jugador esta sobre un PUHuman
             PUHumanos.forEach((PUHuman) => {
                 let distancia = Phaser.Math.Distance.Between(player.x, player.y, PUHuman.x, PUHuman.y);
@@ -549,6 +592,7 @@ var MainGame = new Phaser.Class({
                     generarHumanoEspecial(PUHuman)
                 }
             });
+            }
         }
 
         function perderVida(player) {
@@ -586,6 +630,7 @@ var MainGame = new Phaser.Class({
             ];
 
             player.tipoPU = Phaser.Math.RND.pick(powerUps);
+            player.canPU = false;
 
             switch (player.tipoPU) {
                 case 'AumentoCapacidadPU':
@@ -646,9 +691,10 @@ var MainGame = new Phaser.Class({
                     } else {
                         PowerUp2.alpha = 0
                     }
-                    player.size = 1.1;
+                    player.size = 1.0;
                     escena.time.delayedCall(5000, () => {
-                        player.size = 0.9;
+                        player.size = 0.8;
+                        player.canPU = true
                     });
                     break;
                 case 'BloqueadorPU':
@@ -659,12 +705,14 @@ var MainGame = new Phaser.Class({
                         player2.speed = 0
                         escena.time.delayedCall(5000, () => {
                             player2.speed = 10;
+                            player.canPU = true
                         });
                     } else {
                         PowerUp2.alpha = 0
                         player1.speed = 0
                         escena.time.delayedCall(5000, () => {
                             player1.speed = 10;
+                            player.canPU = true
                         });
                     }
                     break;
@@ -679,6 +727,7 @@ var MainGame = new Phaser.Class({
                     player.speed = 15;
                     escena.time.delayedCall(5000, () => {
                         player.speed = 10;
+                        player.canPU = true
                     });
                     break;
                 case 'MultiplicadorPuntos':
@@ -692,6 +741,7 @@ var MainGame = new Phaser.Class({
                     player.multiplicador = 1.5;
                     escena.time.delayedCall(5000, () => {
                         player.multiplicador = 1;
+                        player.canPU = true
                     });
                     break;
                 case 'Ralentizador':
@@ -702,12 +752,14 @@ var MainGame = new Phaser.Class({
                         player2.speed = 5
                         escena.time.delayedCall(5000, () => {
                             player2.speed = 10;
+                            player.canPU = true
                         });
                     } else {
                         PowerUp2.alpha = 0
                         player1.speed = 5
                         escena.time.delayedCall(5000, () => {
                             player1.speed = 10;
+                            player.canPU = true
                         });
                     }
                     break;
