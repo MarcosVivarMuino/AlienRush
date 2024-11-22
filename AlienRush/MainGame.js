@@ -7,12 +7,13 @@ var MainGame = new Phaser.Class({
     },
 
     init: function (data) {
-        this.musicaMenu = data.musicaMenu; // Recibimos la música del menú
+        this.musicaMenu = data.musicaMenu; 
+        this.fondo = data.fondo;            
     },
 
     preload: function () {
         // Pantalla de carga
-        this.add.image(900, 500, 'fondoCarga');
+        this.add.image(875, 440, 'fondoCarga');
         var percentText = this.make.text({
             x: 1720,
             y: 960,
@@ -39,7 +40,7 @@ var MainGame = new Phaser.Class({
         });
 
         // Archivos
-        this.load.image('fondo', 'assets/AssetsMainGame/Escenarios/Granja.png');
+        this.load.image('pulsaEsp', 'assets/Background/pulsaEsp.png');
         // HUD
         this.load.image('Vida1', 'assets/AssetsMainGame/HUD/Vida1.png');
         this.load.image('Vida2', 'assets/AssetsMainGame/HUD/Vida2.png');
@@ -68,11 +69,32 @@ var MainGame = new Phaser.Class({
         this.load.audio('lanzarHielo', 'audio/lanzarHielo.mp3');
         this.load.audio('lanzarVelocidad', 'audio/lanzarVelocidad.mp3');
         this.load.audio('lanzarX2', 'audio/lanzarX2.mp3');
-        
 
     },
 
     create: function () {
+        ///////////////////////////////////////////////////////////////INSTANCIACION////////////////////////////////////////////////////////////////////
+        Vacas = [];
+        PowerUps = [];
+        Humanos = [];
+        Vacas = [];
+        corazones1 = []
+        corazones2 = []
+        Escombros = []
+        Militares = []
+        PUHumanos = []
+        paused = false;
+
+        this.physics.world.bounds.width = 1750; // Limite al tamaño del mundo
+        this.physics.world.bounds.height = 880;
+        this.cameras.main.setBounds(0, 0, 1750, 880); // Define los limites de la camara
+        this.gameStarted = false; // El juego no comienza hasta pulsar ESP
+        this.temporizadorEvento = null; // Guardará el evento del temporizador
+
+        this.add.image(875, 440, this.fondo).setScale(1); // Creacion del fondo
+        this.pantallaEsp = this.add.image(875, 440, 'pulsaEsp').setDepth(10); // Mostrar pantalla inicial
+
+        
         //AUDIO
         // Inicializar música del juego si no existe
         if (!GlobalMusic.musicaJuego) {
@@ -97,24 +119,6 @@ var MainGame = new Phaser.Class({
         lanzarHielo = this.sound.add('lanzarHielo', { volume: 1.3 });
         lanzarVelocidad = this.sound.add('lanzarVelocidad', { volume: 0.5 });
         lanzarX2 = this.sound.add('lanzarX2', { volume: 0.5 });
-
-        ///////////////////////////////////////////////////////////////INSTANCIACION////////////////////////////////////////////////////////////////////
-        Vacas = [];
-        PowerUps = [];
-        Humanos = [];
-        Vacas = [];
-        corazones1 = []
-        corazones2 = []
-        Escombros = []
-        Militares = []
-        PUHumanos = []
-        paused = false;
-
-        this.physics.world.bounds.width = 1750; // Limite al tamaño del mundo
-        this.physics.world.bounds.height = 880;
-        this.cameras.main.setBounds(0, 0, 1750, 880); // Define los limites de la camara
-
-        this.add.image(875, 440, 'fondo').setScale(1); // Creacion del fondo
 
         // Instanciacion Humanos
         for (let i = 0; i < 25; i++) {
@@ -156,7 +160,7 @@ var MainGame = new Phaser.Class({
         }
 
         // Instanciacion de los jugadores
-        player1 = this.physics.add.sprite(800, 130, 'Player1');
+        player1 = this.physics.add.sprite(200, 600, 'Player1');
         player1.tipoPU = '';
         player1.score = 0;
         player1.alpha = 1;
@@ -169,7 +173,7 @@ var MainGame = new Phaser.Class({
         player1.setBounce(1); // Limites del jugador
         player1.setCollideWorldBounds(true);
 
-        player2 = this.physics.add.sprite(400, 720, 'Player2');
+        player2 = this.physics.add.sprite(1550, 600, 'Player2');
         player2.tipoPU = '';
         player2.score = 0;
         player2.alpha = 0.8;
@@ -245,14 +249,7 @@ var MainGame = new Phaser.Class({
             loop: true
         });
 
-        // Evento de tiempo que se ejecuta cada segundo
-        this.temporizadorEvento = this.time.addEvent({
-            delay: 1000, // 1 segundo
-            callback: actualizarTemporizador,
-            callbackScope: this,
-            loop: true
-        });
-        //////////////////////////////////////////////////////////////////////COLISIONES////////////////////////////////////////////////////////////////////////////
+    
 
         ////////////////////////////////////////////////////////////////////INTERACCIONES///////////////////////////////////////////////////////////////////////////
         // Controles Jugador 1
@@ -275,27 +272,32 @@ var MainGame = new Phaser.Class({
         this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.paused = false;
 
+        // Intro
+        this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Registrar tecla ESPACIO
+
+
+
         ///////////////////////////////////////////////////////////////////////FUNCIONES////////////////////////////////////////////////////////////////////////////
         function moverHumanosAleatoriamente() {
             // Mover cada humano en una dirección aleatoria
             Humanos.forEach((humano) => {
                 let nuevaX = humano.x + Phaser.Math.Between(-100, 100);
                 let nuevaY = humano.y + Phaser.Math.Between(-100, 100);
-        
+
                 // Asegúrate de que los humanos no salgan de los límites de la pantalla
                 nuevaX = Phaser.Math.Clamp(nuevaX, 80, 1680);
                 nuevaY = Phaser.Math.Clamp(nuevaY, 80, 800);
-        
+
                 // Calcular la dirección de movimiento
                 let velX = nuevaX - humano.x; // Diferencia en X
                 let velY = nuevaY - humano.y; // Diferencia en Y
-        
+
                 // Calcular el ángulo de rotación hacia la dirección del movimiento
                 let angle = Math.atan2(velY, velX);
-        
+
                 // Aplicar la rotación antes de animar
                 humano.rotation = angle;
-        
+
                 // Usar un tween para animar el movimiento
                 this.tweens.add({
                     targets: humano,
@@ -320,10 +322,10 @@ var MainGame = new Phaser.Class({
                 // Calcular la dirección de movimiento
                 let velX = nuevaX - vaca.x; // Diferencia en X
                 let velY = nuevaY - vaca.y; // Diferencia en Y
-        
+
                 // Calcular el ángulo de rotación hacia la dirección del movimiento
                 let angle = Math.atan2(velY, velX);
-        
+
                 // Aplicar la rotación antes de animar
                 vaca.rotation = angle;
 
@@ -350,10 +352,10 @@ var MainGame = new Phaser.Class({
                 // Calcular la dirección de movimiento
                 let velX = nuevaX - militar.x; // Diferencia en X
                 let velY = nuevaY - militar.y; // Diferencia en Y
-        
+
                 // Calcular el ángulo de rotación hacia la dirección del movimiento
                 let angle = Math.atan2(velY, velX);
-        
+
                 // Aplicar la rotación antes de animar
                 militar.rotation = angle;
 
@@ -380,10 +382,10 @@ var MainGame = new Phaser.Class({
                 // Calcular la dirección de movimiento
                 let velX = nuevaX - PUHuman.x; // Diferencia en X
                 let velY = nuevaY - PUHuman.y; // Diferencia en Y
-        
+
                 // Calcular el ángulo de rotación hacia la dirección del movimiento
                 let angle = Math.atan2(velY, velX);
-        
+
                 // Aplicar la rotación antes de animar
                 PUHuman.rotation = angle;
 
@@ -398,175 +400,193 @@ var MainGame = new Phaser.Class({
             });
         }
 
-        function actualizarTemporizador() {
-            // Reducir el tiempo restante
-            this.tiempoRestante--;
-
-            // Actualizar el texto del temporizador
-            let minutos = Math.floor(this.tiempoRestante / 60);
-            let segundos = this.tiempoRestante % 60;
-            let textoSegundos = segundos < 10 ? '0' + segundos : segundos;
-            this.textoTemporizador.setText(`Tiempo: ${minutos}:${textoSegundos}`);
-
-            // Si el tiempo se agota, termina la partida
-            if (this.tiempoRestante <= 0) {
-                if (player1.score > player2.score) {
-                    this.scene.start("Victoria1", {
-                        player1Score: player1.score,
-                        player2Score: player2.score
-                    });
-                } else if (player2.score > player1.score) {
-                    this.scene.start("Victoria2", {
-                        player1Score: player1.score,
-                        player2Score: player2.score
-                    });
-                } else {
-                    this.scene.start("Empate", {
-                        player1Score: player1.score,
-                        player2Score: player2.score
-                    });
-                }
-            }
-        }
+        
     },
 
     // Update
     update: function () {
-        var scene = this.scene
-        ////////////////////////////////////////////////////////////CONTROLES////////////////////////////////////////////////////////////////////////////////////
-        // Controles player 2
-        if (this.keyJ.isDown) {  // Interacciones J-K-L-I (player2)
-            player2.body.position.x -= player2.speed;
-        }
-        else if (this.keyL.isDown) {
-            player2.body.position.x += player2.speed;
-        }
-        else if (this.keyI.isDown) {
-            player2.body.position.y -= player2.speed;
-        } else if (this.keyK.isDown) {
-            player2.body.position.y += player2.speed;
+        // Si el juego no ha comenzado y se presiona ESPACIO
+        if (!this.gameStarted && Phaser.Input.Keyboard.JustDown(this.keySPC)) {
+            this.gameStarted = true; // Cambiar estado del juego a iniciado
+            this.pantallaEsp.destroy(); // Eliminar la pantalla inicial
+            this.iniciarTemporizador(); // Iniciar temporizador
         }
 
-        // Controles player 1
-        if (this.keyA.isDown) {  // Interacciones W-A-S-D (player2)
-            player1.body.position.x -= player1.speed;
-        }
-        else if (this.keyD.isDown) {
-            player1.body.position.x += player1.speed;
-        }
-        else if (this.keyW.isDown) {
-            player1.body.position.y -= player1.speed;
-        } else if (this.keyS.isDown) {
-            player1.body.position.y += player1.speed;
-        }
-
-        if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
-            if (!this.paused) {
-                console.log("Pausando MainGame y lanzando MenuPausa...");
-                this.scene.launch('MenuPausa');
-                this.scene.pause();
-                this.paused = true;
+        if (this.gameStarted) {
+            var scene = this.scene
+            ////////////////////////////////////////////////////////////CONTROLES////////////////////////////////////////////////////////////////////////////////////
+            // Controles player 2
+            if (this.keyJ.isDown) {  // Interacciones J-K-L-I (player2)
+                player2.body.position.x -= player2.speed;
             }
-        }
+            else if (this.keyL.isDown) {
+                player2.body.position.x += player2.speed;
+            }
+            else if (this.keyI.isDown) {
+                player2.body.position.y -= player2.speed;
+            } else if (this.keyK.isDown) {
+                player2.body.position.y += player2.speed;
+            }
 
-        ///////////////////////////////////////////////////////////////COMPROBACIONES///////////////////////////////////////////////////////////////////////////
-        // Detectar si se presiona el espacio // Player 1
-        if (Phaser.Input.Keyboard.JustDown(this.keySPC)) {
-            absorberObjeto(player1);
-        }
+            // Controles player 1
+            if (this.keyA.isDown) {  // Interacciones W-A-S-D (player2)
+                player1.body.position.x -= player1.speed;
+            }
+            else if (this.keyD.isDown) {
+                player1.body.position.x += player1.speed;
+            }
+            else if (this.keyW.isDown) {
+                player1.body.position.y -= player1.speed;
+            } else if (this.keyS.isDown) {
+                player1.body.position.y += player1.speed;
+            }
 
-        // Detectar si se presiona el ENTER // Player 2
-        if (Phaser.Input.Keyboard.JustDown(this.keyENTER)) {
-            absorberObjeto(player2);
-        }
-
-        // Detectar si se presiona la E // Player 1
-        if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
-            usarPU(player1, this)
-        }
-
-        // Detectar si se presiona la O // Player 2
-        if (Phaser.Input.Keyboard.JustDown(this.keyO)) {
-            usarPU(player2, this)
-        }
-
-        /////////////////////////////////////////////////////////////////ANIMACIONES////////////////////////////////////////////////////////////////////////////
-        setSize()
-        ////////////////////////////////////////////////////////////////////FUNCIONES//////////////////////////////////////////////////////////////////////////
-
-        function generarHumano(humano) {
-            let x = Phaser.Math.Between(20, 1700);
-            let y = Phaser.Math.Between(30, 800);
-
-            humano.x = x
-            humano.y = y
-        }
-
-        function generarVaca(vaca) {
-            let x = Phaser.Math.Between(20, 1700);
-            let y = Phaser.Math.Between(30, 800);
-
-            vaca.x = x
-            vaca.y = y
-        }
-
-        function generarEscombro(escombro) {
-            let x = Phaser.Math.Between(20, 1700);
-            let y = Phaser.Math.Between(30, 800);
-
-            escombro.x = x
-            escombro.y = y
-        }
-
-        function generarHumanoEspecial(PUHuman) {
-            let x = Phaser.Math.Between(20, 1700);
-            let y = Phaser.Math.Between(30, 800);
-
-            PUHuman.x = x
-            PUHuman.y = y
-        }
-
-        function absorberObjeto(player) {
-            // Verificar si el jugador está sobre un humano    
-            Humanos.forEach((humano) => {
-                let distancia = Phaser.Math.Distance.Between(player.x, player.y, humano.x, humano.y);
-
-                if (distancia < 75) { // Distancia de absorción
-                    player.score += 10 * player.multiplicador; // Puntos por absorber un humano
-                    actuScore()
-                    absorber.play()
-                    generarHumano(humano)
+            if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
+                if (!this.paused) {
+                    console.log("Pausando MainGame y lanzando MenuPausa...");
+                    this.scene.launch('MenuPausa');
+                    this.scene.pause();
+                    this.paused = true;
                 }
-            });
+            }
 
-            // Verificar si el jugador está sobre una vaca
-            Vacas.forEach((vaca) => {
-                let distancia = Phaser.Math.Distance.Between(player.x, player.y, vaca.x, vaca.y);
+            ///////////////////////////////////////////////////////////////COMPROBACIONES///////////////////////////////////////////////////////////////////////////
+            // Detectar si se presiona el espacio // Player 1
+            if (Phaser.Input.Keyboard.JustDown(this.keySPC)) {
+                absorberObjeto(player1);
+            }
 
-                if (distancia < 100) { // Distancia de absorción
-                    player.score += 30 * player.multiplicador; // Puntos por absorber una vaca
-                    actuScore()
-                    absorber.play()
-                    generarVaca(vaca)
+            // Detectar si se presiona el ENTER // Player 2
+            if (Phaser.Input.Keyboard.JustDown(this.keyENTER)) {
+                absorberObjeto(player2);
+            }
+
+            // Detectar si se presiona la E // Player 1
+            if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
+                usarPU(player1, this)
+            }
+
+            // Detectar si se presiona la O // Player 2
+            if (Phaser.Input.Keyboard.JustDown(this.keyO)) {
+                usarPU(player2, this)
+            }
+
+            /////////////////////////////////////////////////////////////////ANIMACIONES////////////////////////////////////////////////////////////////////////////
+            setSize()
+            ////////////////////////////////////////////////////////////////////FUNCIONES//////////////////////////////////////////////////////////////////////////
+
+            function generarHumano(humano) {
+                let x = Phaser.Math.Between(20, 1700);
+                let y = Phaser.Math.Between(30, 800);
+
+                humano.x = x
+                humano.y = y
+            }
+
+            function generarVaca(vaca) {
+                let x = Phaser.Math.Between(20, 1700);
+                let y = Phaser.Math.Between(30, 800);
+
+                vaca.x = x
+                vaca.y = y
+            }
+
+            function generarEscombro(escombro) {
+                let x = Phaser.Math.Between(20, 1700);
+                let y = Phaser.Math.Between(30, 800);
+
+                escombro.x = x
+                escombro.y = y
+            }
+
+            function generarHumanoEspecial(PUHuman) {
+                let x = Phaser.Math.Between(20, 1700);
+                let y = Phaser.Math.Between(30, 800);
+
+                PUHuman.x = x
+                PUHuman.y = y
+            }
+
+            function absorberObjeto(player) {
+                // Verificar si el jugador está sobre un humano    
+                Humanos.forEach((humano) => {
+                    let distancia = Phaser.Math.Distance.Between(player.x, player.y, humano.x, humano.y);
+
+                    if (distancia < 75) { // Distancia de absorción
+                        player.score += 10 * player.multiplicador; // Puntos por absorber un humano
+                        actuScore()
+                        absorber.play()
+                        generarHumano(humano)
+                    }
+                });
+
+                // Verificar si el jugador está sobre una vaca
+                Vacas.forEach((vaca) => {
+                    let distancia = Phaser.Math.Distance.Between(player.x, player.y, vaca.x, vaca.y);
+
+                    if (distancia < 100) { // Distancia de absorción
+                        player.score += 30 * player.multiplicador; // Puntos por absorber una vaca
+                        actuScore()
+                        absorber.play()
+                        generarVaca(vaca)
+                    }
+                });
+
+                //Verificar si el jugador esta sobre un escombro
+                Escombros.forEach((escombro) => {
+                    let distancia = Phaser.Math.Distance.Between(player.x, player.y, escombro.x, escombro.y);
+
+                    if (distancia < 75) { // Distancia de colisión
+                        perderVida(player); // Restar una vida al jugador
+                        daño.play()
+                        generarEscombro(escombro);
+                    }
+                });
+
+                //Verificar si el jugador esta sobre un militar
+                Militares.forEach((militar) => {
+                    let distancia = Phaser.Math.Distance.Between(player.x, player.y, militar.x, militar.y);
+
+                    if (distancia < 50) { // Distancia de colisión
+                        if (player == player1) {
+                            scene.start("Victoria2", {
+                                player1Score: player1.score,
+                                player2Score: player2.score
+                            });
+                        } else {
+                            scene.start("Victoria1", {
+                                player1Score: player1.score,
+                                player2Score: player2.score
+                            });
+                        }
+                    }
+                });
+
+                if (player.canPU) {
+                    //Verificar si el jugador esta sobre un PUHuman
+                    PUHumanos.forEach((PUHuman) => {
+                        let distancia = Phaser.Math.Distance.Between(player.x, player.y, PUHuman.x, PUHuman.y);
+
+                        if (distancia < 75) { // Distancia de colisión
+                            darPowerUp(player)
+                            cogerPowerUp.play()
+                            generarHumanoEspecial(PUHuman)
+                        }
+                    });
                 }
-            });
+            }
 
-            //Verificar si el jugador esta sobre un escombro
-            Escombros.forEach((escombro) => {
-                let distancia = Phaser.Math.Distance.Between(player.x, player.y, escombro.x, escombro.y);
-
-                if (distancia < 75) { // Distancia de colisión
-                    perderVida(player); // Restar una vida al jugador
-                    daño.play()
-                    generarEscombro(escombro);
+            function perderVida(player) {
+                if (player.vidas > 0) {
+                    player.vidas--;
+                    if (player == player1) {
+                        corazones1[player.vidas].destroy(); // Eliminar un corazón de la pantalla
+                    } else {
+                        corazones2[player.vidas].destroy(); // Eliminar un corazón de la pantalla
+                    }
                 }
-            });
 
-            //Verificar si el jugador esta sobre un militar
-            Militares.forEach((militar) => {
-                let distancia = Phaser.Math.Distance.Between(player.x, player.y, militar.x, militar.y);
-
-                if (distancia < 50) { // Distancia de colisión
+                if (player.vidas <= 0) {
                     if (player == player1) {
                         scene.start("Victoria2", {
                             player1Score: player1.score,
@@ -579,203 +599,210 @@ var MainGame = new Phaser.Class({
                         });
                     }
                 }
-            });
+            }
 
-            if(player.canPU){
-            //Verificar si el jugador esta sobre un PUHuman
-            PUHumanos.forEach((PUHuman) => {
-                let distancia = Phaser.Math.Distance.Between(player.x, player.y, PUHuman.x, PUHuman.y);
+            function darPowerUp(player) {
+                const powerUps = [
+                    'AumentoCapacidadPU',
+                    'BloqueadorPU',
+                    'MovimientoRapido',
+                    'MultiplicadorPuntos',
+                    'Ralentizador'
+                ];
 
-                if (distancia < 75) { // Distancia de colisión
-                    darPowerUp(player)
-                    cogerPowerUp.play()
-                    generarHumanoEspecial(PUHuman)
+                player.tipoPU = Phaser.Math.RND.pick(powerUps);
+                player.canPU = false;
+
+                switch (player.tipoPU) {
+                    case 'AumentoCapacidadPU':
+                        if (player == player1) {
+                            PowerUp1.setTexture('ACPU');
+                            PowerUp1.alpha = 1;
+                        } else {
+                            PowerUp2.setTexture('ACPU');
+                            PowerUp2.alpha = 1;
+                        }
+                        break;
+                    case 'BloqueadorPU':
+                        if (player == player1) {
+                            PowerUp1.setTexture('BPU');
+                            PowerUp1.alpha = 1;
+                        } else {
+                            PowerUp2.setTexture('BPU');
+                            PowerUp2.alpha = 1;
+                        }
+                        break;
+                    case 'MovimientoRapido':
+                        if (player == player1) {
+                            PowerUp1.setTexture('MRPU');
+                            PowerUp1.alpha = 1;
+                        } else {
+                            PowerUp2.setTexture('MRPU');
+                            PowerUp2.alpha = 1;
+                        }
+                        break;
+                    case 'MultiplicadorPuntos':
+                        if (player == player1) {
+                            PowerUp1.setTexture('MPPU');
+                            PowerUp1.alpha = 1;
+                        } else {
+                            PowerUp2.setTexture('MPPU');
+                            PowerUp2.alpha = 1;
+                        }
+                        break;
+                    case 'Ralentizador':
+                        if (player == player1) {
+                            PowerUp1.setTexture('RPU');
+                            PowerUp1.alpha = 1;
+                        } else {
+                            PowerUp2.setTexture('RPU');
+                            PowerUp2.alpha = 1;
+                        }
+                        break;
                 }
-            });
             }
-        }
 
-        function perderVida(player) {
-            if (player.vidas > 0) {
-                player.vidas--;
-                if (player == player1) {
-                    corazones1[player.vidas].destroy(); // Eliminar un corazón de la pantalla
-                } else {
-                    corazones2[player.vidas].destroy(); // Eliminar un corazón de la pantalla
+            function usarPU(player, escena) {
+                switch (player.tipoPU) {
+                    case 'AumentoCapacidadPU':
+                        lanzarAumentoCapacidad.play();
+                        player.tipoPU = ' '
+                        if (player == player1) {
+                            PowerUp1.alpha = 0
+                        } else {
+                            PowerUp2.alpha = 0
+                        }
+                        player.size = 1.0;
+                        escena.time.delayedCall(5000, () => {
+                            player.size = 0.8;
+                            player.canPU = true
+                        });
+                        break;
+                    case 'BloqueadorPU':
+                        lanzarBloqueo.play();
+                        player.tipoPU = ''
+                        if (player == player1) {
+                            PowerUp1.alpha = 0
+                            player2.speed = 0
+                            escena.time.delayedCall(5000, () => {
+                                player2.speed = 10;
+                                player.canPU = true
+                            });
+                        } else {
+                            PowerUp2.alpha = 0
+                            player1.speed = 0
+                            escena.time.delayedCall(5000, () => {
+                                player1.speed = 10;
+                                player.canPU = true
+                            });
+                        }
+                        break;
+                    case 'MovimientoRapido':
+                        lanzarVelocidad.play();
+                        player.tipoPU = ''
+                        if (player == player1) {
+                            PowerUp1.alpha = 0
+                        } else {
+                            PowerUp2.alpha = 0
+                        }
+                        player.speed = 15;
+                        escena.time.delayedCall(5000, () => {
+                            player.speed = 10;
+                            player.canPU = true
+                        });
+                        break;
+                    case 'MultiplicadorPuntos':
+                        lanzarX2.play();
+                        player.tipoPU = ''
+                        if (player == player1) {
+                            PowerUp1.alpha = 0
+                        } else {
+                            PowerUp2.alpha = 0
+                        }
+                        player.multiplicador = 1.5;
+                        escena.time.delayedCall(5000, () => {
+                            player.multiplicador = 1;
+                            player.canPU = true
+                        });
+                        break;
+                    case 'Ralentizador':
+                        lanzarHielo.play();
+                        player.tipoPU = ''
+                        if (player == player1) {
+                            PowerUp1.alpha = 0
+                            player2.speed = 5
+                            escena.time.delayedCall(5000, () => {
+                                player2.speed = 10;
+                                player.canPU = true
+                            });
+                        } else {
+                            PowerUp2.alpha = 0
+                            player1.speed = 5
+                            escena.time.delayedCall(5000, () => {
+                                player1.speed = 10;
+                                player.canPU = true
+                            });
+                        }
+                        break;
                 }
             }
 
-            if (player.vidas <= 0) {
-                if (player == player1) {
-                    scene.start("Victoria2", {
-                        player1Score: player1.score,
-                        player2Score: player2.score
-                    });
-                } else {
-                    scene.start("Victoria1", {
-                        player1Score: player1.score,
-                        player2Score: player2.score
-                    });
-                }
+            function setSize() {
+                player1.setScale(player1.size)
+                player2.setScale(player2.size)
             }
-        }
 
-        function darPowerUp(player) {
-            const powerUps = [
-                'AumentoCapacidadPU',
-                'BloqueadorPU',
-                'MovimientoRapido',
-                'MultiplicadorPuntos',
-                'Ralentizador'
-            ];
-
-            player.tipoPU = Phaser.Math.RND.pick(powerUps);
-            player.canPU = false;
-
-            switch (player.tipoPU) {
-                case 'AumentoCapacidadPU':
-                    if (player == player1) {
-                        PowerUp1.setTexture('ACPU');
-                        PowerUp1.alpha = 1;
-                    } else {
-                        PowerUp2.setTexture('ACPU');
-                        PowerUp2.alpha = 1;
-                    }
-                    break;
-                case 'BloqueadorPU':
-                    if (player == player1) {
-                        PowerUp1.setTexture('BPU');
-                        PowerUp1.alpha = 1;
-                    } else {
-                        PowerUp2.setTexture('BPU');
-                        PowerUp2.alpha = 1;
-                    }
-                    break;
-                case 'MovimientoRapido':
-                    if (player == player1) {
-                        PowerUp1.setTexture('MRPU');
-                        PowerUp1.alpha = 1;
-                    } else {
-                        PowerUp2.setTexture('MRPU');
-                        PowerUp2.alpha = 1;
-                    }
-                    break;
-                case 'MultiplicadorPuntos':
-                    if (player == player1) {
-                        PowerUp1.setTexture('MPPU');
-                        PowerUp1.alpha = 1;
-                    } else {
-                        PowerUp2.setTexture('MPPU');
-                        PowerUp2.alpha = 1;
-                    }
-                    break;
-                case 'Ralentizador':
-                    if (player == player1) {
-                        PowerUp1.setTexture('RPU');
-                        PowerUp1.alpha = 1;
-                    } else {
-                        PowerUp2.setTexture('RPU');
-                        PowerUp2.alpha = 1;
-                    }
-                    break;
+            function actuScore() {
+                Score1.setText(` ${player1.score}`);
+                Score2.setText(` ${player2.score}`);
             }
-        }
 
-        function usarPU(player, escena) {
-            switch (player.tipoPU) {
-                case 'AumentoCapacidadPU':
-                    lanzarAumentoCapacidad.play();
-                    player.tipoPU = ' '
-                    if (player == player1) {
-                        PowerUp1.alpha = 0
-                    } else {
-                        PowerUp2.alpha = 0
-                    }
-                    player.size = 1.0;
-                    escena.time.delayedCall(5000, () => {
-                        player.size = 0.8;
-                        player.canPU = true
-                    });
-                    break;
-                case 'BloqueadorPU':
-                    lanzarBloqueo.play();
-                    player.tipoPU = ''
-                    if (player == player1) {
-                        PowerUp1.alpha = 0
-                        player2.speed = 0
-                        escena.time.delayedCall(5000, () => {
-                            player2.speed = 10;
-                            player.canPU = true
-                        });
-                    } else {
-                        PowerUp2.alpha = 0
-                        player1.speed = 0
-                        escena.time.delayedCall(5000, () => {
-                            player1.speed = 10;
-                            player.canPU = true
-                        });
-                    }
-                    break;
-                case 'MovimientoRapido':                    
-                    lanzarVelocidad.play();
-                    player.tipoPU = ''
-                    if (player == player1) {
-                        PowerUp1.alpha = 0
-                    } else {
-                        PowerUp2.alpha = 0
-                    }
-                    player.speed = 15;
-                    escena.time.delayedCall(5000, () => {
-                        player.speed = 10;
-                        player.canPU = true
-                    });
-                    break;
-                case 'MultiplicadorPuntos':
-                    lanzarX2.play();
-                    player.tipoPU = ''
-                    if (player == player1) {
-                        PowerUp1.alpha = 0
-                    } else {
-                        PowerUp2.alpha = 0
-                    }
-                    player.multiplicador = 1.5;
-                    escena.time.delayedCall(5000, () => {
-                        player.multiplicador = 1;
-                        player.canPU = true
-                    });
-                    break;
-                case 'Ralentizador':
-                    lanzarHielo.play();
-                    player.tipoPU = ''
-                    if (player == player1) {
-                        PowerUp1.alpha = 0
-                        player2.speed = 5
-                        escena.time.delayedCall(5000, () => {
-                            player2.speed = 10;
-                            player.canPU = true
-                        });
-                    } else {
-                        PowerUp2.alpha = 0
-                        player1.speed = 5
-                        escena.time.delayedCall(5000, () => {
-                            player1.speed = 10;
-                            player.canPU = true
-                        });
-                    }
-                    break;
-            }
-        }
-
-        function setSize() {
-            player1.setScale(player1.size)
-            player2.setScale(player2.size)
-        }
-
-        function actuScore() {
-            Score1.setText(` ${player1.score}`);
-            Score2.setText(` ${player2.score}`);
         }
     },
+
+    iniciarTemporizador: function () {
+        // Configuración del temporizador
+        this.temporizadorEvento = this.time.addEvent({
+            delay: 1000, // 1 segundo
+            callback: this.actualizarTemporizador,
+            callbackScope: this,
+            loop: true
+        });
+    },
+    
+    actualizarTemporizador: function () {
+        // Reducir el tiempo restante
+        this.tiempoRestante--;
+    
+        // Actualizar el texto del temporizador
+        const minutos = Math.floor(this.tiempoRestante / 60);
+        const segundos = this.tiempoRestante % 60;
+        this.textoTemporizador.setText(`Tiempo: ${minutos}:${segundos < 10 ? '0' : ''}${segundos}`);
+    
+        // Si el tiempo se agota, termina la partida
+        if (this.tiempoRestante <= 0) {
+            this.temporizadorEvento.remove(); // Detener el temporizador
+    
+            // Decidir el resultado del juego
+            if (player1.score > player2.score) {
+                this.scene.start("Victoria1", {
+                    player1Score: player1.score,
+                    player2Score: player2.score
+                });
+            } else if (player2.score > player1.score) {
+                this.scene.start("Victoria2", {
+                    player1Score: player1.score,
+                    player2Score: player2.score
+                });
+            } else {
+                this.scene.start("Empate", {
+                    player1Score: player1.score,
+                    player2Score: player2.score
+                });
+            }
+        }
+    },
+
 
     onResume: function () {
         console.log("Reanudando MainGame...");
