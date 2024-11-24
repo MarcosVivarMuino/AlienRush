@@ -169,7 +169,7 @@ Las teclas “W”, “A”, “S” y “D” para el movimiento por el tablero
 
 ---
 # <a name="_ipcbhvuykbdn"></a>**DISEÑOS Y CONCEPT-ARTS**
-## <a name="_wdmtdubkpk0m"></a>**1. PERSONAJES**
+## <a name="_wdmtdubkpk0m"></a>**1. PERSONAJES ABDUCIBLES**
 Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de ellos tienen desempeñan acciones y resultados diferentes al obtenerlos.
 ### <a name="_a9lqf8fpogrj"></a>**1.1. PERSONAJES HUMANOS** 
 **Descripción**: Los humanos comunes y corrientes que son el objetivo principal de las abducciones.
@@ -255,20 +255,27 @@ Para la granja, se escogerá un mapa en el que podremos ver elementos como tract
 
 *Ilustración 7: Idea de mapa - Granja*
 
+Finalmente se ha diseñado un fondo que actúe como escenario del videojuego, de tal forma que contenga elementos simples que hagan ver que el escenario es un simple añadido visual, que no afecte a la vista de los humanos y demás personajes.
+
+*Ilustración 8: Escenario de granja*
+
 ### **3.2. Nivel 2:  Ciudad**
 
 En el nivel de la ciudad, será algo parecido a la siguiente imagen, un escenario que represente una pequeña ciudad donde se representan elementos visuales que puedan servir en ella como coches, carreteras o edificios. 
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.018.jpeg)![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.019.jpeg)
 
-*Ilustración 8: Idea de mapa - Ciudad*
+*Ilustración 9: Idea de mapa - Ciudad*
 
+Al igual que con la granja, también se ha diseñado un fondo de una ciudad que actúa como escenario visual del juego, en el que los personajes sean claramente distinguibles y guarde coherencia con el estilo.
+
+*Ilustración 10: Escenario de ciudad*
 
 ### **3.3. Nivel 3:  Playa**
 
 Para la playa, será como las siguientes imágenes, un lugar donde se aprecian sombrillas, hamacas o barcos.
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.020.jpeg)![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.021.jpeg)
-*Ilustración 9: Idea de mapa - Playa*
+*Ilustración 11: Idea de mapa - Playa*
 ## <a name="_hny94wsh6l5s"></a><a name="_pf56dhm7t7m1"></a>
 
 ## <a name="_8xpebftqo7pc"></a>**4. LOGO DEL JUEGO**
@@ -277,12 +284,13 @@ Para la playa, será como las siguientes imágenes, un lugar donde se aprecian s
 
 ![ref2]
 
-*Ilustración 10: Logo horizontal*
+*Ilustración 12: Logo horizontal*
 
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.023.png)
 
-*Ilustración 11: Logo vertical*
+*Ilustración 13: Logo vertical*
+
 ## <a name="_olfolzwqujl1"></a>**5. MENÚ DE INICIO**
 Esta pantalla incluirá el logo del juego y tres botones adicionales, desde los cuáles podremos jugar, ir a las opciones y acceder a los créditos, que incluirán la información de todos los participantes del proyecto.
 ## <a name="_4zagq7yyoirj"></a>**6. INTERFAZ DE VICTORIA Y DERROTA**
@@ -290,6 +298,14 @@ Un mensaje de victoria en la pantalla del ganador en la que se especifique los p
 
 Un mensaje de derrota en la pantalla del perdedor en la que se especifique los puntos obtenidos y el motivo de la derrota.
 
+## <a name="_ofghojrc3ozq"></a>**7. POTENCIADORES**
+Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
+
+### <a name="_v1gmtfbu50b7"></a>**7.1. MULTIPLICADOR DE VELOCIDAD**
+### <a name="_v1gmtfbu50b7"></a>**7.2. MULTIPLICADOR DE PUNTOS**
+### <a name="_v1gmtfbu50b7"></a>**7.3. AUMENTO DE CAPACIDAD**
+### <a name="_v1gmtfbu50b7"></a>**7.4. BLOQUEADOR**
+### <a name="_v1gmtfbu50b7"></a>**7.5. RALENTIZADOR**
 ---
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
 “***Alien Rush***!” contará con músicas de fondo tanto en el menú como en la propia partida, con la intención de no hacer aburrida la escena ni el recorrido entre las diferentes pantallas.
@@ -304,7 +320,7 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.024.png)
 
-
+*Ilustración 14: Flujograma*
 
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
