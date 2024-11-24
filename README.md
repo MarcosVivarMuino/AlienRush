@@ -357,6 +357,38 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 ![](IMAGENES/Congelado.png)
 *Ilustración 25: Ralentizador*
 
+## <a name="_ofghojrc3ozq"></a>**10. PERSONAJES FINALES**
+Aquí se muestran los personajes y objetos abducibles del juego en su versión final, es decir, la que permanecerá desde ya en el juego.
+
+### <a name="_v1gmtfbu50b7"></a>**10.1. JUGADORES**
+Para los jugadores se ha decidido realizar el diseño de una nave que será de color diferente para cada jugador.
+![](IMAGENES/Player1.png)
+*Ilustración 26: Player 1*
+
+![](IMAGENES/Player2.png)
+*Ilustración 27: Player 2*
+
+### <a name="_v1gmtfbu50b7"></a>**10.2. HUMANOS**
+Existen diferentes tipos de humanos que pueden ser abducidos como ya se ha explicado.
+
+![](IMAGENES/Personaje1AR.png)
+*Ilustración 28: Humano normal*
+
+![](IMAGENES/MilitarAR.png)
+*Ilustración 29: Militar*
+
+![](IMAGENES/SuperheroeAR.png)
+*Ilustración 30: Superheroe*
+
+### <a name="_v1gmtfbu50b7"></a>**10.3. OTROS ABDUCIBLES**
+Aquí los diseños de otros objetos u animales abducibles como la chatarra y las vacas.
+
+![](IMAGENES/ChatarraAR.png)
+*Ilustración 31: Chatarra*
+
+![](IMAGENES/VacaAR.png)
+*Ilustración 32: Vaca*
+
 ---
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
 “***Alien Rush***!” contará con músicas de fondo tanto en el menú como en la propia partida, con la intención de no hacer aburrida la escena ni el recorrido entre las diferentes pantallas.
@@ -371,7 +403,7 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 
 ![](IMAGENES/Flujograma_V2.png)
 
-*Ilustración 26: Flujograma*
+*Ilustración 33: Flujograma*
 
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
