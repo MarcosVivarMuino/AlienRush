@@ -315,7 +315,7 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 ![](IMAGENES/CapacidadAumentada.png)
 
 ### <a name="_v1gmtfbu50b7"></a>**7.4. BLOQUEADOR**
-![](IMAGENES/Bloqueador.png)
+![](IMAGENES/Bloqueo.png)
 
 ### <a name="_v1gmtfbu50b7"></a>**7.5. RALENTIZADOR**
 ![](IMAGENES/Congelado.png)
