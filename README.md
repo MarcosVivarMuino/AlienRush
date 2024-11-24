@@ -257,6 +257,8 @@ Para la granja, se escogerá un mapa en el que podremos ver elementos como tract
 
 Finalmente se ha diseñado un fondo que actúe como escenario del videojuego, de tal forma que contenga elementos simples que hagan ver que el escenario es un simple añadido visual, que no afecte a la vista de los humanos y demás personajes.
 
+![](IMAGENES/Granja2.png)
+
 *Ilustración 8: Escenario de granja*
 
 ### **3.2. Nivel 2:  Ciudad**
@@ -268,6 +270,8 @@ En el nivel de la ciudad, será algo parecido a la siguiente imagen, un escenari
 *Ilustración 9: Idea de mapa - Ciudad*
 
 Al igual que con la granja, también se ha diseñado un fondo de una ciudad que actúa como escenario visual del juego, en el que los personajes sean claramente distinguibles y guarde coherencia con el estilo.
+
+![](IMAGENES/Ciudad.png)
 
 *Ilustración 10: Escenario de ciudad*
 
@@ -302,10 +306,20 @@ Un mensaje de derrota en la pantalla del perdedor en la que se especifique los p
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
 
 ### <a name="_v1gmtfbu50b7"></a>**7.1. MULTIPLICADOR DE VELOCIDAD**
+![](IMAGENES/Cohete.png)
+
 ### <a name="_v1gmtfbu50b7"></a>**7.2. MULTIPLICADOR DE PUNTOS**
+![](IMAGENES/Multiplicador.png)
+
 ### <a name="_v1gmtfbu50b7"></a>**7.3. AUMENTO DE CAPACIDAD**
+![](IMAGENES/CapacidadAumentada.png)
+
 ### <a name="_v1gmtfbu50b7"></a>**7.4. BLOQUEADOR**
+![](IMAGENES/Bloqueador.png)
+
 ### <a name="_v1gmtfbu50b7"></a>**7.5. RALENTIZADOR**
+![](IMAGENES/Congelado.png)
+
 ---
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
 “***Alien Rush***!” contará con músicas de fondo tanto en el menú como en la propia partida, con la intención de no hacer aburrida la escena ni el recorrido entre las diferentes pantallas.
