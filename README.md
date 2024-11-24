@@ -297,28 +297,65 @@ Para la playa, será como las siguientes imágenes, un lugar donde se aprecian s
 
 ## <a name="_olfolzwqujl1"></a>**5. MENÚ DE INICIO**
 Esta pantalla incluirá el logo del juego y tres botones adicionales, desde los cuáles podremos jugar, ir a las opciones y acceder a los créditos, que incluirán la información de todos los participantes del proyecto.
+![](IMAGENES/Inicio.png)
+*Ilustración 14: Pantalla de inicio*
+
 ## <a name="_4zagq7yyoirj"></a>**6. INTERFAZ DE VICTORIA Y DERROTA**
 Un mensaje de victoria en la pantalla del ganador en la que se especifique los puntos obtenidos y el motivo de victoria.
 
+![](IMAGENES/PantallaFinal.png)
+*Ilustración 15: Pantalla de victoria*
+
 Un mensaje de derrota en la pantalla del perdedor en la que se especifique los puntos obtenidos y el motivo de la derrota.
 
-## <a name="_ofghojrc3ozq"></a>**7. POTENCIADORES**
+## <a name="_ofghojrc3ozq"></a>**7. MENÚS**
+Se han diseñado las interfaces básicas necesarias para el desarrollo normal del videojuego, que incluyen algunas de las siguientes pantallas:
+
+### <a name="_v1gmtfbu50b7"></a>**7.2. PANTALLA DE AJUSTES**
+![](IMAGENES/Ajustes.png)
+*Ilustración 16: Pantalla de ajustes*
+
+### <a name="_v1gmtfbu50b7"></a>**7.3. PANTALLA DE CREDITOS**
+![](IMAGENES/Creditos.png)
+*Ilustración 17: Pantalla de créditos*
+
+### <a name="_v1gmtfbu50b7"></a>**7.4. PANTALLA DE ELECCIÓN DE MAPA**
+![](IMAGENES/Mapas.png)
+*Ilustración 18: Pantalla de elección de mapa*
+
+#### <a name="_v1gmtfbu50b7"></a>**8. EJEMPLOS DE PARTIDA**
+Aquí se mostrarán las pantallas que muestren los ejemplos de como se verían las partidas del juego final.
+
+![](IMAGENES/PartidaEjemplo.png)
+*Ilustración 19: Ejemplo de partida*
+
+Además se ha diseñado una pequeña interfaz para el tutorial del juego.
+
+![](IMAGENES/Tutorial.png)
+*Ilustración 20: Pantalla de tutorial*
+
+## <a name="_ofghojrc3ozq"></a>**9. POTENCIADORES**
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
 
-### <a name="_v1gmtfbu50b7"></a>**7.1. MULTIPLICADOR DE VELOCIDAD**
+### <a name="_v1gmtfbu50b7"></a>**9.1. MULTIPLICADOR DE VELOCIDAD**
 ![](IMAGENES/Cohete.png)
+*Ilustración 21: Multiplicador de velocidad*
 
-### <a name="_v1gmtfbu50b7"></a>**7.2. MULTIPLICADOR DE PUNTOS**
+### <a name="_v1gmtfbu50b7"></a>**9.2. MULTIPLICADOR DE PUNTOS**
 ![](IMAGENES/Multiplicador.png)
+*Ilustración 22: Multiplicador de puntos*
 
-### <a name="_v1gmtfbu50b7"></a>**7.3. AUMENTO DE CAPACIDAD**
+### <a name="_v1gmtfbu50b7"></a>**9.3. AUMENTO DE CAPACIDAD**
 ![](IMAGENES/CapacidadAumentada.png)
+*Ilustración 23: Aumento de capacidad*
 
-### <a name="_v1gmtfbu50b7"></a>**7.4. BLOQUEADOR**
+### <a name="_v1gmtfbu50b7"></a>**9.4. BLOQUEADOR**
 ![](IMAGENES/Bloqueo.png)
+*Ilustración 24: Bloqueador*
 
-### <a name="_v1gmtfbu50b7"></a>**7.5. RALENTIZADOR**
+### <a name="_v1gmtfbu50b7"></a>**9.5. RALENTIZADOR**
 ![](IMAGENES/Congelado.png)
+*Ilustración 25: Ralentizador*
 
 ---
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
@@ -332,9 +369,9 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 ---
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
-![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.024.png)
+![](IMAGENES/Flujograma_V2.png)
 
-*Ilustración 14: Flujograma*
+*Ilustración 26: Flujograma*
 
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
