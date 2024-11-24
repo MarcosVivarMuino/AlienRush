@@ -9,6 +9,7 @@ var ElegirEscenario = new Phaser.Class({
     preload: function () {
         this.load.image('fondoMenu', 'assets/ElegirEscenario/fondoMenu.png');
         this.load.image('granja', 'assets/ElegirEscenario/BotonGranja.png');
+        this.load.image('ciudad', 'assets/ElegirEscenario/BotonCiudad.png');
         this.load.image('proximamente', 'assets/ElegirEscenario/BotonProximamente.png');
         this.load.image('volver', 'assets/ElegirEscenario/BotonVolver.png');
 
@@ -42,7 +43,7 @@ var ElegirEscenario = new Phaser.Class({
         
         /************************* VARIABLES *************************/
         let granja = this.add.image(1370, 400, 'granja');
-        let ciudad = this.add.image(1580, 400, 'proximamente');
+        let ciudad = this.add.image(1580, 400, 'ciudad');
         let proximamente1 = this.add.image(1370, 580, 'proximamente');
         let proximamente2 = this.add.image(1580, 580, 'proximamente');
         let volver = this.add.image(1470, 780, 'volver');

@@ -134,7 +134,8 @@ h2 {
 .personaje img, .powerup img, .escenario img {
     display: block;
     margin: 0 auto 10px;
-    max-width: 100%;
+    padding: 5%;
+    max-width: 80%;
     height: auto;
     border-radius: 10px;
 }
