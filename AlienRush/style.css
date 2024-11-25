@@ -27,9 +27,10 @@ h1 {
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 50px;
     color: #ddd;
 }
+
 
 
 /* Contenedor para 'Historia' y 'Temática' */
@@ -58,7 +59,7 @@ h2 {
 }
 
 .historia p, .tematica p {
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1.6;
     color: #ddd;
     margin: 10px 0;
@@ -123,7 +124,7 @@ h2 {
 }
 
 /* Tarjetas de contenido */
-.personaje, .powerup, .escenario {
+.controles, .personaje, .powerup, .escenario {
     background: rgba(144, 144, 144, 0.286);
     padding: 15px;
     border-radius: 10px;
@@ -142,7 +143,7 @@ h2 {
 
 .controles h2, .personaje h2, .powerup h2, .escenario h2 {
     margin-top: 10px;
-    font-size: 1.6em;
+    font-size: 30px;
     color: #b0ffc9;
 }
 
@@ -154,7 +155,6 @@ ul {
 
 ul li {
     margin: 5px 0;
-    font-size: 16px;
+    font-size: 40px;
     color: #ddd;
 }
-
