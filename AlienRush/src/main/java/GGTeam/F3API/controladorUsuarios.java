@@ -63,13 +63,13 @@ public class controladorUsuarios {
 		}
 	}
 	
-	@DeleteMapping("/usuario/{nombre}")
-	public ResponseEntity<Usuario> deleteUsuario(@PathVariable("nombre") String nombre){
+	@DeleteMapping("/usuario")
+	public ResponseEntity<Usuario> deleteUsuario(@RequestBody Usuario u){
 		boolean usuarioEliminado = false;
 
 	    for (int i = 0; i < listUsu.size(); i++) {
 	        Usuario aux = listUsu.get(i);
-	        if (aux.getNombre().equals(nombre)) {
+	        if (aux.getNombre().equals(u.getNombre()) && aux.getPassword().equals(u.getPassword())) {
 	            listUsu.remove(i);
 	            usuarioEliminado = true;
 	            break;
