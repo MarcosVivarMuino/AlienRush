@@ -25,19 +25,19 @@ public class controladorUsuarios {
 	
 	List<Usuario> listUsu = buscarLista();
 	
-	@GetMapping("/usuario/{nombre}")
-	public ResponseEntity<Usuario> getUsuario(@PathVariable("nombre") String nombre) {
-		boolean comp = false;
-		Usuario aux = buscarUsuario(nombre);
-		
-		if(!aux.getNombre().equals(null) && !aux.getPassword().equals(null)) {
-			comp = true;
-		}
-		if(comp){
-			return new ResponseEntity<>(aux, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+	@PostMapping("/usuario/{nombre}")
+	public ResponseEntity<Usuario> getUsuario(@RequestBody Usuario u) {
+	    if (u.getNombre() == null || u.getPassword() == null) {
+	        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	    }
+
+	    for (Usuario usuario : listUsu) {
+	        if (usuario.getNombre().equals(u.getNombre()) && usuario.getPassword().equals(u.getPassword())) {
+	            return new ResponseEntity<>(usuario, HttpStatus.OK); // Usuario encontrado y credenciales correctas
+	        }
+	    }
+
+	    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	@GetMapping("/listausuarios")
@@ -65,46 +65,43 @@ public class controladorUsuarios {
 	
 	@DeleteMapping("/usuario/{nombre}")
 	public ResponseEntity<Usuario> deleteUsuario(@PathVariable("nombre") String nombre){
-		boolean comp = false;
-		Usuario aux;
-		Usuario fin = listUsu.get(0);
-		
-		for(int i = 0; i<listUsu.size();i++) {
-			aux = listUsu.get(i);
-			if(aux.getNombre().equals(nombre)) {
-				fin = aux;
-				listUsu.remove(i);
-				comp = true;
-			}
-		}
-		if(comp){
-			actuFichero();
-			return new ResponseEntity<>(fin, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		boolean usuarioEliminado = false;
+
+	    for (int i = 0; i < listUsu.size(); i++) {
+	        Usuario aux = listUsu.get(i);
+	        if (aux.getNombre().equals(nombre)) {
+	            listUsu.remove(i);
+	            usuarioEliminado = true;
+	            break;
+	        }
+	    }
+
+	    if (usuarioEliminado) {
+	        actuFichero();
+	        return new ResponseEntity<>(HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
 	}
 	
 	@PutMapping("/usuario/{nombre}")
-	public ResponseEntity<Usuario> actuUsuario(@PathVariable("nombre") String nombre, @RequestBody Usuario u){
-		boolean comp = false;
-		Usuario aux;
-		Usuario fin = listUsu.get(0);
-		
-		for(int i = 0; i<listUsu.size();i++) {
-			aux = listUsu.get(i);
-			if(aux.getNombre().equals(nombre)) {
-				listUsu.set(i,u);
-				comp = true;
-				fin = aux;
-			}
-		}
-		if(comp){
-			actuFichero();
-			return new ResponseEntity<>(fin, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+	public ResponseEntity<String> actuUsuario(@PathVariable("nombre") String nombre, @RequestBody Usuario u) {
+	    boolean usuarioActualizado = false;
+
+	    for (Usuario aux : listUsu) {
+	        if (aux.getNombre().equals(nombre) && aux.getPassword().equals(u.getPassword())) {
+	            aux.setPassword(u.getNuevaPassword());
+	            usuarioActualizado = true;
+	            break;
+	        }
+	    }
+
+	    if (usuarioActualizado) {
+	        actuFichero();
+	        return new ResponseEntity<>("Contraseña actualizada correctamente.", HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>("Usuario no encontrado o contraseña incorrecta.", HttpStatus.NOT_FOUND);
+	    }
 	}
 	
 	public void actuFichero() {
