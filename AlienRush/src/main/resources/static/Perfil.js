@@ -9,16 +9,20 @@ var Perfil = new Phaser.Class({
     init: function (data) {
         this.musicaMenu = data.musica;  // Música del menú
         this.musicasAdicionales = data.musicas || []; // Música adicional (si la hubiera)
+		this.nombreUsuario = data.nombreUsuario;
     },
 
     preload: function () {
         this.load.image('BotonBC', 'assets/Perfil/BotonBC.png');
         this.load.image('BotonCS', 'assets/Perfil/BotonCS.png');
-        this.load.image('BotonCC', 'assets/Perfil/BotonCC.png');
         this.load.image('BotonCP', 'assets/Perfil/BotonCP.png');
 
 		this.load.image('BotonAtrasFlecha', 'assets/Perfil/BotonAtrasFlecha.png');
 
+		this.load.image('Confirmacion', 'assets/BorrarCuenta/RecuadroEstasSeguro.png');
+		this.load.image('BotonSi', 'assets/BorrarCuenta/BotonSi.png');
+		this.load.image('BotonNo', 'assets/BorrarCuenta/BotonNo.png');
+		
 	    this.load.image('fondoPerfil', 'assets/Perfil/fondoPerfil.png');
 
     },
@@ -45,13 +49,16 @@ var Perfil = new Phaser.Class({
         }
 
         /************************* VARIABLES *************************/
-        let botonBorrarCuenta = this.add.image(1470, 360, 'BotonBC');
-        let botonCerrarSesion = this.add.image(1470, 500, 'BotonCS');
-        let botonCambiarCuenta = this.add.image(1470, 640, 'BotonCC');
-        let botonCambiarContraseña = this.add.image(1470, 780, 'BotonCP');
+        let botonCambiarContraseña = this.add.image(1470, 360, 'BotonCP');
+        let botonBorrarCuenta = this.add.image(1470, 500, 'BotonBC');
+        let botonCerrarSesion = this.add.image(1470, 640, 'BotonCS');
 
 		let BotonAtrasFlecha = this.add.image(100, 100, 'BotonAtrasFlecha');
 
+		// Confirmación
+        let Confirmacion = this.add.image(1480, 440, 'Confirmacion').setVisible(false);
+        let BotonSi = this.add.image(1410, 480, 'BotonSi').setVisible(false);
+        let BotonNo = this.add.image(1545, 480, 'BotonNo').setVisible(false);
         /************************* BOTONES *************************/
         //botonBorrarCuenta
         botonBorrarCuenta.setInteractive();
@@ -64,23 +71,43 @@ var Perfil = new Phaser.Class({
         //botonCerrarSesion
         botonCerrarSesion.setInteractive();
         botonCerrarSesion.on("pointerdown", () => {
-            this.scene.start("MenuScene");
+			Confirmacion.setVisible(true);
+	        BotonSi.setVisible(true);
+	        BotonNo.setVisible(true);
+			botonBorrarCuenta.setVisible(false);
+			botonCerrarSesion.setVisible(false);
+			botonCambiarContraseña.setVisible(false);
         })
         botonCerrarSesion.on("pointerover", () => { botonCerrarSesion.setScale(1.2); })
         botonCerrarSesion.on("pointerout", () => { botonCerrarSesion.setScale(1); })
 
-        //botonCambiarCuenta
-        botonCambiarCuenta.setInteractive();
-        botonCambiarCuenta.on("pointerdown", () => {
-            this.scene.start("MenuScene");
-        })
-        botonCambiarCuenta.on("pointerover", () => { botonCambiarCuenta.setScale(1.2); })
-        botonCambiarCuenta.on("pointerout", () => { botonCambiarCuenta.setScale(1); })
+		// BotonNo
+        BotonNo.setInteractive();
+        BotonNo.on("pointerdown", () => {
+            // Ocultar cuadro de confirmación
+            Confirmacion.setVisible(false);
+            BotonSi.setVisible(false);
+            BotonNo.setVisible(false);
+			botonBorrarCuenta.setVisible(true);
+			botonCerrarSesion.setVisible(true);
+			botonCambiarContraseña.setVisible(true);
+        });
+        BotonNo.on("pointerover", () => { BotonNo.setScale(1.2); });
+        BotonNo.on("pointerout", () => { BotonNo.setScale(1); });
 
+        // BotonSi
+        BotonSi.setInteractive();
+        BotonSi.on("pointerdown", () => {
+			this.scene.start("SignInScene");
+		});
+        BotonSi.on("pointerover", () => { BotonSi.setScale(1.2); });
+        BotonSi.on("pointerout", () => { BotonSi.setScale(1); });
+				
+       
         //botonCambiarContraseña
         botonCambiarContraseña.setInteractive();
         botonCambiarContraseña.on("pointerdown", () => {
-            this.scene.start("MenuScene");
+            this.scene.start("CambiarContraseña", {nombreUsuario: nombreUsuario});
         })
         botonCambiarContraseña.on("pointerover", () => { botonCambiarContraseña.setScale(1.2); })
         botonCambiarContraseña.on("pointerout", () => { botonCambiarContraseña.setScale(1); })
