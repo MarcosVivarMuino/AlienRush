@@ -4,12 +4,7 @@ var CambiarContraseña = new Phaser.Class({
 
     initialize: function () {
         Phaser.Scene.call(this, { "key": "CambiarContraseña" });
-
     },
-	
-	init: function (data) {
-		this.nombreUsuario = data.nombreUsuario;
-	},
 
     preload: function () {
 		//Imagenes
@@ -25,6 +20,7 @@ var CambiarContraseña = new Phaser.Class({
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
 		
 		//Html
+		this.load.html('nameform', 'assets/nombre.html');
 		this.load.html('passform', 'assets/contra.html');
     },
 
@@ -62,8 +58,9 @@ var CambiarContraseña = new Phaser.Class({
 
 
         /************************* VARIABLES *************************/
-		const cuadroContra = this.add.dom(1470, 360).createFromCache('passform');
-		const cuadroNuevaContra = this.add.dom(1470, 460).createFromCache('passform');
+		const cuadroNombre = this.add.dom(1470, 360).createFromCache('nameform');
+		const cuadroContra = this.add.dom(1470, 460).createFromCache('passform');
+		const cuadroNuevaContra = this.add.dom(1470, 560).createFromCache('newpassform');
 		
 		let BotonAceptar = this.add.image(1530, 640, 'BotonAceptar');
 		let BotonAtrasFlecha = this.add.image(1320, 640, 'BotonAtrasFlecha');
@@ -74,22 +71,22 @@ var CambiarContraseña = new Phaser.Class({
         let BotonNo = this.add.image(1545, 480, 'BotonNo').setVisible(false);
         /************************* BOTONES *************************/
         //BotonAceptar
-		BotonAceptar.setInteractive();
-	    BotonAceptar.on("pointerdown", () => {
-            const inputTextPw = cuadroContra.getChildByName('password');
-            const inputTextNewPw = cuadroNuevaContra.getChildByName('password');
+        BotonAceptar.setInteractive();
+        BotonAceptar.on("pointerdown", () => {
+			const inputTextId = cuadroNombre.getChildByName('nameField');
+			const inputTextPw = cuadroContra.getChildByName('password');
 
-            if (inputTextPw.value !== '' && inputTextNewPw.value !== '') {
-                Confirmacion.setVisible(true);
-                BotonSi.setVisible(true);
-                BotonNo.setVisible(true);
-                cuadroContra.setVisible(false);
-                cuadroNuevaContra.setVisible(false);
-                BotonAceptar.setVisible(false);
-                BotonAtrasFlecha.setVisible(false);
-		 
+			if (inputTextId.value !== '' && inputTextPw.value !== '') {
+		        Confirmacion.setVisible(true);
+		        BotonSi.setVisible(true);
+		        BotonNo.setVisible(true);
+				cuadroNombre.setVisible(false);
+				cuadroContra.setVisible(false);
+				BotonAceptar.setVisible(false);
+				BotonAtrasFlecha.setVisible(false);
+				
 			} else {
-		        alert("Por favor, completa ambos campos.");
+			    alert("Por favor, completa ambos campos.");
 			}
         })
         BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); })
@@ -110,8 +107,8 @@ var CambiarContraseña = new Phaser.Class({
             Confirmacion.setVisible(false);
             BotonSi.setVisible(false);
             BotonNo.setVisible(false);
+			cuadroNombre.setVisible(true);
 			cuadroContra.setVisible(true);
-			cuadroNuevaContra.setVisible(true);
 			BotonAceptar.setVisible(true);
 			BotonAtrasFlecha.setVisible(true);
         });
@@ -121,34 +118,33 @@ var CambiarContraseña = new Phaser.Class({
         // BotonSi
         BotonSi.setInteractive();
         BotonSi.on("pointerdown", () => {
+            const inputTextId = cuadroNombre.getChildByName('nameField');
             const inputTextPw = cuadroContra.getChildByName('password');
-            const inputTextNewPw = cuadroNuevaContra.getChildByName('password');
 
-			
             if (inputTextId.value !== '' && inputTextPw.value !== '') {
-                
-				const usuario = {
-	               nombre: this.nombreUsuario, // Suponiendo que el nombre está disponible
-	               password: inputTextPw.value,
-	               nuevaPassword: inputTextNewPw.value
-	           };
-			   
-			   $.ajax({
-                  method: "PUT",
-                  url: ipLocal + "usuario",
-                  data: JSON.stringify(usuario),
-                  contentType: "application/json",
-                  processData: false
-              })
-              .done(function (data, textStatus, jqXHR) {
-					if (textStatus === "success") {
-                      	this.scene.start("Perfil"); // Volver al perfil
-					}
-              }.bind(this))
-              .fail(function (jqXHR) {
-                  alert("Error al actualizar la contraseña.");
-                  
-              });
+                const usuario = {
+                    nombre: inputTextId.value,
+                    password: inputTextPw.value
+                };
+
+                $.ajax({
+                    method: "DELETE",
+                    url: ipLocal + "usuario",
+                    data: JSON.stringify(usuario),
+                    contentType: "application/json",
+                    processData: false
+                })
+                .done(function (data, textStatus, jqXHR) {
+                    if (textStatus === "success") {
+                        this.scene.start("Perfil"); // Volver al perfil o menú principal
+                    }
+					
+                }.bind(this))
+				
+                .fail(function (data) {
+                    alert("Usuario o contraseña incorrecta.");
+                   
+				});
 				
             }
 
