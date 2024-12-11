@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +28,22 @@ public class controladorUsuarios {
 	
 	List<Usuario> listUsu = buscarLista();
 	
-	@PostMapping("/usuario/{nombre}")
+	@GetMapping("api/getIp")
+    @ResponseBody
+    public String getServerIp() {
+        try {
+            // Obtiene la dirección IP del servidor
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            String serverIp = inetAddress.getHostAddress();
+            System.out.println(inetAddress);
+            return serverIp;
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return "No se pudo obtener la dirección IP del servidor.";
+        }
+    }
+	
+	@PostMapping("/usuarioInicio")
 	public ResponseEntity<Usuario> getUsuario(@RequestBody Usuario u) {
 	    if (u.getNombre() == null || u.getPassword() == null) {
 	        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
