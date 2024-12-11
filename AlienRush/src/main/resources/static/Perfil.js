@@ -53,7 +53,7 @@ var Perfil = new Phaser.Class({
         //botonBorrarCuenta
         botonBorrarCuenta.setInteractive();
         botonBorrarCuenta.on("pointerdown", () => {
-            this.scene.start("MenuScene");
+            this.scene.start("BorrarCuenta");
         })
         botonBorrarCuenta.on("pointerover", () => { botonBorrarCuenta.setScale(1.2); })
         botonBorrarCuenta.on("pointerout", () => { botonBorrarCuenta.setScale(1); })
