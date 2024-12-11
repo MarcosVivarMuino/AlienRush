@@ -12,18 +12,20 @@ var Perfil = new Phaser.Class({
     },
 
     preload: function () {
-        this.load.image('BotonBorrarCuenta', 'assets/Perfil/BotonBorrarCuenta.png');
-        this.load.image('BotonCerrarSesion', 'assets/Perfil/BotonCerrarSesion.png');
-        this.load.image('BotonCambiarCuenta', 'assets/Perfil/BotonCambiarCuenta.png');
-        this.load.image('BotonCambiarContraseña', 'assets/Perfil/BotonCambiarContraseña.png');
-        this.load.image('iconoPerfil', 'assets/Perfil/iconoPerfil.png');
-        this.load.image('fondoMenu', 'assets/Menu/fondoMenu.png');
+        this.load.image('BotonBC', 'assets/Perfil/BotonBC.png');
+        this.load.image('BotonCS', 'assets/Perfil/BotonCS.png');
+        this.load.image('BotonCC', 'assets/Perfil/BotonCC.png');
+        this.load.image('BotonCP', 'assets/Perfil/BotonCP.png');
+
+		this.load.image('BotonAtrasFlecha', 'assets/Perfil/BotonAtrasFlecha.png');
+
+	    this.load.image('fondoPerfil', 'assets/Perfil/fondoPerfil.png');
 
     },
 
     create: function () {
         /************************* FONDO *************************/
-        this.add.image(875, 440, 'fondoMenu');
+        this.add.image(875, 440, 'fondoPerfil');
         
         //AUDIO
         // Inicializar música del menú si no existe
@@ -43,11 +45,12 @@ var Perfil = new Phaser.Class({
         }
 
         /************************* VARIABLES *************************/
-        let botonBorrarCuenta = this.add.image(700, 440, 'BotonBorrarCuenta');
-        let botonCerrarSesion = this.add.image(1000, 440, 'BotonCerrarSesion');
-        let botonCambiarCuenta = this.add.image(700, 580, 'BotonCambiarCuenta');
-        let botonCambiarContraseña = this.add.image(1000, 580, 'BotonCambiarContraseña');
-        this.add.image(1450, 500, 'iconoPerfil').setScale(0.8);
+        let botonBorrarCuenta = this.add.image(1470, 360, 'BotonBC');
+        let botonCerrarSesion = this.add.image(1470, 500, 'BotonCS');
+        let botonCambiarCuenta = this.add.image(1470, 640, 'BotonCC');
+        let botonCambiarContraseña = this.add.image(1470, 780, 'BotonCP');
+
+		let BotonAtrasFlecha = this.add.image(100, 100, 'BotonAtrasFlecha');
 
         /************************* BOTONES *************************/
         //botonBorrarCuenta
@@ -81,5 +84,14 @@ var Perfil = new Phaser.Class({
         })
         botonCambiarContraseña.on("pointerover", () => { botonCambiarContraseña.setScale(1.2); })
         botonCambiarContraseña.on("pointerout", () => { botonCambiarContraseña.setScale(1); })
+		
+		//BotonAtrasFlecha
+        BotonAtrasFlecha.setInteractive();
+        BotonAtrasFlecha.on("pointerdown", () => {
+            this.scene.start("MenuScene");
+        })
+        BotonAtrasFlecha.on("pointerover", () => { BotonAtrasFlecha.setScale(1.2); })
+        BotonAtrasFlecha.on("pointerout", () => { BotonAtrasFlecha.setScale(1); })
+
     }
 });
