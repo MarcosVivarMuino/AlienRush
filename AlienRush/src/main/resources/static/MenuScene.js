@@ -5,6 +5,10 @@ var MenuScene = new Phaser.Class({
     initialize: function () {
         Phaser.Scene.call(this, { "key": "MenuScene" });
     },
+    
+    init: function(data) {
+		nombreUsuario = data.nombreUsuario
+    },
 
     preload: function () {
         this.load.image('fondoMenu', 'assets/Menu/fondoMenu.png');
@@ -12,12 +16,22 @@ var MenuScene = new Phaser.Class({
         this.load.image('ajustes', 'assets/Menu/BotonAjustes.png');
         this.load.image('creditos', 'assets/Menu/BotonCreditos.png');
         this.load.image('iconoPerfil', 'assets/Menu/iconoPerfil.png');
+        this.load.image('enviar', 'assets/SignScene/BotonAceptar.png');
 
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
         this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
+        
+        this.load.html('nameform', 'assets/nombre.html');
     },
 
     create: function () {
+		////////////////////////////////IP//////////////////////////////////////////
+		fetch('/api/getIp')
+    			.then(response => response.text())
+    			.then(data => {
+				ipLocal = "http://"+data+":8080/"
+        		console.log(ipLocal); 
+    	});
         /************************* FONDO *************************/
         //IMAGEN
         this.add.image(875, 440, 'fondoMenu');
@@ -47,8 +61,31 @@ var MenuScene = new Phaser.Class({
         let ajustes = this.add.image(1470, 500, 'ajustes');
         let creditos = this.add.image(1470, 640, 'creditos');
         let iconoPerfil = this.add.image(100, 80, 'iconoPerfil').setScale(0.7);
+        nombreUsuario = "Juan"
 
+		////////////////////////////////////////CHAT///////////////////////////////////////////
+		// Fondo del chat
+    const chatBackground = this.add.rectangle(0, 520, 500, 300, 0x000000).setOrigin(0).setAlpha(0.8);
 
+    // Texto de mensajes
+    const chatMessages = this.add.text(0, 1500, '', {
+        font: '25px Arial',
+        fill: '#ffffff',
+        wordWrap: { width: 480 }
+    }).setOrigin(0);
+
+    // Entrada de texto para el mensaje
+    const chatInput = this.add.dom(210, 850).createFromCache('nameform');
+    
+    btnEnviar = this.add.image(460, 850, 'enviar').setInteractive().setScale(0.4);
+
+   btnEnviar.on('pointerdown', () => {
+            const inputField = chatInput.getChildByName('nameField');
+            if (inputField && inputField.value.trim() !== '') {
+                this.sendMessage(inputField.value);
+                inputField.value = '';
+            }
+        });
         /************************* BOTONES *************************/
         //JUGAR
         play.setInteractive();
@@ -80,10 +117,56 @@ var MenuScene = new Phaser.Class({
         //ICONO PERFIL
         iconoPerfil.setInteractive();
         iconoPerfil.on("pointerdown", () => {
-            this.scene.start("Perfil");
+            this.scene.start("Perfil", {"nombreUsuario":nombreUsuario});
         })
         iconoPerfil.on("pointerover", () => { iconoPerfil.setScale(0.9); })
         iconoPerfil.on("pointerout", () => { iconoPerfil.setScale(0.7); })
-    },
+        
+    setInterval(() => {
+   this.refreshChat(chatMessages, ipLocal);
+	}, 1000);
+},
+    sendMessage: function (message) {
+     const chatMessage = {
+        NombreUsuario: nombreUsuario,
+        mensaje: message
+    };
+    
+     console.log("Enviando mensaje:", chatMessage);
 
+    // Enviar el mensaje al servidor
+    $.ajax({
+        method: "POST",
+        url: ipLocal + "chat", // La URL de tu servidor
+        data: JSON.stringify(chatMessage), // Convierte el objeto a JSON
+        contentType: "application/json",  // Asegúrate de establecer el tipo de contenido
+        success: function () {
+            console.log("Mensaje enviado");
+        },
+        error: function (xhr, status, error) {
+            console.error("Error al enviar mensaje", error);
+        }
+    });
+	},
+
+	refreshChat: function (chatMessages, ipLocal) {
+        // Obtener mensajes del servidor
+        $.ajax({
+            method: "GET",
+            url: ipLocal + "chat",
+            success: function (data) {
+				console.log(data);
+                // Invertir los mensajes para que los más recientes estén en la parte superior
+            	newMessages = data.map(msg => `${msg.NombreUsuario}: ${msg.mensaje}`).reverse();
+            	chatMessages.text = newMessages.join('\n');
+
+            	// Actualizar la posición para que el texto de los mensajes más recientes aparezca hacia arriba
+            	// Cambiar la posición 'y' para desplazar los mensajes hacia arriba
+            	chatMessages.setY(820 - chatMessages.height);  // Ajuste de la posición para que el texto se mueva hacia arriba
+            },
+            error: function () {
+                console.error("Error al actualizar chat");
+            }
+        });
+    }
 });
