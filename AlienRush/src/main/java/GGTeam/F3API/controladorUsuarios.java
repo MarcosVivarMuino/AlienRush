@@ -102,12 +102,12 @@ public class controladorUsuarios {
 	    }
 	}
 	
-	@PutMapping("/usuario/{nombre}")
-	public ResponseEntity<String> actuUsuario(@PathVariable("nombre") String nombre, @RequestBody Usuario u) {
+	@PutMapping("/usuario")
+	public ResponseEntity<String> actuUsuario(@RequestBody Usuario u) {
 	    boolean usuarioActualizado = false;
 
 	    for (Usuario aux : listUsu) {
-	        if (aux.getNombre().equals(nombre) && aux.getPassword().equals(u.getPassword())) {
+	        if (aux.getNombre().equals(u.getNombre()) && aux.getPassword().equals(u.getPassword())) {
 	            aux.setPassword(u.getNuevaPassword());
 	            usuarioActualizado = true;
 	            break;

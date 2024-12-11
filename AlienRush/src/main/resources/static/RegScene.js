@@ -1,14 +1,14 @@
-var SignInScene = new Phaser.Class({
+var RegScene = new Phaser.Class({
 
     Extends: Phaser.Scene,
 
     initialize: function () {
-        Phaser.Scene.call(this, { "key": "SignInScene" });
+        Phaser.Scene.call(this, { "key": "RegScene" });
     },
 
     preload: function () {
 		//Imagenes
-        this.load.image('fondoInicio', 'assets/SignScene/Pantalla IS.png');
+        this.load.image('fondoRegistro', 'assets/RegScene/Pantalla Registro.png');
         this.load.image('Aceptar', 'assets/SignScene/BotonAceptar.png');
         this.load.image('Contrasena', 'assets/SignScene/LetrasContraseña.png');
         this.load.image('Usuario', 'assets/SignScene/LetrasUsuario.png');
@@ -32,7 +32,7 @@ var SignInScene = new Phaser.Class({
     	});
         /************************* FONDO *************************/
         //IMAGEN
-        this.add.image(875, 440, 'fondoInicio');
+        this.add.image(875, 440, 'fondoRegistro');
         //AUDIO
         // Inicializar música del menú si no existe
         if (!GlobalMusic.musicaMenu) {
@@ -57,13 +57,14 @@ var SignInScene = new Phaser.Class({
         /************************* VARIABLES *************************/
         const elementId1 = this.add.dom(1500, 400).createFromCache('nameform');
         const elementPw1 = this.add.dom(1500, 500).createFromCache('passform');
+        cont = this;
         ready1 = this.add.image(1500, 650, 'Aceptar').setScale(1);
         this.add.image(1380, 360, 'Usuario').setScale(1);
         this.add.image(1410, 455, 'Contrasena').setScale(1);
-        crearCuenta = this.add.image(1410, 555, 'Contrasena').setScale(1);
+        inicioSesion = this.add.image(1410, 555, 'Contrasena').setScale(1);
         
         ready1.setInteractive();
-        crearCuenta.setInteractive();
+        inicioSesion.setInteractive();
 
         /************************* BOTONES *************************/
         ready1.on("pointerdown",()=>{
@@ -77,7 +78,7 @@ var SignInScene = new Phaser.Class({
 						
 					method: "POST",
 					
-					url:ipLocal+"usuarioInicio",
+					url:ipLocal+"usuario",
 					
 					data: JSON.stringify({nombre: inputTextId.value, password: inputTextPw.value}),
 					
@@ -91,7 +92,7 @@ var SignInScene = new Phaser.Class({
 						console.log(data);
 						console.log(textStatus+" "+jqXHR.statusCode());
 						if(textStatus == "success"){
-                           self.scene.start("MenuScene", {"nombreUsuario":inputTextId});
+                            self.scene.start("MenuScene", {"nombreUsuario":inputTextId});
 						}
 					}).fail(function(data){
 						alert("Usuario invalido o no registrado");
@@ -107,8 +108,8 @@ var SignInScene = new Phaser.Class({
             ready1.setScale(1);
         })
         
-        crearCuenta.on("pointerdown",()=>{
-            this.scene.start("RegScene");
+        inicioSesion.on("pointerdown",()=>{
+            this.scene.start("SignInScene");
         })
     },
 });
