@@ -1,4 +1,4 @@
-var MenuScene = new Phaser.Class({
+var SignInScene = new Phaser.Class({
 
     Extends: Phaser.Scene,
 
@@ -9,17 +9,25 @@ var MenuScene = new Phaser.Class({
     preload: function () {
 		//Imagenes
         this.load.image('fondoMenu', 'assets/Menu/fondoMenu.png');
-        this.load.image('play', 'assets/Menu/BotonJugar.png');
-        this.load.image('ajustes', 'assets/Menu/BotonAjustes.png');
-        this.load.image('creditos', 'assets/Menu/BotonCreditos.png');
-        this.load.image('iconoPerfil', 'assets/Perfil/iconoPerfil.png');
+        this.load.image('Aceptar', 'assets/SignScene/BotonAceptar.png');
 		
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
         this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
+        
+        //Otras cosas
+        this.load.html('nameform', 'assets/nombre.html');
+        this.load.html('passform', 'assets/contra.html');
     },
 
     create: function () {
+		///////////////////////////////////////////////////////API//////////////////////////////////////////////////////////////
+		fetch('/api/getIp')
+    			.then(response => response.text())
+    			.then(data => {
+				ipLocal = "http://"+data+":8080/"
+        		console.log(ipLocal); 
+    	});
         /************************* FONDO *************************/
         //IMAGEN
         this.add.image(875, 440, 'fondoMenu');
@@ -45,47 +53,51 @@ var MenuScene = new Phaser.Class({
 
 
         /************************* VARIABLES *************************/
-        let play = this.add.image(1470, 360, 'play');
-        let ajustes = this.add.image(1470, 500, 'ajustes');
-        let creditos = this.add.image(1470, 640, 'creditos');
-        let iconoPerfil = this.add.image(70, 70, 'iconoPerfil').setScale(0.15);
-
+        const elementId1 = this.add.dom(900, 400).createFromCache('nameform');
+        const elementPw1 = this.add.dom(900, 475).createFromCache('passform');
+        ready1 = this.add.image(900, 590, 'Aceptar').setScale(1);
+        
+        ready1.setInteractive();
 
         /************************* BOTONES *************************/
-        //JUGAR
-        play.setInteractive();
-        play.on("pointerdown", () => {
-            this.scene.start("ElegirEscenario");
+        ready1.on("pointerdown",()=>{
+            const inputTextId = elementId1.getChildByName('nameField');
+            const inputTextPw = elementPw1.getChildByName('password');
+            
+                if (inputTextId.value !== '' && inputTextPw.value !== '' )
+                {
+                    $.ajax({
+						
+					method: "POST",
+					
+					url:ipLocal+"usuarioInicio",
+					
+					data: JSON.stringify({nombre: inputTextId.value, password: inputTextPw.value}),
+					
+					processData: false,
+					
+					headers: {
+						"Content-type":"application/json"
+					}
+					
+					}).done(function(data, textStatus, jqXHR) {
+						console.log(data);
+						console.log(textStatus+" "+jqXHR.statusCode());
+						if(textStatus == "success"){
+                            this.scene.start("MenuScene");
+						}
+					}).fail(function(data){
+						alert("Usuario invalido o no registrado");
+					});
+                }
         })
-        play.on("pointerover", () => { play.setScale(1.2); })
-        play.on("pointerout", () => { play.setScale(1); })
+        
+        ready1.on("pointerover",()=>{
+            ready1.setScale(1.2);
+        })
 
-        //AJUSTES
-        ajustes.setInteractive();
-        ajustes.on("pointerdown", () => {
-            this.scene.start("Ajustes", {
-                musica: GlobalMusic.musicaMenu,
-                musicas: [GlobalMusic.musicaMenu, GlobalMusic.musicaJuego]
-            });
+        ready1.on("pointerout",()=>{
+            ready1.setScale(1);
         })
-        ajustes.on("pointerover", () => { ajustes.setScale(1.2); })
-        ajustes.on("pointerout", () => { ajustes.setScale(1); })
-
-        //CREDITOS
-        creditos.setInteractive();
-        creditos.on("pointerdown", () => {
-            this.scene.start("Creditos");
-        })
-        creditos.on("pointerover", () => { creditos.setScale(1.2); })
-        creditos.on("pointerout", () => { creditos.setScale(1); })
-
-        //ICONO PERFIL
-        iconoPerfil.setInteractive();
-        iconoPerfil.on("pointerdown", () => {
-            this.scene.start("Perfil");
-        })
-        iconoPerfil.on("pointerover", () => { iconoPerfil.setScale(0.2); })
-        iconoPerfil.on("pointerout", () => { iconoPerfil.setScale(0.15); })
     },
-
 });
