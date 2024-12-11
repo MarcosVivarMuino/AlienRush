@@ -1,26 +1,30 @@
-var BorrarCuenta = new Phaser.Class({
+var CambiarContraseña = new Phaser.Class({
 
     Extends: Phaser.Scene,
 
     initialize: function () {
-        Phaser.Scene.call(this, { "key": "BorrarCuenta" });
+        Phaser.Scene.call(this, { "key": "CambiarContraseña" });
+
     },
+	
+	init: function (data) {
+		this.nombreUsuario = data.nombreUsuario;
+	},
 
     preload: function () {
 		//Imagenes
-        this.load.image('fondoBorrarCuenta', 'assets/BorrarCuenta/fondoBorrarCuenta.png');
-        this.load.image('BotonAceptar', 'assets/BorrarCuenta/BotonAceptar.png');
-        this.load.image('BotonAtrasFlecha', 'assets/BorrarCuenta/BotonAtrasFlecha.png');
+        this.load.image('fondoCambiarContraseña', 'assets/CambiarContraseña/fondoCambiarContraseña.png');
+        this.load.image('BotonAceptar', 'assets/CambiarContraseña/BotonAceptar.png');
+        this.load.image('BotonAtrasFlecha', 'assets/CambiarContraseña/BotonAtrasFlecha.png');
 		
-		this.load.image('Confirmacion', 'assets/BorrarCuenta/RecuadroEstasSeguro.png');
-		this.load.image('BotonSi', 'assets/BorrarCuenta/BotonSi.png');
-		this.load.image('BotonNo', 'assets/BorrarCuenta/BotonNo.png');
+		this.load.image('Confirmacion', 'assets/CambiarContraseña/RecuadroEstasSeguro.png');
+		this.load.image('BotonSi', 'assets/CambiarContraseña/BotonSi.png');
+		this.load.image('BotonNo', 'assets/CambiarContraseña/BotonNo.png');
 		
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
 		
 		//Html
-		this.load.html('nameform', 'assets/nombre.html');
 		this.load.html('passform', 'assets/contra.html');
     },
 
@@ -35,7 +39,7 @@ var BorrarCuenta = new Phaser.Class({
 				
         /************************* FONDO *************************/
         //IMAGEN
-        this.add.image(875, 440, 'fondoBorrarCuenta');
+        this.add.image(875, 440, 'fondoCambiarContraseña');
         //AUDIO
         // Inicializar música del menú si no existe
         if (!GlobalMusic.musicaMenu) {
@@ -58,8 +62,8 @@ var BorrarCuenta = new Phaser.Class({
 
 
         /************************* VARIABLES *************************/
-		const cuadroNombre = this.add.dom(1470, 360).createFromCache('nameform');
-		const cuadroContra = this.add.dom(1470, 460).createFromCache('passform');
+		const cuadroContra = this.add.dom(1470, 360).createFromCache('passform');
+		const cuadroNuevaContra = this.add.dom(1470, 460).createFromCache('passform');
 		
 		let BotonAceptar = this.add.image(1530, 640, 'BotonAceptar');
 		let BotonAtrasFlecha = this.add.image(1320, 640, 'BotonAtrasFlecha');
@@ -70,22 +74,22 @@ var BorrarCuenta = new Phaser.Class({
         let BotonNo = this.add.image(1545, 480, 'BotonNo').setVisible(false);
         /************************* BOTONES *************************/
         //BotonAceptar
-        BotonAceptar.setInteractive();
-        BotonAceptar.on("pointerdown", () => {
-			const inputTextId = cuadroNombre.getChildByName('nameField');
-			const inputTextPw = cuadroContra.getChildByName('password');
+		BotonAceptar.setInteractive();
+	    BotonAceptar.on("pointerdown", () => {
+            const inputTextPw = cuadroContra.getChildByName('password');
+            const inputTextNewPw = cuadroNuevaContra.getChildByName('password');
 
-			if (inputTextId.value !== '' && inputTextPw.value !== '') {
-		        Confirmacion.setVisible(true);
-		        BotonSi.setVisible(true);
-		        BotonNo.setVisible(true);
-				cuadroNombre.setVisible(false);
-				cuadroContra.setVisible(false);
-				BotonAceptar.setVisible(false);
-				BotonAtrasFlecha.setVisible(false);
-				
+            if (inputTextPw.value !== '' && inputTextNewPw.value !== '') {
+                Confirmacion.setVisible(true);
+                BotonSi.setVisible(true);
+                BotonNo.setVisible(true);
+                cuadroContra.setVisible(false);
+                cuadroNuevaContra.setVisible(false);
+                BotonAceptar.setVisible(false);
+                BotonAtrasFlecha.setVisible(false);
+		 
 			} else {
-			    alert("Por favor, completa ambos campos.");
+		        alert("Por favor, completa ambos campos.");
 			}
         })
         BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); })
@@ -106,8 +110,8 @@ var BorrarCuenta = new Phaser.Class({
             Confirmacion.setVisible(false);
             BotonSi.setVisible(false);
             BotonNo.setVisible(false);
-			cuadroNombre.setVisible(true);
 			cuadroContra.setVisible(true);
+			cuadroNuevaContra.setVisible(true);
 			BotonAceptar.setVisible(true);
 			BotonAtrasFlecha.setVisible(true);
         });
@@ -117,33 +121,34 @@ var BorrarCuenta = new Phaser.Class({
         // BotonSi
         BotonSi.setInteractive();
         BotonSi.on("pointerdown", () => {
-            const inputTextId = cuadroNombre.getChildByName('nameField');
             const inputTextPw = cuadroContra.getChildByName('password');
+            const inputTextNewPw = cuadroNuevaContra.getChildByName('password');
 
+			
             if (inputTextId.value !== '' && inputTextPw.value !== '') {
-                const usuario = {
-                    nombre: inputTextId.value,
-                    password: inputTextPw.value
-                };
-
-                $.ajax({
-                    method: "DELETE",
-                    url: ipLocal + "usuario",
-                    data: JSON.stringify(usuario),
-                    contentType: "application/json",
-                    processData: false
-                })
-                .done(function (data, textStatus, jqXHR) {
-                    if (textStatus === "success") {
-                        this.scene.start("Perfil"); // Volver al perfil o menú principal
-                    }
-					
-                }.bind(this))
-				
-                .fail(function (data) {
-                    alert("Usuario o contraseña incorrecta.");
-                   
-				});
+                
+				const usuario = {
+	               nombre: this.nombreUsuario, // Suponiendo que el nombre está disponible
+	               password: inputTextPw.value,
+	               nuevaPassword: inputTextNewPw.value
+	           };
+			   
+			   $.ajax({
+                  method: "PUT",
+                  url: ipLocal + "usuario",
+                  data: JSON.stringify(usuario),
+                  contentType: "application/json",
+                  processData: false
+              })
+              .done(function (data, textStatus, jqXHR) {
+					if (textStatus === "success") {
+                      	this.scene.start("Perfil"); // Volver al perfil
+					}
+              }.bind(this))
+              .fail(function (jqXHR) {
+                  alert("Error al actualizar la contraseña.");
+                  
+              });
 				
             }
 
