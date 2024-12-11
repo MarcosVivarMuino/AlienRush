@@ -11,7 +11,7 @@ var MenuScene = new Phaser.Class({
         this.load.image('play', 'assets/Menu/BotonJugar.png');
         this.load.image('ajustes', 'assets/Menu/BotonAjustes.png');
         this.load.image('creditos', 'assets/Menu/BotonCreditos.png');
-        this.load.image('iconoPerfil', 'assets/Perfil/iconoPerfil.png');
+        this.load.image('iconoPerfil', 'assets/Menu/iconoPerfil.png');
 
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
         this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
@@ -46,7 +46,7 @@ var MenuScene = new Phaser.Class({
         let play = this.add.image(1470, 360, 'play');
         let ajustes = this.add.image(1470, 500, 'ajustes');
         let creditos = this.add.image(1470, 640, 'creditos');
-        let iconoPerfil = this.add.image(70, 70, 'iconoPerfil').setScale(0.15);
+        let iconoPerfil = this.add.image(100, 80, 'iconoPerfil').setScale(0.7);
 
 
         /************************* BOTONES *************************/
@@ -82,8 +82,8 @@ var MenuScene = new Phaser.Class({
         iconoPerfil.on("pointerdown", () => {
             this.scene.start("Perfil");
         })
-        iconoPerfil.on("pointerover", () => { iconoPerfil.setScale(0.2); })
-        iconoPerfil.on("pointerout", () => { iconoPerfil.setScale(0.15); })
+        iconoPerfil.on("pointerover", () => { iconoPerfil.setScale(0.9); })
+        iconoPerfil.on("pointerout", () => { iconoPerfil.setScale(0.7); })
     },
 
 });
