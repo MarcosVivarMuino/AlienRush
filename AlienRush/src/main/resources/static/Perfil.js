@@ -107,7 +107,7 @@ var Perfil = new Phaser.Class({
         //botonCambiarContraseña
         botonCambiarContraseña.setInteractive();
         botonCambiarContraseña.on("pointerdown", () => {
-            this.scene.start("CambiarContraseña", {nombreUsuario: nombreUsuario});
+            this.scene.start("CambiarContraseña", {"nombreUsuario": nombreUsuario});
         })
         botonCambiarContraseña.on("pointerover", () => { botonCambiarContraseña.setScale(1.2); })
         botonCambiarContraseña.on("pointerout", () => { botonCambiarContraseña.setScale(1); })

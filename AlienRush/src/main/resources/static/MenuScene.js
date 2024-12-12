@@ -117,7 +117,7 @@ var MenuScene = new Phaser.Class({
         //ICONO PERFIL
         iconoPerfil.setInteractive();
         iconoPerfil.on("pointerdown", () => {
-            this.scene.start("Perfil", {"nombreUsuario":nombreUsuario});
+            this.scene.start("Perfil", {nombreUsuario :nombreUsuario});
         })
         iconoPerfil.on("pointerover", () => { iconoPerfil.setScale(0.9); })
         iconoPerfil.on("pointerout", () => { iconoPerfil.setScale(0.7); })

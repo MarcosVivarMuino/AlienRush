@@ -6,6 +6,10 @@ var CambiarContraseña = new Phaser.Class({
         Phaser.Scene.call(this, { "key": "CambiarContraseña" });
     },
 
+	init: function (data) {
+       this.nombreUsuario = data.nombreUsuario;            
+   },
+	   
     preload: function () {
 		//Imagenes
         this.load.image('fondoCambiarContraseña', 'assets/CambiarContraseña/fondoCambiarContraseña.png');
