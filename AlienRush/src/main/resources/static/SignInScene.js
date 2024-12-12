@@ -12,6 +12,8 @@ var SignInScene = new Phaser.Class({
         this.load.image('Aceptar', 'assets/SignScene/BotonAceptar.png');
         this.load.image('Contrasena', 'assets/SignScene/LetrasContraseña.png');
         this.load.image('Usuario', 'assets/SignScene/LetrasUsuario.png');
+		this.load.image('BotonR', 'assets/SignScene/BotonRegistrarse.png');
+
 		
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
@@ -57,13 +59,13 @@ var SignInScene = new Phaser.Class({
         /************************* VARIABLES *************************/
         const elementId1 = this.add.dom(1500, 400).createFromCache('nameform');
         const elementPw1 = this.add.dom(1500, 500).createFromCache('passform');
-        ready1 = this.add.image(1500, 650, 'Aceptar').setScale(1);
+		ready1 = this.add.image(1500, 690, 'Aceptar').setScale(1);
+		BotonR = this.add.image(1500, 800, 'BotonR').setScale(1);
         this.add.image(1380, 360, 'Usuario').setScale(1);
         this.add.image(1410, 455, 'Contrasena').setScale(1);
-        crearCuenta = this.add.image(1410, 555, 'Contrasena').setScale(1);
         
         ready1.setInteractive();
-        crearCuenta.setInteractive();
+        BotonR.setInteractive();
 
         /************************* BOTONES *************************/
         ready1.on("pointerdown",()=>{
@@ -97,6 +99,9 @@ var SignInScene = new Phaser.Class({
 						alert("Usuario invalido o no registrado");
 					});
                 }
+				else{
+					alert("Rellena ambos campos");
+				}
         })
         
         ready1.on("pointerover",()=>{
@@ -107,8 +112,16 @@ var SignInScene = new Phaser.Class({
             ready1.setScale(1);
         })
         
-        crearCuenta.on("pointerdown",()=>{
+        BotonR.on("pointerdown",()=>{
             this.scene.start("RegScene");
+        })
+		
+		BotonR.on("pointerover",()=>{
+            BotonR.setScale(1.2);
+        })
+
+        BotonR.on("pointerout",()=>{
+            BotonR.setScale(1);
         })
     },
 });

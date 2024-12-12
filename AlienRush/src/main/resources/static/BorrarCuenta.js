@@ -145,7 +145,9 @@ var BorrarCuenta = new Phaser.Class({
                    
 				});
 				
-            }
+			}else{
+				alert("Rellena ambos campos");
+			}
 
         });
         BotonSi.on("pointerover", () => { BotonSi.setScale(1.2); });
