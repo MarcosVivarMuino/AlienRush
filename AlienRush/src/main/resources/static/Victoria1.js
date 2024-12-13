@@ -30,25 +30,25 @@ var Victoria1 = new Phaser.Class({
         }
 
         //TEXTO
-        this.add.text(450, 400, `${this.nombreUsuario} 1`, {
+        this.add.text(510, 400, `${this.nombreUsuario} 1`, {
             fontSize: '80px',
             color: '#FFFFFF',
             fontFamily: 'Impact, fantasy'
         }).setOrigin(0.5);
 
-        this.add.text(450, 500, `${this.player1Score}`, {
+        this.add.text(510, 500, `${this.player1Score}`, {
             fontSize: '80px',
             color: '#FFFFFF',
             fontFamily: 'Impact, fantasy'
         }).setOrigin(0.5);
 
-        this.add.text(450, 650, `${this.nombreUsuario} 2`, {
+        this.add.text(510, 650, `${this.nombreUsuario} 2`, {
             fontSize: '80px',
             color: '#FFFFFF',
             fontFamily: 'Impact, fantasy'
         }).setOrigin(0.5);
 
-        this.add.text(450, 750, `${this.player2Score}`, {
+        this.add.text(510, 750, `${this.player2Score}`, {
             fontSize: '80px',
             color: '#FFFFFF',
             fontFamily: 'Impact, fantasy'
@@ -71,7 +71,7 @@ var Victoria1 = new Phaser.Class({
         }
 
         /************************* VARIABLES *************************/
-        let botonMenu = this.add.image(875, 800, 'botonMenu')
+        let botonMenu = this.add.image(1420, 390, 'botonMenu')
 
         /************************* BOTONES *************************/
         //MENU       
