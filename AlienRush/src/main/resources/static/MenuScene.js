@@ -127,7 +127,7 @@ var MenuScene = new Phaser.Class({
 },
     sendMessage: function (message) {
      const chatMessage = {
-        NombreUsuario: nombreUsuario,
+        NombreUsuario: this.nombreUsuario,
         mensaje: message
     };
     
@@ -149,23 +149,41 @@ var MenuScene = new Phaser.Class({
 	},
 
 	refreshChat: function (chatMessages, ipLocal) {
-        // Obtener mensajes del servidor
-        $.ajax({
-            method: "GET",
-            url: ipLocal + "chat",
-            success: function (data) {
-				console.log(data);
-                // Invertir los mensajes para que los más recientes estén en la parte superior
-            	newMessages = data.map(msg => `${msg.NombreUsuario}: ${msg.mensaje}`).reverse();
-            	chatMessages.text = newMessages.join('\n');
+    // Obtener mensajes del servidor
+    $.ajax({
+        method: "GET",
+        url: ipLocal + "chat",
+        success: function (data) {
+            console.log(data);
 
-            	// Actualizar la posición para que el texto de los mensajes más recientes aparezca hacia arriba
-            	// Cambiar la posición 'y' para desplazar los mensajes hacia arriba
-            	chatMessages.setY(820 - chatMessages.height);  // Ajuste de la posición para que el texto se mueva hacia arriba
-            },
-            error: function () {
-                console.error("Error al actualizar chat");
+            // Limitar el número de mensajes mostrados
+            const maxMessages = 10; // Mostrar solo los últimos 50 mensajes
+            if (data.length > maxMessages) {
+                data = data.slice(data.length - maxMessages);
             }
-        });
-    }
+
+            // Crear un array de mensajes en formato pila inversa (más recientes abajo)
+            const formattedMessages = data.map(msg => `${msg.NombreUsuario}: ${msg.mensaje}`);
+
+            // Renderizar los mensajes en orden inverso, más recientes abajo
+            chatMessages.text = formattedMessages.join('\n');
+
+            // Ajustar la posición del texto para alinear los mensajes con el borde inferior del contenedor
+            const containerHeight = 300; // Altura del área de chat
+            const totalTextHeight = chatMessages.height; // Altura total del texto
+
+            if (totalTextHeight > containerHeight) {
+                // Si el texto excede la altura del contenedor, alinear el texto al borde inferior
+                chatMessages.setY(520 + containerHeight - totalTextHeight);
+            } else {
+                // Si hay suficiente espacio, alinear el texto al área inferior del contenedor
+                chatMessages.setY(520 + (containerHeight - totalTextHeight));
+            }
+        },
+        error: function () {
+            console.error("Error al actualizar chat");
+        }
+    });
+}
+
 });
