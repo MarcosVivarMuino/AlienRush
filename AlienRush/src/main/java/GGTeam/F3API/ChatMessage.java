@@ -1,7 +1,12 @@
 package GGTeam.F3API;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ChatMessage {
-	private String NombreUsuario;
+	@JsonProperty("NombreUsuario")
+    private String NombreUsuario;
+
+    @JsonProperty("mensaje")
     private String mensaje;
 
     // Getters y Setters
