@@ -48,7 +48,7 @@ var Victoria1 = new Phaser.Class({
             fontFamily: 'Impact, fantasy'
         }).setOrigin(0.5);
 
-        this.add.text(1350, 750, `${this.player2Score}`, {
+        this.add.text(450, 750, `${this.player2Score}`, {
             fontSize: '80px',
             color: '#FFFFFF',
             fontFamily: 'Impact, fantasy'
