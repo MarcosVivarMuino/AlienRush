@@ -7,7 +7,7 @@ var MenuScene = new Phaser.Class({
     },
     
     init: function(data) {
-		nombreUsuario = data.nombreUsuario
+		this.nombreUsuario = data.nombreUsuario
     },
 
     preload: function () {
@@ -61,25 +61,24 @@ var MenuScene = new Phaser.Class({
         let ajustes = this.add.image(1470, 500, 'ajustes');
         let creditos = this.add.image(1470, 640, 'creditos');
         let iconoPerfil = this.add.image(100, 80, 'iconoPerfil').setScale(0.7);
-        nombreUsuario = "Juan"
 
 		////////////////////////////////////////CHAT///////////////////////////////////////////
 		// Fondo del chat
-    const chatBackground = this.add.rectangle(0, 520, 500, 300, 0x000000).setOrigin(0).setAlpha(0.8);
-
-    // Texto de mensajes
-    const chatMessages = this.add.text(0, 1500, '', {
-        font: '25px Arial',
-        fill: '#ffffff',
-        wordWrap: { width: 480 }
-    }).setOrigin(0);
-
-    // Entrada de texto para el mensaje
-    const chatInput = this.add.dom(210, 850).createFromCache('nameform');
-    
-    btnEnviar = this.add.image(460, 850, 'enviar').setInteractive().setScale(0.4);
-
-   btnEnviar.on('pointerdown', () => {
+	    const chatBackground = this.add.rectangle(0, 520, 500, 300, 0x000000).setOrigin(0).setAlpha(0.8);
+	
+	    // Texto de mensajes
+	    const chatMessages = this.add.text(0, 1500, '', {
+	        font: '25px Arial',
+	        fill: '#ffffff',
+	        wordWrap: { width: 480 }
+	    }).setOrigin(0);
+	
+	    // Entrada de texto para el mensaje
+	    const chatInput = this.add.dom(210, 850).createFromCache('nameform');
+	    
+	    btnEnviar = this.add.image(460, 850, 'enviar').setInteractive().setScale(0.4);
+	
+	   btnEnviar.on('pointerdown', () => {
             const inputField = chatInput.getChildByName('nameField');
             if (inputField && inputField.value.trim() !== '') {
                 this.sendMessage(inputField.value);
@@ -117,7 +116,7 @@ var MenuScene = new Phaser.Class({
         //ICONO PERFIL
         iconoPerfil.setInteractive();
         iconoPerfil.on("pointerdown", () => {
-            this.scene.start("Perfil", {nombreUsuario :nombreUsuario});
+            this.scene.start("Perfil", {"nombreUsuario": this.nombreUsuario});
         })
         iconoPerfil.on("pointerover", () => { iconoPerfil.setScale(0.9); })
         iconoPerfil.on("pointerout", () => { iconoPerfil.setScale(0.7); })
