@@ -23,11 +23,9 @@ public class controladorChat {
 	
 	@PostMapping("/chat")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<ChatMessage> newMessage(@RequestBody ChatMessage chatMessage) {
+	public ResponseEntity<ChatMessage> newMessage(@RequestBody ChatMessage ChatMessage) {
 		 // Procesa el mensaje recibido
-        	System.out.println("Usuario: " + chatMessage.getNombre());
-        	System.out.println("Mensaje: " + chatMessage.getMessage());
-			listUsu.add(chatMessage);
+			listUsu.add(ChatMessage);
 			return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

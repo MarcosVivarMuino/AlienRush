@@ -7,7 +7,7 @@ var MenuScene = new Phaser.Class({
     },
     
     init: function(data) {
-		nombreUsuario = data.nombreUsuario
+		this.nombreUsuario = data.nombreUsuario
     },
 
     preload: function () {
@@ -32,6 +32,17 @@ var MenuScene = new Phaser.Class({
 				ipLocal = "http://"+data+":8080/"
         		console.log(ipLocal); 
     	});
+    	///////////////////////////////////////////INCREMENTAR USUARIOS///////////////////////////////////////////////
+    	$.ajax({
+    		method: "POST",
+    		url: ipLocal + "numusuarios",
+    		success: function () {
+        		console.log("Usuario conectado. Contador incrementado.");
+    		},
+    		error: function () {
+        		console.error("Error al incrementar contador de usuarios.");
+    		}
+		});
         /************************* FONDO *************************/
         //IMAGEN
         this.add.image(875, 440, 'fondoMenu');
@@ -61,25 +72,34 @@ var MenuScene = new Phaser.Class({
         let ajustes = this.add.image(1470, 500, 'ajustes');
         let creditos = this.add.image(1470, 640, 'creditos');
         let iconoPerfil = this.add.image(100, 80, 'iconoPerfil').setScale(0.7);
-        nombreUsuario = "Juan"
+        ///////////////////////////////////////USUARIOSCONECTADOS//////////////////////////////
+        // Mostrar el número de usuarios conectados
+    	const usuariosConectadosText = this.add.text(800, 50, 'Usuarios conectados: 0', {
+        	font: '25px Arial',
+        	fill: '#ffffff'
+    	});
 
+    	// Actualizar el número de usuarios conectados cada segundo
+    	setInterval(() => {
+        	this.refreshUsuariosConectados(usuariosConectadosText);
+    	}, 1000);
 		////////////////////////////////////////CHAT///////////////////////////////////////////
 		// Fondo del chat
-    const chatBackground = this.add.rectangle(0, 520, 500, 300, 0x000000).setOrigin(0).setAlpha(0.8);
+    	const chatBackground = this.add.rectangle(0, 520, 500, 300, 0x000000).setOrigin(0).setAlpha(0.8);
 
-    // Texto de mensajes
-    const chatMessages = this.add.text(0, 1500, '', {
-        font: '25px Arial',
-        fill: '#ffffff',
-        wordWrap: { width: 480 }
-    }).setOrigin(0);
+    	// Texto de mensajes
+    	const chatMessages = this.add.text(0, 1500, '', {
+        	font: '25px Arial',
+        	fill: '#ffffff',
+        	wordWrap: { width: 480 }
+    	}).setOrigin(0);
 
-    // Entrada de texto para el mensaje
-    const chatInput = this.add.dom(210, 850).createFromCache('nameform');
+    	// Entrada de texto para el mensaje
+    	const chatInput = this.add.dom(210, 850).createFromCache('nameform');
     
-    btnEnviar = this.add.image(460, 850, 'enviar').setInteractive().setScale(0.4);
+    	btnEnviar = this.add.image(460, 850, 'enviar').setInteractive().setScale(0.4);
 
-   btnEnviar.on('pointerdown', () => {
+  		btnEnviar.on('pointerdown', () => {
             const inputField = chatInput.getChildByName('nameField');
             if (inputField && inputField.value.trim() !== '') {
                 this.sendMessage(inputField.value);
@@ -127,18 +147,18 @@ var MenuScene = new Phaser.Class({
 	}, 1000);
 },
     sendMessage: function (message) {
-     const chatMessage = {
-        NombreUsuario: nombreUsuario,
-        mensaje: message
+     const ChatMessage = {
+        "NombreUsuario": this.nombreUsuario,
+        "mensaje": message
     };
     
-     console.log("Enviando mensaje:", chatMessage);
+     console.log("Enviando mensaje:", ChatMessage);
 
     // Enviar el mensaje al servidor
     $.ajax({
         method: "POST",
         url: ipLocal + "chat", // La URL de tu servidor
-        data: JSON.stringify(chatMessage), // Convierte el objeto a JSON
+        data: JSON.stringify(ChatMessage), // Convierte el objeto a JSON
         contentType: "application/json",  // Asegúrate de establecer el tipo de contenido
         success: function () {
             console.log("Mensaje enviado");
@@ -150,23 +170,54 @@ var MenuScene = new Phaser.Class({
 	},
 
 	refreshChat: function (chatMessages, ipLocal) {
-        // Obtener mensajes del servidor
-        $.ajax({
-            method: "GET",
-            url: ipLocal + "chat",
-            success: function (data) {
-				console.log(data);
-                // Invertir los mensajes para que los más recientes estén en la parte superior
-            	newMessages = data.map(msg => `${msg.NombreUsuario}: ${msg.mensaje}`).reverse();
-            	chatMessages.text = newMessages.join('\n');
+    // Obtener mensajes del servidor
+    $.ajax({
+        method: "GET",
+        url: ipLocal + "chat",
+        success: function (data) {
+            console.log(data);
 
-            	// Actualizar la posición para que el texto de los mensajes más recientes aparezca hacia arriba
-            	// Cambiar la posición 'y' para desplazar los mensajes hacia arriba
-            	chatMessages.setY(820 - chatMessages.height);  // Ajuste de la posición para que el texto se mueva hacia arriba
-            },
-            error: function () {
-                console.error("Error al actualizar chat");
+            // Limitar el número de mensajes mostrados
+            const maxMessages = 10; // Mostrar solo los últimos 50 mensajes
+            if (data.length > maxMessages) {
+                data = data.slice(data.length - maxMessages);
             }
-        });
-    }
+
+            // Crear un array de mensajes en formato pila inversa (más recientes abajo)
+            const formattedMessages = data.map(msg => `${msg.NombreUsuario}: ${msg.mensaje}`);
+
+            // Renderizar los mensajes en orden inverso, más recientes abajo
+            chatMessages.text = formattedMessages.join('\n');
+
+            // Ajustar la posición del texto para alinear los mensajes con el borde inferior del contenedor
+            const containerHeight = 300; // Altura del área de chat
+            const totalTextHeight = chatMessages.height; // Altura total del texto
+
+            if (totalTextHeight > containerHeight) {
+                // Si el texto excede la altura del contenedor, alinear el texto al borde inferior
+                chatMessages.setY(520 + containerHeight - totalTextHeight);
+            } else {
+                // Si hay suficiente espacio, alinear el texto al área inferior del contenedor
+                chatMessages.setY(520 + (containerHeight - totalTextHeight));
+            }
+        },
+        error: function () {
+            console.error("Error al actualizar chat");
+        }
+    });
+},
+
+	refreshUsuariosConectados: function (usuariosConectadosText) {
+    	$.ajax({
+        	method: "GET",
+        	url: ipLocal + "numusuarios", // Endpoint del servidor
+        	success: function (data) {
+            	usuariosConectadosText.setText(`Usuarios conectados: ${data}`);
+        	},
+        	error: function () {
+            	console.error("Error al obtener usuarios conectados");
+        	}
+    	});
+	}
+
 });

@@ -1,6 +1,7 @@
 package GGTeam.F3API;
 
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,6 +27,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class controladorUsuarios {
 	
 	List<Usuario> listUsu = buscarLista();
+	private AtomicInteger contadorUsuarios = new AtomicInteger(0);
+	
+	// Endpoint para obtener el número de usuarios conectados
+    @GetMapping("/numusuarios")
+    public int getUsuariosConectados() {
+        return contadorUsuarios.get();
+    }
+
+    // Incrementar el contador de usuarios
+    @PostMapping("/numusuarios")
+    public void incrementarUsuarios() {
+        contadorUsuarios.incrementAndGet();
+    }
+
+    // Decrementar el contador de usuarios
+    @PutMapping("/numusuarios")
+    public void decrementarUsuarios() {
+        contadorUsuarios.decrementAndGet();
+    }
 	
 	@GetMapping("api/getIp")
     @ResponseBody

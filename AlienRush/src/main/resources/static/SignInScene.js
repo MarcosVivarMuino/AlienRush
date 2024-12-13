@@ -93,7 +93,7 @@ var SignInScene = new Phaser.Class({
 						console.log(data);
 						console.log(textStatus+" "+jqXHR.statusCode());
 						if(textStatus == "success"){
-                           self.scene.start("MenuScene", {"nombreUsuario" :inputTextId});
+                           self.scene.start("MenuScene", {"nombreUsuario" :inputTextId.value});
 						}
 					}).fail(function(data){
 						alert("Usuario invalido o no registrado");
