@@ -11,7 +11,8 @@ var Victoria2 = new Phaser.Class({
     },
 
     preload: function () {
-        this.load.image('fondoVictoria2', 'assets/Victoria2/fondoVictoria2.png');
+        this.load.image('PantallaPuntuacionCiudadRojo', 'assets/Victoria1/PantallaPuntuacionCiudadRojo.png');
+        this.load.image('PantallaPuntuacionGranjaRojo', 'assets/Victoria1/PantallaPuntuacionGranjaRojo.png');
         this.load.image('botonMenu', 'assets/Victoria2/BotonVMP.png');
         this.load.audio('musicaVictoria', 'audio/victoria.mp3');
 
@@ -20,7 +21,12 @@ var Victoria2 = new Phaser.Class({
     create: function () {
         /************************* FONDO *************************/
         //IMAGEN
-        this.add.image(875, 440, 'fondoVictoria2');
+        if(this.fondo = "fondoGranja"){
+            this.add.image(875, 440, 'PantallaPuntuacionGranjaRojo');
+            
+        }else if(this.fondo = "fondoCiudad"){
+            this.add.image(875, 440, 'PantallaPuntuacionCiudadRojo');
+        }
 
         //TEXTO
         this.add.text(415, 610, `${this.player1Score}`, {

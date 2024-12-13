@@ -8,10 +8,12 @@ var Victoria1 = new Phaser.Class({
     init: function(data){
         this.player1Score = data.player1Score;
         this.player2Score = data.player2Score;
+        this.fondo = data.fondo;
     },
 
     preload: function () {
-        this.load.image('fondoVictoria1', 'assets/Victoria1/fondoVictoria1.png');
+        this.load.image('PantallaPuntuacionCiudadAzul', 'assets/Victoria1/PantallaPuntuacionCiudadAzul.png');
+        this.load.image('PantallaPuntuacionGranjaAzul', 'assets/Victoria1/PantallaPuntuacionGranjaAzul.png');
         this.load.image('botonMenu', 'assets/Victoria1/BotonVMP.png');
         this.load.audio('musicaVictoria', 'audio/victoria.mp3');
     },
@@ -19,7 +21,12 @@ var Victoria1 = new Phaser.Class({
     create: function () {
         /************************* FONDO *************************/
         //IMAGEN
-        this.add.image(875, 440, 'fondoVictoria1');
+        if(this.fondo = "fondoGranja"){
+            this.add.image(875, 440, 'PantallaPuntuacionGranjaAzul');
+            
+        }else if(this.fondo = "fondoCiudad"){
+            this.add.image(875, 440, 'PantallaPuntuacionCiudadAzul');
+        }
 
         //TEXTO
         this.add.text(415, 610, `${this.player1Score}`, {

@@ -262,8 +262,8 @@ var MainGame = new Phaser.Class({
         PowerUp2.alpha = 0
 
         // Instanciacion temporizador
-        this.tiempoRestante = 300; // 5 minutos en segundos
-        this.textoTemporizador = this.add.text(720, 30, 'Tiempo: 5:00', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
+        this.tiempoRestante = 120; // 5 minutos en segundos
+        this.textoTemporizador = this.add.text(720, 30, 'Tiempo: 2:00', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
 
         // Instanciacion Puntos
         Score1 = this.add.text(50, 140, '0', { fontSize: '70px', color: '#ffffff', fontFamily: 'Impact, fantasy' });
@@ -323,8 +323,8 @@ var MainGame = new Phaser.Class({
         this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.paused = false;
 
-        // Intro
-        this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Registrar tecla ESPACIO
+        // Y
+        this.keyY = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Y); 
 
         ///////////////////////////////////////////////////////////////////////FUNCIONES////////////////////////////////////////////////////////////////////////////
         function moverHumanosAleatoriamente() {
@@ -452,7 +452,7 @@ var MainGame = new Phaser.Class({
 
     update: function () {
         // Iniciar juego si no ha comenzado
-        if (!this.gameStarted && Phaser.Input.Keyboard.JustDown(this.keySPC)) {
+        if (!this.gameStarted && Phaser.Input.Keyboard.JustDown(this.keyY)) {
             this.iniciarJuego();
         }
     
@@ -616,6 +616,7 @@ var MainGame = new Phaser.Class({
         this.scene.start(escenaVictoria, {
             player1Score: player1.score,
             player2Score: player2.score,
+            fondo: this.fondo,
         });
     },
     
