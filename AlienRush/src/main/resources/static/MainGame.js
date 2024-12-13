@@ -453,7 +453,7 @@ var MainGame = new Phaser.Class({
 
     update: function () {
         // Iniciar juego si no ha comenzado
-        if (!this.gameStarted && Phaser.Input.Keyboard.JustDown(this.keyY)) {
+        if (!this.gameStarted && (Phaser.Input.Keyboard.JustDown(this.keyY))) {
             this.iniciarJuego();
         }
     
@@ -550,12 +550,20 @@ var MainGame = new Phaser.Class({
     
     // Detecta colisión entre un jugador y objetos
     detectarColision: function (player, objetos, distancia, callback) {
-        objetos.forEach((objeto) => {
-            if (Phaser.Math.Distance.Between(player.x, player.y, objeto.x, objeto.y) < distancia) {
-                callback(objeto);
-            }
-        });
-    },
+    objetos.forEach((objeto) => {
+        	if (
+            	Phaser.Math.Distance.Between(player.x, player.y, objeto.x, objeto.y) < distancia &&
+            	!objeto.isBeingProcessed
+        	) {
+            	objeto.isBeingProcessed = true; // Marca el objeto como procesado
+            	callback(objeto);
+            	this.time.delayedCall(500, () => {
+                	objeto.isBeingProcessed = false; // Desmarca después de 500ms
+            	});
+        	}
+    	});
+	},
+
     
     // Genera un humano en una posición aleatoria
     generarHumano: function () {
@@ -574,14 +582,16 @@ var MainGame = new Phaser.Class({
         humano.play('caminar_' + tipoHumano); // Inicia la animación de caminar
         Humanos.push(humano); // Reemplaza con el sprite animado
     },
-    
-    // Genera una vaca en una posición aleatoria
-    generarVaca: function () {
-        let x = Phaser.Math.Between(20, 1700);
-        let y = Phaser.Math.Between(30, 800);
-        let vaca = this.add.image(x, y, 'Vaca').setScale(0.3);
-        Vacas.push(vaca);
+
+	generarVaca: function () {
+		let maxVacas = 8;
+    	if (Vacas.length >= maxVacas) return; // No generar más vacas si alcanzamos el límite
+    	let x = Phaser.Math.Between(20, 1700);
+    	let y = Phaser.Math.Between(30, 800);
+    	let vaca = this.add.image(x, y, 'Vaca').setScale(0.3);
+    	Vacas.push(vaca);
     },
+
 
     generarEscombro : function(escombro) {
         let x = Phaser.Math.Between(20, 1700);
