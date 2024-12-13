@@ -8,6 +8,8 @@ var Victoria2 = new Phaser.Class({
     init: function (data) {
         this.player1Score = data.player1Score;
         this.player2Score = data.player2Score;
+        this.fondo = data.fondo;
+        this.nombreUsuario = data.nombreUsuario;
     },
 
     preload: function () {
@@ -28,18 +30,30 @@ var Victoria2 = new Phaser.Class({
             this.add.image(875, 440, 'PantallaPuntuacionCiudadRojo');
         }
 
-        //TEXTO
-        this.add.text(415, 610, `${this.player1Score}`, {
-            fontSize: '80px',
-            color: '#FFFFFF',
-            fontFamily: 'Impact, fantasy'
-        }).setOrigin(0.5);
+      //TEXTO
+      this.add.text(450, 400, `${this.nombreUsuario} 2`, {
+        fontSize: '80px',
+        color: '#FFFFFF',
+        fontFamily: 'Impact, fantasy'
+    }).setOrigin(0.5);
 
-        this.add.text(1350, 610, `${this.player2Score}`, {
-            fontSize: '80px',
-            color: '#FFFFFF',
-            fontFamily: 'Impact, fantasy'
-        }).setOrigin(0.5);
+    this.add.text(450, 500, `${this.player2Score}`, {
+        fontSize: '80px',
+        color: '#FFFFFF',
+        fontFamily: 'Impact, fantasy'
+    }).setOrigin(0.5);
+
+    this.add.text(450, 650, `${this.nombreUsuario} 1`, {
+        fontSize: '80px',
+        color: '#FFFFFF',
+        fontFamily: 'Impact, fantasy'
+    }).setOrigin(0.5);
+
+    this.add.text(1350, 750, `${this.player1Score}`, {
+        fontSize: '80px',
+        color: '#FFFFFF',
+        fontFamily: 'Impact, fantasy'
+    }).setOrigin(0.5);
         
         //AUDIO
         // Inicializar música del juego si no existe

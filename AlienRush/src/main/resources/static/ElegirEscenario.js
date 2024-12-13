@@ -6,6 +6,11 @@ var ElegirEscenario = new Phaser.Class({
         Phaser.Scene.call(this, { "key": "ElegirEscenario" });
     },
 
+       
+    init: function(data) {
+		this.nombreUsuario = data.nombreUsuario
+    },
+
     preload: function () {
         this.load.image('fondoMenu', 'assets/ElegirEscenario/fondoMenu.png');
         this.load.image('granja', 'assets/ElegirEscenario/BotonGranja.png');
@@ -54,7 +59,8 @@ var ElegirEscenario = new Phaser.Class({
         granja.setInteractive();
         granja.on("pointerdown", () => {
             this.scene.start("MainGame", {
-                fondo: 'fondoGranja'
+                fondo: 'fondoGranja',
+                nombreUsuario: this.nombreUsuario
             });
         })
         granja.on("pointerover", () => { granja.setScale(1.2); })
@@ -64,7 +70,8 @@ var ElegirEscenario = new Phaser.Class({
         ciudad.setInteractive();
         ciudad.on("pointerdown", () => {
             this.scene.start("MainGame", {
-                fondo: 'fondoCiudad'
+                fondo: 'fondoCiudad',
+                nombreUsuario: this.nombreUsuario
             });
         })
         ciudad.on("pointerover", () => { ciudad.setScale(1.2); })

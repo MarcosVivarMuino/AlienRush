@@ -8,7 +8,8 @@ var MainGame = new Phaser.Class({
 
     init: function (data) {
         this.musicaMenu = data.musicaMenu; 
-        this.fondo = data.fondo;            
+        this.fondo = data.fondo;       
+        this.nombreUsuario = data.nombreUsuario;  
     },
 
     preload: function () {
@@ -617,6 +618,7 @@ var MainGame = new Phaser.Class({
             player1Score: player1.score,
             player2Score: player2.score,
             fondo: this.fondo,
+            nombreUsuario: this.nombreUsuario
         });
     },
     
@@ -658,17 +660,23 @@ var MainGame = new Phaser.Class({
             if (player1.score > player2.score) {
                 this.scene.start("Victoria1", {
                     player1Score: player1.score,
-                    player2Score: player2.score
+                    player2Score: player2.score,
+                    fondo: this.fondo,
+                    nombreUsuario: this.nombreUsuario
                 });
             } else if (player2.score > player1.score) {
                 this.scene.start("Victoria2", {
                     player1Score: player1.score,
-                    player2Score: player2.score
+                    player2Score: player2.score,
+                    fondo: this.fondo,
+                    nombreUsuario: this.nombreUsuario
                 });
             } else {
                 this.scene.start("Empate", {
                     player1Score: player1.score,
-                    player2Score: player2.score
+                    player2Score: player2.score,
+                    fondo: this.fondo,
+                    nombreUsuario: this.nombreUsuario
                 });
             }
         }
