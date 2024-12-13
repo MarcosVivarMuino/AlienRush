@@ -101,7 +101,7 @@ var RegScene = new Phaser.Class({
 							console.log(data);
 							console.log(textStatus+" "+jqXHR.statusCode());
 							if(textStatus == "success"){
-		                           self.scene.start("MenuScene", {"nombreUsuario": inputTextId});
+		                           self.scene.start("MenuScene", {"nombreUsuario": inputTextId.value});
 							}
 						})
 						
