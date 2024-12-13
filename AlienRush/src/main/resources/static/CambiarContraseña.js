@@ -20,6 +20,9 @@ var CambiarContraseña = new Phaser.Class({
 		this.load.image('BotonSi', 'assets/CambiarContraseña/BotonSi.png');
 		this.load.image('BotonNo', 'assets/CambiarContraseña/BotonNo.png');
 		
+		this.load.image('Contrasena', 'assets/CambiarContraseña/LetrasContraseña.png');
+		this.load.image('NContrasena', 'assets/CambiarContraseña/LetrasNuevaContraseña.png');
+		
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
 		
@@ -62,13 +65,14 @@ var CambiarContraseña = new Phaser.Class({
 
 
         /************************* VARIABLES *************************/
-		const cuadroNombre = this.add.dom(1470, 360).createFromCache('nameform');
-		const cuadroContra = this.add.dom(1470, 460).createFromCache('passform');
-		const cuadroNuevaContra = this.add.dom(1470, 560).createFromCache('newpassform');
+		const cuadroContra = this.add.dom(1465, 400).createFromCache('passform');
+		const cuadroNuevaContra = this.add.dom(1465, 500).createFromCache('passform');
 		
 		let BotonAceptar = this.add.image(1530, 640, 'BotonAceptar');
 		let BotonAtrasFlecha = this.add.image(1320, 640, 'BotonAtrasFlecha');
 		
+		this.add.image(1380, 360, 'Contrasena').setScale(1);
+		this.add.image(1450, 460, 'NContrasena').setScale(1);
 		// Confirmación
         let Confirmacion = this.add.image(1480, 440, 'Confirmacion').setVisible(false);
         let BotonSi = this.add.image(1410, 480, 'BotonSi').setVisible(false);
@@ -77,14 +81,14 @@ var CambiarContraseña = new Phaser.Class({
         //BotonAceptar
         BotonAceptar.setInteractive();
         BotonAceptar.on("pointerdown", () => {
-			const inputTextId = cuadroNombre.getChildByName('nameField');
 			const inputTextPw = cuadroContra.getChildByName('password');
+			const inputTextNewPw = cuadroNuevaContra.getChildByName('password');
 
-			if (inputTextId.value !== '' && inputTextPw.value !== '') {
+			if (inputTextPw.value !== '' && inputTextNewPw.value !== '') {
 		        Confirmacion.setVisible(true);
 		        BotonSi.setVisible(true);
 		        BotonNo.setVisible(true);
-				cuadroNombre.setVisible(false);
+				cuadroNuevaContra.setVisible(false);
 				cuadroContra.setVisible(false);
 				BotonAceptar.setVisible(false);
 				BotonAtrasFlecha.setVisible(false);
@@ -122,17 +126,19 @@ var CambiarContraseña = new Phaser.Class({
         // BotonSi
         BotonSi.setInteractive();
         BotonSi.on("pointerdown", () => {
-            const inputTextId = cuadroNombre.getChildByName('nameField');
             const inputTextPw = cuadroContra.getChildByName('password');
+            const inputTextNewPw = cuadroNuevaContra.getChildByName('password');
 
-            if (inputTextId.value !== '' && inputTextPw.value !== '') {
+            if (inputTextNewPw.value !== '' && inputTextPw.value !== '') {
                 const usuario = {
-                    nombre: inputTextId.value,
-                    password: inputTextPw.value
+                    "nombre": this.nombreUsuario,
+                    "password": inputTextPw.value,
+					"nuevaPassword": inputTextNewPw.value
+					
                 };
-
+				console.log(usuario);
                 $.ajax({
-                    method: "DELETE",
+                    method: "PUT",
                     url: ipLocal + "usuario",
                     data: JSON.stringify(usuario),
                     contentType: "application/json",
@@ -140,13 +146,13 @@ var CambiarContraseña = new Phaser.Class({
                 })
                 .done(function (data, textStatus, jqXHR) {
                     if (textStatus === "success") {
-                        this.scene.start("Perfil"); // Volver al perfil o menú principal
+                        this.scene.start("MenuScene"); // Volver al perfil o menú principal
                     }
 					
                 }.bind(this))
 				
                 .fail(function (data) {
-                    alert("Usuario o contraseña incorrecta.");
+                    alert("La contraseña no es correcta");
                    
 				});
 				

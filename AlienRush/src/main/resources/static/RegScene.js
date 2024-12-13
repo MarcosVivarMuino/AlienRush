@@ -9,9 +9,10 @@ var RegScene = new Phaser.Class({
     preload: function () {
 		//Imagenes
         this.load.image('fondoRegistro', 'assets/RegScene/Pantalla Registro.png');
-        this.load.image('Aceptar', 'assets/SignScene/BotonAceptar.png');
-        this.load.image('Contrasena', 'assets/SignScene/LetrasContraseña.png');
-        this.load.image('Usuario', 'assets/SignScene/LetrasUsuario.png');
+        this.load.image('Aceptar', 'assets/RegScene/BotonAceptar.png');
+        this.load.image('Contrasena', 'assets/RegScene/LetrasContraseña.png');
+		this.load.image('RContrasena', 'assets/RegScene/LetrasRepiteContraseña.png');
+		this.load.image('Usuario', 'assets/RegScene/LetrasUsuario.png');
 		this.load.image('BotonIS', 'assets/RegScene/BotonIS.png');
 				
 		//Audio
@@ -56,16 +57,16 @@ var RegScene = new Phaser.Class({
 
 
         /************************* VARIABLES *************************/
-        const elementId1 = this.add.dom(1500, 400).createFromCache('nameform');
-        const elementPw1 = this.add.dom(1500, 500).createFromCache('passform');
-		const elementPw2 = this.add.dom(1500, 600).createFromCache('passform');
+        const elementId1 = this.add.dom(1465, 360).createFromCache('nameform');
+        const elementPw1 = this.add.dom(1465, 460).createFromCache('passform');
+		const elementPw2 = this.add.dom(1465, 560).createFromCache('passform');
 
         cont = this;
-        ready1 = this.add.image(1500, 690, 'Aceptar').setScale(1);
-		BotonIS = this.add.image(1500, 800, 'BotonIS').setScale(1);
-        this.add.image(1380, 360, 'Usuario').setScale(1);
-        this.add.image(1410, 455, 'Contrasena').setScale(1);
-        this.add.image(1410, 555, 'Contrasena').setScale(1);
+        ready1 = this.add.image(1470, 670, 'Aceptar').setScale(1);
+		BotonIS = this.add.image(1470, 790, 'BotonIS').setScale(1);
+        this.add.image(1350, 320, 'Usuario').setScale(1);
+        this.add.image(1380, 420, 'Contrasena').setScale(1);
+        this.add.image(1470, 520, 'RContrasena').setScale(1);
         
         ready1.setInteractive();
         BotonIS.setInteractive();
@@ -101,7 +102,7 @@ var RegScene = new Phaser.Class({
 							console.log(data);
 							console.log(textStatus+" "+jqXHR.statusCode());
 							if(textStatus == "success"){
-		                           self.scene.start("MenuScene", {"nombreUsuario": inputTextId});
+		                           self.scene.start("MenuScene", {"nombreUsuario": inputTextId.value});
 							}
 						})
 						

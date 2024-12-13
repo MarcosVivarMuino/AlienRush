@@ -57,12 +57,12 @@ var SignInScene = new Phaser.Class({
 
 
         /************************* VARIABLES *************************/
-        const elementId1 = this.add.dom(1500, 400).createFromCache('nameform');
-        const elementPw1 = this.add.dom(1500, 500).createFromCache('passform');
-		ready1 = this.add.image(1500, 690, 'Aceptar').setScale(1);
-		BotonR = this.add.image(1500, 800, 'BotonR').setScale(1);
-        this.add.image(1380, 360, 'Usuario').setScale(1);
-        this.add.image(1410, 455, 'Contrasena').setScale(1);
+        const elementId1 = this.add.dom(1465, 360).createFromCache('nameform');
+        const elementPw1 = this.add.dom(1465, 460).createFromCache('passform');
+		ready1 = this.add.image(1470, 670, 'Aceptar').setScale(1);
+		BotonR = this.add.image(1470, 790, 'BotonR').setScale(1);
+		this.add.image(1350, 320, 'Usuario').setScale(1);
+		this.add.image(1380, 420, 'Contrasena').setScale(1);
         
         ready1.setInteractive();
         BotonR.setInteractive();
@@ -93,7 +93,7 @@ var SignInScene = new Phaser.Class({
 						console.log(data);
 						console.log(textStatus+" "+jqXHR.statusCode());
 						if(textStatus == "success"){
-                           self.scene.start("MenuScene", {"nombreUsuario" :inputTextId});
+                           self.scene.start("MenuScene", {"nombreUsuario" :inputTextId.value});
 						}
 					}).fail(function(data){
 						alert("Usuario invalido o no registrado");

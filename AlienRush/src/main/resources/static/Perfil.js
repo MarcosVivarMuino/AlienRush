@@ -63,7 +63,7 @@ var Perfil = new Phaser.Class({
         //botonBorrarCuenta
         botonBorrarCuenta.setInteractive();
         botonBorrarCuenta.on("pointerdown", () => {
-            this.scene.start("BorrarCuenta");
+            this.scene.start("BorrarCuenta", {"nombreUsuario": this.nombreUsuario});
         })
         botonBorrarCuenta.on("pointerover", () => { botonBorrarCuenta.setScale(1.2); })
         botonBorrarCuenta.on("pointerout", () => { botonBorrarCuenta.setScale(1); })
@@ -107,7 +107,7 @@ var Perfil = new Phaser.Class({
         //botonCambiarContraseña
         botonCambiarContraseña.setInteractive();
         botonCambiarContraseña.on("pointerdown", () => {
-            this.scene.start("CambiarContraseña", {"nombreUsuario": nombreUsuario});
+            this.scene.start("CambiarContraseña", {"nombreUsuario": this.nombreUsuario});
         })
         botonCambiarContraseña.on("pointerover", () => { botonCambiarContraseña.setScale(1.2); })
         botonCambiarContraseña.on("pointerout", () => { botonCambiarContraseña.setScale(1); })
