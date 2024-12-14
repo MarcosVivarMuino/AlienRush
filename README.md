@@ -323,7 +323,7 @@ Se han diseñado las interfaces básicas necesarias para el desarrollo normal de
 ![](IMAGENES/Mapas.png)
 *Ilustración 18: Pantalla de elección de mapa*
 
-#### <a name="_v1gmtfbu50b7"></a>**8. EJEMPLOS DE PARTIDA**
+## <a name="_v1gmtfbu50b7"></a>**8. EJEMPLOS DE PARTIDA**
 Aquí se mostrarán las pantallas que muestren los ejemplos de como se verían las partidas del juego final.
 
 ![](IMAGENES/PartidaEjemplo.png)
@@ -334,33 +334,56 @@ Además se ha diseñado una pequeña interfaz para el tutorial del juego.
 ![](IMAGENES/Tutorial.png)
 *Ilustración 20: Pantalla de tutorial*
 
-## <a name="_ofghojrc3ozq"></a>**9. POTENCIADORES**
+## <a name="_v1gmtfbu50b7"></a>**9. MENÚS EN LÍNEA**
+Estos serán los menús que se mostrarán para los servicios en línea relacionados con las cuentas de los jugadores.
+Todos los menús guardan la misma estética para conservar la coherencia en el diseño del juego.
+
+### <a name="_v1gmtfbu50b7"></a>**9.1. REGISTRO DE JUGADORES**
+En esta pantalla los jugadores podrán registrarse con el usuario y contraseña que deseen.
+![](IMAGENES/Pantalla Registro.png)
+
+### <a name="_v1gmtfbu50b7"></a>**9.2. INICIO DE SESIÓN**
+Pantalla de inicio de sesión para los jugadores que ya tengan una cuenta registrada.
+
+### <a name="_v1gmtfbu50b7"></a>**9.3. CAMBIAR DE CUENTA**
+Menú para que el jugador pueda cambiar de cuenta con facilidad.
+
+### <a name="_v1gmtfbu50b7"></a>**9.4. BORRAR CUENTA**
+Aquí el jugador podrá borrar sus credenciales, confirmando antes de realizar la acción en concreto.
+
+### <a name="_v1gmtfbu50b7"></a>**9.5. CERRAR SESIÓN**
+Pantalla en la que el jugador cerrará la sesión de su cuenta sin salir del juego.
+
+### <a name="_v1gmtfbu50b7"></a>**9.6. PERFIL**
+Perfil del jugador.
+
+## <a name="_ofghojrc3ozq"></a>**11. POTENCIADORES**
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
 
-### <a name="_v1gmtfbu50b7"></a>**9.1. MULTIPLICADOR DE VELOCIDAD**
+### <a name="_v1gmtfbu50b7"></a>**11.1. MULTIPLICADOR DE VELOCIDAD**
 ![](IMAGENES/Cohete.png)
 *Ilustración 21: Multiplicador de velocidad*
 
-### <a name="_v1gmtfbu50b7"></a>**9.2. MULTIPLICADOR DE PUNTOS**
+### <a name="_v1gmtfbu50b7"></a>**11.2. MULTIPLICADOR DE PUNTOS**
 ![](IMAGENES/Multiplicador.png)
 *Ilustración 22: Multiplicador de puntos*
 
-### <a name="_v1gmtfbu50b7"></a>**9.3. AUMENTO DE CAPACIDAD**
+### <a name="_v1gmtfbu50b7"></a>**11.3. AUMENTO DE CAPACIDAD**
 ![](IMAGENES/CapacidadAumentada.png)
 *Ilustración 23: Aumento de capacidad*
 
-### <a name="_v1gmtfbu50b7"></a>**9.4. BLOQUEADOR**
+### <a name="_v1gmtfbu50b7"></a>**11.4. BLOQUEADOR**
 ![](IMAGENES/Bloqueo.png)
 *Ilustración 24: Bloqueador*
 
-### <a name="_v1gmtfbu50b7"></a>**9.5. RALENTIZADOR**
+### <a name="_v1gmtfbu50b7"></a>**11.5. RALENTIZADOR**
 ![](IMAGENES/Congelado.png)
 *Ilustración 25: Ralentizador*
 
-## <a name="_ofghojrc3ozq"></a>**10. PERSONAJES FINALES**
+## <a name="_ofghojrc3ozq"></a>**12. PERSONAJES FINALES**
 Aquí se muestran los personajes y objetos abducibles del juego en su versión final, es decir, la que permanecerá desde ya en el juego.
 
-### <a name="_v1gmtfbu50b7"></a>**10.1. JUGADORES**
+### <a name="_v1gmtfbu50b7"></a>**12.1. JUGADORES**
 Para los jugadores se ha decidido realizar el diseño de una nave que será de color diferente para cada jugador.
 ![](IMAGENES/Player1.png)
 *Ilustración 26: Player 1*
@@ -368,7 +391,7 @@ Para los jugadores se ha decidido realizar el diseño de una nave que será de c
 ![](IMAGENES/Player2.png)
 *Ilustración 27: Player 2*
 
-### <a name="_v1gmtfbu50b7"></a>**10.2. HUMANOS**
+### <a name="_v1gmtfbu50b7"></a>**12.2. HUMANOS**
 Existen diferentes tipos de humanos que pueden ser abducidos como ya se ha explicado.
 
 ![](IMAGENES/Personaje1AR.png)
@@ -380,7 +403,7 @@ Existen diferentes tipos de humanos que pueden ser abducidos como ya se ha expli
 ![](IMAGENES/SuperheroeAR.png)
 *Ilustración 30: Superheroe*
 
-### <a name="_v1gmtfbu50b7"></a>**10.3. OTROS ABDUCIBLES**
+### <a name="_v1gmtfbu50b7"></a>**12.3. OTROS ABDUCIBLES**
 Aquí los diseños de otros objetos u animales abducibles como la chatarra y las vacas.
 
 ![](IMAGENES/ChatarraAR.png)
