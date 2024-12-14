@@ -308,7 +308,7 @@ Se muestra sobre el mapa en el que se ha desarrollado la partida, con el usuario
 
 *Ilustración 15: Pantalla de victoria del jugador 1 en la ciudad*
 
-![](IMAGENES/PantallaPuntuacionGranjaRoja.png)
+![](IMAGENES/PantallaPuntuacionGranjaRojo.png)
 
 *Ilustración 16: Pantalla de victoria del jugador 2 en la granja*
 
