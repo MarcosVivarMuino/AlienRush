@@ -298,13 +298,19 @@ Para la playa, será como las siguientes imágenes, un lugar donde se aprecian s
 ## <a name="_olfolzwqujl1"></a>**5. MENÚ DE INICIO**
 Esta pantalla incluirá el logo del juego y tres botones adicionales, desde los cuáles podremos jugar, ir a las opciones y acceder a los créditos, que incluirán la información de todos los participantes del proyecto.
 ![](IMAGENES/Inicio.png)
+
 *Ilustración 14: Pantalla de inicio*
 
 ## <a name="_4zagq7yyoirj"></a>**6. INTERFAZ DE VICTORIA Y DERROTA**
-Un mensaje de victoria en la pantalla del ganador en la que se especifique los puntos obtenidos y el motivo de victoria.
+Se muestra sobre el mapa en el que se ha desarrollado la partida, con el usuario ganador en alto y el perdedor representado como una anve rota. Además se muuestran los puntos del jugador y el motivo de la victoria.
 
-![](IMAGENES/PantallaFinal.png)
-*Ilustración 15: Pantalla de victoria*
+![](IMAGENES/PantallaPuntuacionCiudadAzul.png)
+
+*Ilustración 15: Pantalla de victoria del jugador 1 en la ciudad*
+
+![](IMAGENES/PantallaPuntuacionGranjaRoja.png)
+
+*Ilustración 16: Pantalla de victoria del jugador 2 en la granja*
 
 Un mensaje de derrota en la pantalla del perdedor en la que se especifique los puntos obtenidos y el motivo de la derrota.
 
@@ -313,26 +319,31 @@ Se han diseñado las interfaces básicas necesarias para el desarrollo normal de
 
 ### <a name="_v1gmtfbu50b7"></a>**7.2. PANTALLA DE AJUSTES**
 ![](IMAGENES/Ajustes.png)
-*Ilustración 16: Pantalla de ajustes*
+
+*Ilustración 17: Pantalla de ajustes*
 
 ### <a name="_v1gmtfbu50b7"></a>**7.3. PANTALLA DE CREDITOS**
 ![](IMAGENES/Creditos.png)
-*Ilustración 17: Pantalla de créditos*
+
+*Ilustración 18: Pantalla de créditos*
 
 ### <a name="_v1gmtfbu50b7"></a>**7.4. PANTALLA DE ELECCIÓN DE MAPA**
 ![](IMAGENES/Mapas.png)
-*Ilustración 18: Pantalla de elección de mapa*
+
+*Ilustración 19: Pantalla de elección de mapa*
 
 ## <a name="_v1gmtfbu50b7"></a>**8. EJEMPLOS DE PARTIDA**
 Aquí se mostrarán las pantallas que muestren los ejemplos de como se verían las partidas del juego final.
 
 ![](IMAGENES/PartidaEjemplo.png)
-*Ilustración 19: Ejemplo de partida*
+
+*Ilustración 20: Ejemplo de partida*
 
 Además se ha diseñado una pequeña interfaz para el tutorial del juego.
 
 ![](IMAGENES/Tutorial.png)
-*Ilustración 20: Pantalla de tutorial*
+
+*Ilustración 21: Pantalla de tutorial*
 
 ## <a name="_v1gmtfbu50b7"></a>**9. MENÚS EN LÍNEA**
 Estos serán los menús que se mostrarán para los servicios en línea relacionados con las cuentas de los jugadores.
@@ -341,107 +352,141 @@ Todos los menús guardan la misma estética para conservar la coherencia en el d
 ### <a name="_v1gmtfbu50b7"></a>**9.1. REGISTRO DE JUGADORES**
 En esta pantalla los jugadores podrán registrarse con el usuario y contraseña que deseen.
 
-*Ilustración 21: Pantalla de registro*
+
+
+*Ilustración 22: Pantalla de registro*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.2. INICIO DE SESIÓN**
 Pantalla de inicio de sesión para los jugadores que ya tengan una cuenta registrada.
 
-*Ilustración 22: Pantalla de inicio de sesión*
+
+
+*Ilustración 23: Pantalla de inicio de sesión*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.3. CAMBIAR DE CUENTA**
 Menú para que el jugador pueda cambiar de cuenta con facilidad.
 
-*Ilustración 23: Pantalla de cambair cuenta*
+
+
+*Ilustración 24: Pantalla de cambair cuenta*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.4. BORRAR CUENTA**
 Aquí el jugador podrá borrar sus credenciales, confirmando antes de realizar la acción en concreto.
 
-*Ilustración 24: Pantalla de borrar cuenta*
+
+
+*Ilustración 25: Pantalla de borrar cuenta*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.5. CERRAR SESIÓN**
 Pantalla en la que el jugador cerrará la sesión de su cuenta sin salir del juego.
 
-*Ilustración 25: Pantalla de cerrar sesión*
+
+
+*Ilustración 26: Pantalla de cerrar sesión*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.6. PERFIL**
 Perfil del jugador.
 
-*Ilustración 26: Pantalla de perfil*
+
+
+*Ilustración 27: Pantalla de perfil*
 
 ## <a name="_ofghojrc3ozq"></a>**10. BOTONES DE INTERFAZ**
 Estos son los botones diseñados para las interfaces mostradas previamente. Se han diseñado todos en una misma línea estética para no romper el diseño de cada interfaz.
 Son botones básicos que muestran la acción a realizar en texto dentro del propio botón, un ejemplo es el botón de "Iniciar Sesion".
 
 ![](IMAGENES/BotonIS.png)
-*Ilustración 27: Botón de iniciar sesión*
+
+*Ilustración 28: Botón de iniciar sesión*
 
 Los únicos botones que se han diseñado de diferente forma son los botones que llevan a la pantalla de perfil y el botón que viaja a la pantalla anterior, que se han diseñado con símbolos ya que son intuitivos y más estéticos que el texto.
 
 ![](IMAGENES/BotonAtrasFlecha.png)
-*Ilustración 28: Botón de atrás*
+
+*Ilustración 29: Botón de atrás*
 
 ![](IMAGENES/LogoUusuarioDEF.png)
-*Ilustración 29: Botón de perfil*
+
+*Ilustración 30: Botón de perfil*
 
 Además, para los campos de texto se ha escogido una tipografía concreta para indicar la accióna realizar en dicho campo.
 
 ![](IMAGENES/LetrasNuevaContraseña.png)
-*Ilustración 29: Tipografía del menú*
+
+*Ilustración 31: Tipografía del menú*
 
 ## <a name="_ofghojrc3ozq"></a>**11. POTENCIADORES**
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
 
 ### <a name="_v1gmtfbu50b7"></a>**11.1. MULTIPLICADOR DE VELOCIDAD**
+
 ![](IMAGENES/Cohete.png)
-*Ilustración 30: Multiplicador de velocidad*
+
+*Ilustración 32: Multiplicador de velocidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.2. MULTIPLICADOR DE PUNTOS**
+
 ![](IMAGENES/Multiplicador.png)
-*Ilustración 31: Multiplicador de puntos*
+
+*Ilustración 33: Multiplicador de puntos*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.3. AUMENTO DE CAPACIDAD**
+
 ![](IMAGENES/CapacidadAumentada.png)
-*Ilustración 32: Aumento de capacidad*
+
+*Ilustración 34: Aumento de capacidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.4. BLOQUEADOR**
+
 ![](IMAGENES/Bloqueo.png)
-*Ilustración 33: Bloqueador*
+
+*Ilustración 35: Bloqueador*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.5. RALENTIZADOR**
+
 ![](IMAGENES/Congelado.png)
-*Ilustración 34: Ralentizador*
+
+*Ilustración 36: Ralentizador*
 
 ## <a name="_ofghojrc3ozq"></a>**12. PERSONAJES FINALES**
 Aquí se muestran los personajes y objetos abducibles del juego en su versión final, es decir, la que permanecerá desde ya en el juego.
 
 ### <a name="_v1gmtfbu50b7"></a>**12.1. JUGADORES**
 Para los jugadores se ha decidido realizar el diseño de una nave que será de color diferente para cada jugador.
+
 ![](IMAGENES/Player1.png)
-*Ilustración 35: Player 1*
+
+*Ilustración 37: Player 1*
 
 ![](IMAGENES/Player2.png)
-*Ilustración 36: Player 2*
+
+*Ilustración 38: Player 2*
 
 ### <a name="_v1gmtfbu50b7"></a>**12.2. HUMANOS**
 Existen diferentes tipos de humanos que pueden ser abducidos como ya se ha explicado.
 
 ![](IMAGENES/Personaje1AR.png)
-*Ilustración 37: Humano normal*
+
+*Ilustración 39: Humano normal*
 
 ![](IMAGENES/MilitarAR.png)
-*Ilustración 38: Militar*
+
+*Ilustración 40: Militar*
 
 ![](IMAGENES/SuperheroeAR.png)
-*Ilustración 39: Superheroe*
+
+*Ilustración 41: Superheroe*
 
 ### <a name="_v1gmtfbu50b7"></a>**12.3. OTROS ABDUCIBLES**
 Aquí los diseños de otros objetos u animales abducibles como la chatarra y las vacas.
 
 ![](IMAGENES/ChatarraAR.png)
-*Ilustración 40: Chatarra*
+
+*Ilustración 42: Chatarra*
 
 ![](IMAGENES/VacaAR.png)
-*Ilustración 41: Vaca*
+
+*Ilustración 43: Vaca*
 
 ---
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
@@ -456,7 +501,7 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
 ![](IMAGENES/Flujograma_V2.png)
-*Ilustración 42: Flujograma*
+*Ilustración 44: Flujograma*
 
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
