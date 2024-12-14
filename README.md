@@ -340,7 +340,6 @@ Todos los menús guardan la misma estética para conservar la coherencia en el d
 
 ### <a name="_v1gmtfbu50b7"></a>**9.1. REGISTRO DE JUGADORES**
 En esta pantalla los jugadores podrán registrarse con el usuario y contraseña que deseen.
-![](IMAGENES/Pantalla Registro.png)
 
 ### <a name="_v1gmtfbu50b7"></a>**9.2. INICIO DE SESIÓN**
 Pantalla de inicio de sesión para los jugadores que ya tengan una cuenta registrada.
@@ -356,6 +355,18 @@ Pantalla en la que el jugador cerrará la sesión de su cuenta sin salir del jue
 
 ### <a name="_v1gmtfbu50b7"></a>**9.6. PERFIL**
 Perfil del jugador.
+
+## <a name="_ofghojrc3ozq"></a>**10. BOTONES DE INTERFAZ**
+Estos son los botones diseñados para las interfaces mostradas previamente. Se han diseñado todos en una misma línea estética para no romper el diseño de cada interfaz.
+Son botones básicos que muestran la acción a realizar en texto dentro del propio botón, un ejemplo es el botón de "Iniciar Sesion".
+![](IMAGENES/BotonIS.png)
+
+Los únicos botones que se han diseñado de diferente forma son los botones que llevan a la pantalla de perfil y el botón que viaja a la pantalla anterior, que se han diseñado con símbolos ya que son intuitivos y más estéticos que el texto.
+![](IMAGENES/AtrasFlecha.png)
+![](IMAGENES/LogoUusuarioDEF.png)
+
+Además, para los campos de texto se ha escogido una tipografía concreta para indicar la accióna realizar en dicho campo.
+![](IMAGENES/LetrasNuevaContraseña.png)
 
 ## <a name="_ofghojrc3ozq"></a>**11. POTENCIADORES**
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
