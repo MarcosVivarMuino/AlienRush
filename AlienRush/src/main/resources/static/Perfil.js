@@ -98,6 +98,19 @@ var Perfil = new Phaser.Class({
         // BotonSi
         BotonSi.setInteractive();
         BotonSi.on("pointerdown", () => {
+		$.ajax({
+    		method: "PUT",
+    		url: ipLocal + "numusuarios",
+    		contentType: "application/json",
+    		async: false,
+    		data: JSON.stringify(this.nombreUsuario),
+    		success: function () {
+        		console.log("Usuario desconectado. Eliminado de la lista.");
+    		},
+    		error: function () {
+        		console.error("Error al eliminar usuario de la lista.");
+    		}
+		});
 			this.scene.start("SignInScene");
 		});
         BotonSi.on("pointerover", () => { BotonSi.setScale(1.2); });

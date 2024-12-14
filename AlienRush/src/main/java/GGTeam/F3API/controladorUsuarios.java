@@ -27,24 +27,34 @@ import org.springframework.web.bind.annotation.RestController;
 public class controladorUsuarios {
 	
 	List<Usuario> listUsu = buscarLista();
-	private AtomicInteger contadorUsuarios = new AtomicInteger(0);
-	
-	// Endpoint para obtener el número de usuarios conectados
+	 // Lista para almacenar los nombres de usuarios conectados
+    private final List<String> usuariosConectados = new CopyOnWriteArrayList<>();
+
+    // Endpoint para obtener el número de usuarios conectados
     @GetMapping("/numusuarios")
     public int getUsuariosConectados() {
-        return contadorUsuarios.get();
+        return usuariosConectados.size(); // Devuelve el tamaño de la lista
     }
 
-    // Incrementar el contador de usuarios
+    // Endpoint para agregar un nuevo usuario
     @PostMapping("/numusuarios")
-    public void incrementarUsuarios() {
-        contadorUsuarios.incrementAndGet();
+    public void agregarUsuario(@RequestBody String nombreUsuario) {
+        if (!usuariosConectados.contains(nombreUsuario)) {
+            usuariosConectados.add(nombreUsuario); // Añade el usuario si no está en la lista
+            System.out.println("Usuario conectado: " + nombreUsuario);
+        } else {
+            System.out.println("El usuario ya está conectado: " + nombreUsuario);
+        }
     }
 
-    // Decrementar el contador de usuarios
+    // Endpoint para eliminar un usuario
     @PutMapping("/numusuarios")
-    public void decrementarUsuarios() {
-        contadorUsuarios.decrementAndGet();
+    public void eliminarUsuario(@RequestBody String nombreUsuario) {
+        if (usuariosConectados.remove(nombreUsuario)) { // Elimina el usuario si está en la lista
+            System.out.println("Usuario desconectado: " + nombreUsuario);
+        } else {
+            System.out.println("El usuario no estaba conectado: " + nombreUsuario);
+        }
     }
 	
 	@GetMapping("api/getIp")

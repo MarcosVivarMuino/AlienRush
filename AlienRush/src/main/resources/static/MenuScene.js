@@ -32,6 +32,23 @@ var MenuScene = new Phaser.Class({
 				ipLocal = "http://"+data+":8080/"
         		console.log(ipLocal); 
     	});
+    	////////////////////////////////NUMJUGADORES/////////////////////////////////
+
+			$.ajax({
+    			method: "POST",
+    			url: ipLocal + "numusuarios",
+    			contentType: "application/json",
+    			data: JSON.stringify(this.nombreUsuario),
+    			success: function () {
+        			console.log("Usuario conectado. Añadido a la lista.");
+    			},
+    			error: function () {
+        			console.error("Error al agregar usuario a la lista.");
+    		}
+		});
+
+		
+
         /************************* FONDO *************************/
         //IMAGEN
         this.add.image(875, 440, 'fondoMenu');
@@ -72,7 +89,12 @@ var MenuScene = new Phaser.Class({
 	        fill: '#ffffff',
 	        wordWrap: { width: 480 }
 	    }).setOrigin(0);
-	
+		///////////////////////////////////MUESTREODEUSUARIOS//////////////////////////////////
+		const usuariosConectadosText = this.add.text(1250, 820, 'Usuarios conectados: 0', {
+        	fontFamily: 'Impact, fantasy',
+        	fill: '#ffffff',
+        	fontSize: '50px'
+    	});
 	    // Entrada de texto para el mensaje
 	    const chatInput = this.add.dom(210, 850).createFromCache('nameform');
 	    
@@ -122,8 +144,13 @@ var MenuScene = new Phaser.Class({
         iconoPerfil.on("pointerout", () => { iconoPerfil.setScale(0.7); })
         
     setInterval(() => {
-   this.refreshChat(chatMessages, ipLocal);
+    	this.refreshChat(chatMessages, ipLocal);
 	}, 1000);
+	
+	// Actualizar el número de usuarios conectados cada segundo
+    setInterval(() => {
+        this.refreshUsuariosConectados(usuariosConectadosText);
+    }, 1000);
 },
     sendMessage: function (message) {
      const chatMessage = {
@@ -182,6 +209,19 @@ var MenuScene = new Phaser.Class({
         },
         error: function () {
             console.error("Error al actualizar chat");
+        }
+    });
+},
+
+refreshUsuariosConectados: function (usuariosConectadosText) {
+    $.ajax({
+        method: "GET",
+        url: ipLocal + "numusuarios",
+        success: function (data) {
+            usuariosConectadosText.setText(`Usuarios conectados: ${data}`);
+        },
+        error: function () {
+            console.error("Error al obtener usuarios conectados");
         }
     });
 }

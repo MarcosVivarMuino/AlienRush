@@ -241,23 +241,23 @@ var MainGame = new Phaser.Class({
         player2.setCollideWorldBounds(true);
 
         // Instanciacion vidas
-        this.add.image(150, 90, 'hud1').setScale(0.5);
+        this.add.image(150, 90, 'hud1').setScale(0.5).setDepth(10);
         this.add.text(80, 90, 'Jugador 1', { fontSize: '25px', color: '#ffffff' });
         for (let i = 0; i < player1.vidas; i++) {
-            let corazon = this.add.image(120 + i * 40, 60 + i * -3, 'Vida1').setScale(0.5);
+            let corazon = this.add.image(120 + i * 40, 60 + i * -3, 'Vida1').setScale(0.5).setDepth(10);
             corazones1.push(corazon);
         }
 
-        this.add.image(1600, 90, 'hud2').setScale(0.5);
+        this.add.image(1600, 90, 'hud2').setScale(0.5).setDepth(10);
         this.add.text(1530, 90, 'Jugador 2', { fontSize: '25px', color: '#ffffff' });
         for (let i = 0; i < player2.vidas; i++) {
-            let corazon = this.add.image(1630 - i * 40, 60 + i * -3, 'Vida2').setScale(0.5);
+            let corazon = this.add.image(1630 - i * 40, 60 + i * -3, 'Vida2').setScale(0.5).setDepth(10);
             corazones2.push(corazon);
         }
 
         //Instanciacion Power Up
-        PowerUp1 = this.add.image(350, 90, 'ACPU').setScale(0.06);
-        PowerUp2 = this.add.image(1400, 90, 'ACPU').setScale(0.06);
+        PowerUp1 = this.add.image(350, 90, 'ACPU').setScale(0.06).setDepth(10);
+        PowerUp2 = this.add.image(1400, 90, 'ACPU').setScale(0.06).setDepth(10);
 
         PowerUp1.alpha = 0
         PowerUp2.alpha = 0
@@ -624,6 +624,8 @@ var MainGame = new Phaser.Class({
     // Termina la partida dependiendo del jugador
     terminarPartida: function (jugador) {
         let escenaVictoria = jugador === player1 ? "Victoria2" : "Victoria1";
+        this.shutdown();
+        this.scene.stop();
         this.scene.start(escenaVictoria, {
             player1Score: player1.score,
             player2Score: player2.score,
@@ -837,6 +839,26 @@ var MainGame = new Phaser.Class({
                 break;
         }
     },
+    
+    shutdown: function () {
+    
+    // Destruir teclas registradas
+    this.input.keyboard.removeKey(this.SPC);
+    this.input.keyboard.removeKey(this.keyESC);
+    this.input.keyboard.removeKey(this.keyENTER);
+    this.input.keyboard.removeKey(this.keyW);
+    this.input.keyboard.removeKey(this.keyA);
+    this.input.keyboard.removeKey(this.keyS);
+    this.input.keyboard.removeKey(this.keyD);
+    this.input.keyboard.removeKey(this.keyI);
+    this.input.keyboard.removeKey(this.keyJ);
+    this.input.keyboard.removeKey(this.keyK);
+    this.input.keyboard.removeKey(this.keyL);
+    this.input.keyboard.removeKey(this.keyO);
+    this.input.keyboard.removeKey(this.keyE);
+    this.input.keyboard.removeKey(this.keyY);
+    
+},
     
     onResume: function () {
         console.log("Reanudando MainGame...");
