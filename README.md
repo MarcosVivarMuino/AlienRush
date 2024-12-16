@@ -363,33 +363,26 @@ Pantalla de inicio de sesión para los jugadores que ya tengan una cuenta regist
 
 *Ilustración 23: Pantalla de inicio de sesión*
 
-### <a name="_v1gmtfbu50b7"></a>**9.3. CAMBIAR DE CUENTA**
-Menú para que el jugador pueda cambiar de cuenta con facilidad.
-
-
-
-*Ilustración 24: Pantalla de cambair cuenta*
-
-### <a name="_v1gmtfbu50b7"></a>**9.4. BORRAR CUENTA**
+### <a name="_v1gmtfbu50b7"></a>**9.3. BORRAR CUENTA**
 Aquí el jugador podrá borrar sus credenciales, confirmando antes de realizar la acción en concreto.
 
 
 
-*Ilustración 25: Pantalla de borrar cuenta*
+*Ilustración 24: Pantalla de borrar cuenta*
 
-### <a name="_v1gmtfbu50b7"></a>**9.5. CERRAR SESIÓN**
+### <a name="_v1gmtfbu50b7"></a>**9.4. CERRAR SESIÓN**
 Pantalla en la que el jugador cerrará la sesión de su cuenta sin salir del juego.
 
 
 
-*Ilustración 26: Pantalla de cerrar sesión*
+*Ilustración 25: Pantalla de cerrar sesión*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.6. PERFIL**
 Perfil del jugador.
 
 
 
-*Ilustración 27: Pantalla de perfil*
+*Ilustración 26: Pantalla de perfil*
 
 ## <a name="_ofghojrc3ozq"></a>**10. BOTONES DE INTERFAZ**
 Estos son los botones diseñados para las interfaces mostradas previamente. Se han diseñado todos en una misma línea estética para no romper el diseño de cada interfaz.
@@ -397,23 +390,23 @@ Son botones básicos que muestran la acción a realizar en texto dentro del prop
 
 ![](IMAGENES/BotonIS.png)
 
-*Ilustración 28: Botón de iniciar sesión*
+*Ilustración 27: Botón de iniciar sesión*
 
 Los únicos botones que se han diseñado de diferente forma son los botones que llevan a la pantalla de perfil y el botón que viaja a la pantalla anterior, que se han diseñado con símbolos ya que son intuitivos y más estéticos que el texto.
 
 ![](IMAGENES/BotonAtrasFlecha.png)
 
-*Ilustración 29: Botón de atrás*
+*Ilustración 28: Botón de atrás*
 
 ![](IMAGENES/LogoUusuarioDEF.png)
 
-*Ilustración 30: Botón de perfil*
+*Ilustración 29: Botón de perfil*
 
 Además, para los campos de texto se ha escogido una tipografía concreta para indicar la accióna realizar en dicho campo.
 
 ![](IMAGENES/LetrasNuevaContraseña.png)
 
-*Ilustración 31: Tipografía del menú*
+*Ilustración 30: Tipografía del menú*
 
 ## <a name="_ofghojrc3ozq"></a>**11. POTENCIADORES**
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
@@ -422,31 +415,31 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 
 ![](IMAGENES/Cohete.png)
 
-*Ilustración 32: Multiplicador de velocidad*
+*Ilustración 31: Multiplicador de velocidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.2. MULTIPLICADOR DE PUNTOS**
 
 ![](IMAGENES/Multiplicador.png)
 
-*Ilustración 33: Multiplicador de puntos*
+*Ilustración 32: Multiplicador de puntos*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.3. AUMENTO DE CAPACIDAD**
 
 ![](IMAGENES/CapacidadAumentada.png)
 
-*Ilustración 34: Aumento de capacidad*
+*Ilustración 33: Aumento de capacidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.4. BLOQUEADOR**
 
 ![](IMAGENES/Bloqueo.png)
 
-*Ilustración 35: Bloqueador*
+*Ilustración 34: Bloqueador*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.5. RALENTIZADOR**
 
 ![](IMAGENES/Congelado.png)
 
-*Ilustración 36: Ralentizador*
+*Ilustración 35: Ralentizador*
 
 ## <a name="_ofghojrc3ozq"></a>**12. PERSONAJES FINALES**
 Aquí se muestran los personajes y objetos abducibles del juego en su versión final, es decir, la que permanecerá desde ya en el juego.
@@ -456,37 +449,37 @@ Para los jugadores se ha decidido realizar el diseño de una nave que será de c
 
 ![](IMAGENES/Player1.png)
 
-*Ilustración 37: Player 1*
+*Ilustración 36: Player 1*
 
 ![](IMAGENES/Player2.png)
 
-*Ilustración 38: Player 2*
+*Ilustración 37: Player 2*
 
 ### <a name="_v1gmtfbu50b7"></a>**12.2. HUMANOS**
 Existen diferentes tipos de humanos que pueden ser abducidos como ya se ha explicado.
 
 ![](IMAGENES/Personaje1AR.png)
 
-*Ilustración 39: Humano normal*
+*Ilustración 38: Humano normal*
 
 ![](IMAGENES/MilitarAR.png)
 
-*Ilustración 40: Militar*
+*Ilustración 39: Militar*
 
 ![](IMAGENES/SuperheroeAR.png)
 
-*Ilustración 41: Superheroe*
+*Ilustración 40: Superheroe*
 
 ### <a name="_v1gmtfbu50b7"></a>**12.3. OTROS ABDUCIBLES**
 Aquí los diseños de otros objetos u animales abducibles como la chatarra y las vacas.
 
 ![](IMAGENES/ChatarraAR.png)
 
-*Ilustración 42: Chatarra*
+*Ilustración 41: Chatarra*
 
 ![](IMAGENES/VacaAR.png)
 
-*Ilustración 43: Vaca*
+*Ilustración 42: Vaca*
 
 ---
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
@@ -501,7 +494,7 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
 ![](IMAGENES/Flujograma_V2.png)
-*Ilustración 44: Flujograma*
+*Ilustración 43: Flujograma*
 
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
