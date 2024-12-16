@@ -163,7 +163,7 @@ var MenuScene = new Phaser.Class({
     // Enviar el mensaje al servidor
     $.ajax({
         method: "POST",
-        url: ipLocal + "chat", // La URL de tu servidor
+        url:"/chat", // La URL de tu servidor
         data: JSON.stringify(chatMessage), // Convierte el objeto a JSON
         contentType: "application/json",  // Asegúrate de establecer el tipo de contenido
         success: function () {
@@ -179,7 +179,7 @@ var MenuScene = new Phaser.Class({
     // Obtener mensajes del servidor
     $.ajax({
         method: "GET",
-        url: ipLocal + "chat",
+        url:"/chat",
         success: function (data) {
             console.log(data);
 
@@ -216,7 +216,7 @@ var MenuScene = new Phaser.Class({
 refreshUsuariosConectados: function (usuariosConectadosText) {
     $.ajax({
         method: "GET",
-        url: ipLocal + "numusuarios",
+        url:"/numusuarios",
         success: function (data) {
             usuariosConectadosText.setText(`Usuarios conectados: ${data}`);
         },

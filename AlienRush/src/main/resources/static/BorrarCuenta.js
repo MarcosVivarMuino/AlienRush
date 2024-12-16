@@ -139,7 +139,7 @@ var BorrarCuenta = new Phaser.Class({
 	
 	                $.ajax({
 	                    method: "DELETE",
-	                    url: ipLocal + "usuario",
+	                    url:"/usuario",
 	                    data: JSON.stringify(usuario),
 	                    contentType: "application/json",
 	                    processData: false

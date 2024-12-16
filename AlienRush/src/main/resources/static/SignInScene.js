@@ -72,14 +72,14 @@ var SignInScene = new Phaser.Class({
             const inputTextId = elementId1.getChildByName('nameField');
             const inputTextPw = elementPw1.getChildByName('password');
             const self = this; // Guardar el contexto actual
-            
+            //url:ipLocal+"usuarioInicio"
                 if (inputTextId.value !== '' && inputTextPw.value !== '' )
                 {
                     $.ajax({
 						
 					method: "POST",
 					
-					url:ipLocal+"usuarioInicio",
+					url:"/usuarioInicio",
 					
 					data: JSON.stringify({nombre: inputTextId.value, password: inputTextPw.value}),
 					

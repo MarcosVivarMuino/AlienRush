@@ -139,7 +139,7 @@ var CambiarContraseña = new Phaser.Class({
 				console.log(usuario);
                 $.ajax({
                     method: "PUT",
-                    url: ipLocal + "usuario",
+                    url:"/usuario",
                     data: JSON.stringify(usuario),
                     contentType: "application/json",
                     processData: false

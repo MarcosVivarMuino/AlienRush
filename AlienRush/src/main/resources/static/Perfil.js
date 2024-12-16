@@ -100,7 +100,7 @@ var Perfil = new Phaser.Class({
         BotonSi.on("pointerdown", () => {
 		$.ajax({
     		method: "PUT",
-    		url: ipLocal + "numusuarios",
+    		url:"/numusuarios",
     		contentType: "application/json",
     		async: false,
     		data: JSON.stringify(this.nombreUsuario),

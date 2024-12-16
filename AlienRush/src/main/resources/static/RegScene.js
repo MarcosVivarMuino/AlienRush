@@ -86,7 +86,7 @@ var RegScene = new Phaser.Class({
 											
 						method: "POST",
 						
-						url:ipLocal+"usuario",
+						url:"/usuario",
 						
 						data: JSON.stringify({nombre: inputTextId.value, password: inputTextPw.value}),
 						
