@@ -297,7 +297,8 @@ Para la playa, será como las siguientes imágenes, un lugar donde se aprecian s
 
 ## <a name="_olfolzwqujl1"></a>**5. MENÚ DE INICIO**
 Esta pantalla incluirá el logo del juego y tres botones adicionales, desde los cuáles podremos jugar, ir a las opciones y acceder a los créditos, que incluirán la información de todos los participantes del proyecto.
-![](IMAGENES/Inicio.png)
+Además de un botón para visitar el perfil del jugador, el chat del juego y el número de usuarios conectados.
+![](IMAGENES/Pantalla_Inicial_final.png)
 
 *Ilustración 14: Pantalla de inicio*
 
@@ -352,35 +353,35 @@ Todos los menús guardan la misma estética para conservar la coherencia en el d
 ### <a name="_v1gmtfbu50b7"></a>**9.1. REGISTRO DE JUGADORES**
 En esta pantalla los jugadores podrán registrarse con el usuario y contraseña que deseen.
 
-
+![](IMAGENES/Pantalla_Reg_Final.png)
 
 *Ilustración 22: Pantalla de registro*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.2. INICIO DE SESIÓN**
 Pantalla de inicio de sesión para los jugadores que ya tengan una cuenta registrada.
 
-
+![](IMAGENES/Pantalla_IS_Final.png)
 
 *Ilustración 23: Pantalla de inicio de sesión*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.3. BORRAR CUENTA**
 Aquí el jugador podrá borrar sus credenciales, confirmando antes de realizar la acción en concreto.
 
-
+![](IMAGENES/Pantalla_BC_Final.png)
 
 *Ilustración 24: Pantalla de borrar cuenta*
 
-### <a name="_v1gmtfbu50b7"></a>**9.4. CERRAR SESIÓN**
-Pantalla en la que el jugador cerrará la sesión de su cuenta sin salir del juego.
+### <a name="_v1gmtfbu50b7"></a>**9.4. CAMBIAR CONTRASEÑA**
+Pantalla en la que el jugador cambiará la contraseña de su cuenta.
 
-
+![](IMAGENES/Pantalla_CC_final.png)
 
 *Ilustración 25: Pantalla de cerrar sesión*
 
-### <a name="_v1gmtfbu50b7"></a>**9.6. PERFIL**
+### <a name="_v1gmtfbu50b7"></a>**9.5. PERFIL**
 Perfil del jugador.
 
-
+![](IMAGENES/Pantalla_Perfil_final.png)
 
 *Ilustración 26: Pantalla de perfil*
 
