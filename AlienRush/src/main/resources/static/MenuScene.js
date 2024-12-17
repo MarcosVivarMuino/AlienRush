@@ -183,6 +183,8 @@ var MenuScene = new Phaser.Class({
     onResume : function() {
        iconoWifi.setTexture("Wifi").setScale(0.2);
        this.setIntervals();
+       this.scene.bringToTop("MenuScene");
+       this.input.enabled = true;
     },
 	
     sendMessage: function (message) {
@@ -198,7 +200,6 @@ var MenuScene = new Phaser.Class({
         data: JSON.stringify(chatMessage), // Convierte el objeto a JSON
         contentType: "application/json",  // Asegúrate de establecer el tipo de contenido
         success: function () {
-            console.log("Mensaje enviado");
         },
         error: function (xhr, status, error) {
             console.error("Error al enviar mensaje", error);
@@ -212,7 +213,6 @@ var MenuScene = new Phaser.Class({
         method: "GET",
         url:"/chat",
         success: function (data) {
-            console.log(data);
 
             // Limitar el número de mensajes mostrados
             const maxMessages = 10; // Mostrar solo los últimos 50 mensajes

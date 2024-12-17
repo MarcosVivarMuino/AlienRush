@@ -189,6 +189,8 @@ var CambiarContraseña = new Phaser.Class({
 		    onResume : function() {
 		       iconoWifi.setTexture("Wifi").setScale(0.2);
 		       this.setIntervals();
+		       this.scene.bringToTop("CambiarContraseña");
+       		   this.input.enabled = true;
 		    }
 });
 

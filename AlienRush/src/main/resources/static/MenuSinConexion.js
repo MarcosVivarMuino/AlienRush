@@ -11,8 +11,6 @@ var MenuSinConexion = new Phaser.Class({
     },
     
     preload: function () {
-        this.load.image('botonRecargar', 'assets/SinConex/BotonRecargar.png');
-        this.load.image('fondoError', 'assets/SinConex/fondoError.png');
     },
 
     create: function () {

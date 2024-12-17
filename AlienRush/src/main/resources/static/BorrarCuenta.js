@@ -212,6 +212,8 @@ var BorrarCuenta = new Phaser.Class({
 		    onResume : function() {
 		       iconoWifi.setTexture("Wifi").setScale(0.2);
 		       this.setIntervals();
+		       this.scene.bringToTop("BorrarCuenta");
+       		   this.input.enabled = true;
 		    }
 			
 });
