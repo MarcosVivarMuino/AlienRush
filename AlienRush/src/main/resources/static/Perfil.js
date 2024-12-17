@@ -23,6 +23,9 @@ var Perfil = new Phaser.Class({
 		this.load.image('BotonSi', 'assets/BorrarCuenta/BotonSi.png');
 		this.load.image('BotonNo', 'assets/BorrarCuenta/BotonNo.png');
 		
+        this.load.image('Wifi', 'assets/SinConex/Wifi.png');
+        this.load.image('noWifi', 'assets/SinConex/noWifi.png');
+		
 	    this.load.image('fondoPerfil', 'assets/Perfil/fondoPerfil.png');
 
     },
@@ -60,7 +63,7 @@ var Perfil = new Phaser.Class({
         let BotonSi = this.add.image(1410, 480, 'BotonSi').setVisible(false);
         let BotonNo = this.add.image(1545, 480, 'BotonNo').setVisible(false);
         
-        iconoWifi = this.add.image(100, 200, 'Wifi').setScale(0.5);
+		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
         /************************* BOTONES *************************/
         //botonBorrarCuenta
         botonBorrarCuenta.setInteractive();
@@ -135,31 +138,40 @@ var Perfil = new Phaser.Class({
         BotonAtrasFlecha.on("pointerover", () => { BotonAtrasFlecha.setScale(1.2); })
         BotonAtrasFlecha.on("pointerout", () => { BotonAtrasFlecha.setScale(1); })
 		
-		intervalConexion = setInterval(() => {
-        	this.checkConexion();
-    	}, 1000);
+        this.setIntervals();
+
     },
+    
     checkConexion: function(){
 		let local = this;
 		$.ajax({
         method: "GET",
         url: "/conexion",
         error: function () {
-            iconoWifi.setTexture("noWifi").setScale(0.4);
-            clearInterval(intervalConexion);
+            iconoWifi.setTexture("noWifi").setScale(0.2);
+            local.stopIntervals(intervalConexion);
             local.reConnect();
         },
     });
 	},
+	
+	setIntervals: function(){
+		intervalConexion = setInterval(() => {
+        	this.checkConexion();
+    	}, 1000);
+	},
+	
+	stopIntervals: function(){
+		clearInterval(intervalConexion);
+	},
+	
 	reConnect: function () {
         this.scene.launch("MenuSinConexion", {"sceneName": "Perfil"});
         this.scene.bringToTop("MenuSinConexion");
         this.scene.pause();
     },
     onResume : function() {
-       iconoWifi.setTexture("Wifi").setScale(0.5);
-       intervalConexion = setInterval(() => {
-        	this.checkConexion();
-    	}, 1000);
+       iconoWifi.setTexture("Wifi").setScale(0.2);
+       this.setIntervals();
     }
 });

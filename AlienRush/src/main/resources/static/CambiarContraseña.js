@@ -103,14 +103,7 @@ var CambiarContraseña = new Phaser.Class({
 		// BotonNo
         BotonNo.setInteractive();
         BotonNo.on("pointerdown", () => {
-            // Ocultar cuadro de confirmación
-            Confirmacion.setVisible(false);
-            BotonSi.setVisible(false);
-            BotonNo.setVisible(false);
-			cuadroNombre.setVisible(true);
-			cuadroContra.setVisible(true);
-			BotonAceptar.setVisible(true);
-			BotonAtrasFlecha.setVisible(true);
+			this.scene.start("CambiarContraseña");
         });
         BotonNo.on("pointerover", () => { BotonNo.setScale(1.2); });
         BotonNo.on("pointerout", () => { BotonNo.setScale(1); });

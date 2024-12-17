@@ -11,28 +11,17 @@ var MenuSinConexion = new Phaser.Class({
     },
     
     preload: function () {
-        this.load.image('botonReconexion', 'assets/MenuPausa/BotonReanudar.png');
-        this.load.image('fondoPausa', 'assets/MenuPausa/fondoPausa.png');
+        this.load.image('botonRecargar', 'assets/SinConex/BotonRecargar.png');
+        this.load.image('fondoError', 'assets/SinConex/fondoError.png');
     },
 
     create: function () {
         /************************* FONDO *************************/
-        this.add.image(875, 440, 'fondoPausa');
-        /************************* VARIABLES *************************/
-        let botonReconexion = this.add.image(853, 690, 'botonReconexion').setInteractive();
-		usuariosConectadosText = this.add.text(800, 540, 'Has perdido la conexión.', {
-        	fontFamily: 'Impact, fantasy',
-        	fill: '#ffffff',
-        	fontSize: '50px'
-    	});
-    	usuariosConectadosText = this.add.text(600, 590, 'Intenta conectarte de nuevo en unos instantes.', {
-        	fontFamily: 'Impact, fantasy',
-        	fill: '#ffffff',
-        	fontSize: '50px'
-    	});
+        this.add.image(875, 440, 'fondoError');
+       
         /************************* BOTONES *************************/
         //Reconexion
-        botonReconexion.on('pointerdown', () => {
+        botonRecargar.on('pointerdown', () => {
 			let local = this;
 			$.ajax({
         	method: "GET",
@@ -44,8 +33,8 @@ var MenuSinConexion = new Phaser.Class({
         	},
     		});
         });
-        botonReconexion.on("pointerover", () => { botonReconexion.setScale(1.2); });
-        botonReconexion.on("pointerout", () => { botonReconexion.setScale(1); });
+        botonRecargar.on("pointerover", () => { botonRecargar.setScale(1.2); });
+        botonRecargar.on("pointerout", () => { botonRecargar.setScale(1); });
 
     }
 });

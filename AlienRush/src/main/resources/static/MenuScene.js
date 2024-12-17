@@ -17,8 +17,8 @@ var MenuScene = new Phaser.Class({
         this.load.image('creditos', 'assets/Menu/BotonCreditos.png');
         this.load.image('iconoPerfil', 'assets/Menu/iconoPerfil.png');
         this.load.image('enviar', 'assets/SignScene/BotonAceptar.png');
-        this.load.image('Wifi', 'assets/Menu/Wifi.png');
-        this.load.image('noWifi', 'assets/Menu/noWifi.png');
+        this.load.image('Wifi', 'assets/SinConex/Wifi.png');
+        this.load.image('noWifi', 'assets/SinConex/noWifi.png');
 
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
         this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
@@ -68,8 +68,8 @@ var MenuScene = new Phaser.Class({
         let play = this.add.image(1470, 360, 'play');
         let ajustes = this.add.image(1470, 500, 'ajustes');
         let creditos = this.add.image(1470, 640, 'creditos');
-        let iconoPerfil = this.add.image(100, 80, 'iconoPerfil').setScale(0.7);
-        iconoWifi = this.add.image(100, 200, 'Wifi').setScale(0.5);
+        let iconoPerfil = this.add.image(100, 80, 'iconoPerfil').setScale(0.7);;
+        iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
 
 		////////////////////////////////////////CHAT///////////////////////////////////////////
 		// Fondo del chat
@@ -82,17 +82,17 @@ var MenuScene = new Phaser.Class({
 	        wordWrap: { width: 480 }
 	    }).setOrigin(0);
 		///////////////////////////////////MUESTREODEUSUARIOS//////////////////////////////////
-		usuariosConectadosText = this.add.text(1250, 820, 'Usuarios conectados: 0', {
+		usuariosConectadosText = this.add.text(20, 470, 'Usuarios conectados: 0', {
         	fontFamily: 'Impact, fantasy',
         	fill: '#ffffff',
-        	fontSize: '50px'
+        	fontSize: '40px'
     	});
 	    // Entrada de texto para el mensaje
 	    const chatInput = this.add.dom(210, 850).createFromCache('nameform');
 	    
 	    btnEnviar = this.add.image(460, 850, 'enviar').setInteractive().setScale(0.4);
 	
-	   btnEnviar.on('pointerdown', () => {
+	    btnEnviar.on('pointerdown', () => {
             const inputField = chatInput.getChildByName('nameField');
             if (inputField && inputField.value.trim() !== '') {
                 this.sendMessage(inputField.value);
@@ -103,7 +103,7 @@ var MenuScene = new Phaser.Class({
         //JUGAR
         play.setInteractive();
         play.on("pointerdown", () => {
-            this.scene.start("ElegirEscenario");
+            this.scene.start("ElegirEscenario", {"nombreUsuario": this.nombreUsuario});
         })
         play.on("pointerover", () => { play.setScale(1.2); })
         play.on("pointerout", () => { play.setScale(1); })
@@ -145,7 +145,7 @@ var MenuScene = new Phaser.Class({
         method: "GET",
         url: "/conexion",
         error: function () {
-            iconoWifi.setTexture("noWifi").setScale(0.4);
+            iconoWifi.setTexture("noWifi").setScale(0.2);
             local.stopIntervals();
             local.reConnect();
         },
@@ -180,7 +180,7 @@ var MenuScene = new Phaser.Class({
     },
     
     onResume : function() {
-       iconoWifi.setTexture("Wifi").setScale(0.5);
+       iconoWifi.setTexture("Wifi").setScale(0.2);
        this.setIntervals();
     },
 	

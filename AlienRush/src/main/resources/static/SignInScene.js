@@ -13,6 +13,8 @@ var SignInScene = new Phaser.Class({
         this.load.image('Contrasena', 'assets/SignScene/LetrasContraseña.png');
         this.load.image('Usuario', 'assets/SignScene/LetrasUsuario.png');
 		this.load.image('BotonR', 'assets/SignScene/BotonRegistrarse.png');
+        this.load.image('Wifi', 'assets/SinConex/Wifi.png');
+        this.load.image('noWifi', 'assets/SinConex/noWifi.png');
 
 		
 		//Audio
@@ -59,6 +61,7 @@ var SignInScene = new Phaser.Class({
         
         ready1.setInteractive();
         BotonR.setInteractive();
+		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
 
         /************************* BOTONES *************************/
         ready1.on("pointerdown",()=>{
@@ -66,35 +69,35 @@ var SignInScene = new Phaser.Class({
             const inputTextPw = elementPw1.getChildByName('password');
             const self = this; // Guardar el contexto actual
             //url:ipLocal+"usuarioInicio"
-                if (inputTextId.value !== '' && inputTextPw.value !== '' )
-                {
-                    $.ajax({
-						
-					method: "POST",
+            if (inputTextId.value !== '' && inputTextPw.value !== '' )
+            {
+                $.ajax({
 					
-					url:"/usuarioInicio",
-					
-					data: JSON.stringify({nombre: inputTextId.value, password: inputTextPw.value}),
-					
-					processData: false,
-					
-					headers: {
-						"Content-type":"application/json"
-					}
-					
-					}).done(function(data, textStatus, jqXHR) {
-						console.log(data);
-						console.log(textStatus+" "+jqXHR.statusCode());
-						if(textStatus == "success"){
-                           self.scene.start("MenuScene", {"nombreUsuario" :inputTextId.value});
-						}
-					}).fail(function(data){
-						alert("Usuario invalido o no registrado");
-					});
-                }
-				else{
-					alert("Rellena ambos campos");
+				method: "POST",
+				
+				url:"/usuarioInicio",
+				
+				data: JSON.stringify({nombre: inputTextId.value, password: inputTextPw.value}),
+				
+				processData: false,
+				
+				headers: {
+					"Content-type":"application/json"
 				}
+				
+				}).done(function(data, textStatus, jqXHR) {
+					console.log(data);
+					console.log(textStatus+" "+jqXHR.statusCode());
+					if(textStatus == "success"){
+                       self.scene.start("MenuScene", {"nombreUsuario" :inputTextId.value});
+					}
+				}).fail(function(data){
+					alert("Usuario invalido o no registrado");
+				});
+            }
+			else{
+				alert("Rellena ambos campos");
+			}
         })
         
         ready1.on("pointerover",()=>{
@@ -116,5 +119,42 @@ var SignInScene = new Phaser.Class({
         BotonR.on("pointerout",()=>{
             BotonR.setScale(1);
         })
+    
+		this.setIntervals();
+
+	},
+    
+    checkConexion: function(){
+		let local = this;
+		$.ajax({
+        method: "GET",
+        url: "/conexion",
+        error: function () {
+            iconoWifi.setTexture("noWifi").setScale(0.2);
+            local.stopIntervals(intervalConexion);
+            local.reConnect();
+        },
+    });
+	},
+	
+	setIntervals: function(){
+		intervalConexion = setInterval(() => {
+        	this.checkConexion();
+    	}, 1000);
+	},
+	
+	stopIntervals: function(){
+		clearInterval(intervalConexion);
+	},
+	
+	reConnect: function () {
+        this.scene.launch("MenuSinConexion", {"sceneName": "SignInScene"});
+        this.scene.bringToTop("MenuSinConexion");
+        this.scene.pause();
     },
+    onResume : function() {
+       iconoWifi.setTexture("Wifi").setScale(0.2);
+       this.setIntervals();
+    }
+	
 });
