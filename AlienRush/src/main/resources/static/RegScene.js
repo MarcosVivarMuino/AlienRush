@@ -100,7 +100,7 @@ var RegScene = new Phaser.Class({
 						})
 						
 						.fail(function(data){
-							alert("Usuario invalido o no registrado");
+							alert("Usuario ya registrado.");
 						});
 					}else{
 						alert("Las contraseñas no coinciden");

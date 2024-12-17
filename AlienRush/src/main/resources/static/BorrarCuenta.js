@@ -138,6 +138,19 @@ var BorrarCuenta = new Phaser.Class({
 	                })
 	                .done(function (data, textStatus, jqXHR) {
 	                    if (textStatus === "success") {
+							$.ajax({
+    							method: "PUT",
+    							url:"/numusuarios",
+    							contentType: "application/json",
+    							async: false,
+    							data: JSON.stringify(this.nombreUsuario),
+    							success: function () {
+        						console.log("Usuario desconectado. Eliminado de la lista.");
+    							},
+    							error: function () {
+        						console.error("Error al eliminar usuario de la lista.");
+    							}
+							});
 	                        this.scene.start("SignInScene"); // Volver al perfil o menú principal
 	                    }
 						
