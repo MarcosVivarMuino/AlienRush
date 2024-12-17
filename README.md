@@ -491,7 +491,7 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 ---
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
-![](IMAGENES/Flujograma_V2.png)
+![](IMAGENES/FlujogramaF3.png)
 *Ilustración 42: Flujograma*
 
 
