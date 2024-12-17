@@ -180,6 +180,12 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 *Ilustración 1: Idea de humanos normales*
 
+Un ejemplo de personaje que se ha diseñado finalmente para el juego es el siguiente:
+
+![](IMAGENES/Personaje1AR.png)
+
+*Ilustración 2: Personaje*
+
 ### <a name="_23ov1ras98cn"></a>**1.2. PERSONAJES VACAS**
 **Descripción**: Estos animales son especialmente codiciados, otorgando el doble de puntos que los humanos.
 
@@ -191,7 +197,13 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.009.png)
 
-*Ilustración 2: Idea de vacas*
+*Ilustración 3: Idea de vacas*
+
+Finalmente el diseño realizado para las vacas del juego es el siguiente:
+
+![](IMAGENES/VacaAR.png)
+
+*Ilustración 4: Vaca*
 
 ### <a name="_4rsemzwoct82"></a>**1.3. CHATARRA**
 **Descripción**: Objetos de metal o basura que, en lugar de ser útiles, causan daño a la nave alienígena.
@@ -202,7 +214,13 @@ Habrá diferentes tipos de personajes y elementos que poder abducir. Cada uno de
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.010.png)![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.011.png)
 
-*Ilustración 3: Idea de chatarra*
+*Ilustración 5: Idea de chatarra*
+
+La chatarra en el juego final está diseñada de la siguiente forma:
+
+![](IMAGENES/ChatarraAR.png)
+
+*Ilustración 6: Chatarra*
 
 ### <a name="_owkp6x4oowal"></a>**1.4. MILITAR**
 **Descripción**: Personajes militares que son un peligro mortal. Si los abduces por error, pierdes inmediatamente.
@@ -219,7 +237,14 @@ reconocibles desde la vista cenital.
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.014.png)
 
 
-*Ilustración 4: Idea de militares*
+*Ilustración 7: Idea de militares*
+
+Los militares en el juego se han terminado también.
+
+![](IMAGENES/MilitarAR.png)
+
+*Ilustración 8: Militar*
+
 ### <a name="_v1gmtfbu50b7"></a>**1.5. PERSONAJES HUMANOS CON ESTEROIDES**
 **Descripción**: Humanos más grandes y fuertes que otorgan un aumento temporal en las habilidades de la nave alienígena.
 
@@ -229,8 +254,14 @@ reconocibles desde la vista cenital.
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.015.png)
 
+*Ilustración 9: Idea de humano con esteroides*
 
-*Ilustración 5: Idea de humano con esteroides*
+Los humanos fuertes finalmente son superhéroes que sobrevuelan la ciudad.
+
+![](IMAGENES/SuperheroeAR.png)
+
+*Ilustración 10: Superhéroe*
+
 ## <a name="_hnluayo0zj7t"></a>**2. NAVE**
 Como personaje jugable tendrá cada jugador un OVNI con un marciano, que será el que deberemos controlar para poder abducir a los ya nombrados anteriormente.
 
@@ -238,11 +269,14 @@ La idea es que sea una vista cenital donde se aprecie justo debajo la zona habil
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.016.png)
 
+*Ilustración 11: Idea de nave*
 
+Las naves que se verán en el juego final serán cada una de un color para indicar a cada jugador.
 
+![](IMAGENES/Player1.png)
+![](IMAGENES/Player2.png)
 
-*Ilustración 6: Idea de nave*
-
+*Ilustración 12: Jugadores*
 
 ## <a name="_ofghojrc3ozq"></a>**3. ESCENARIOS**
 En **Alien Rush!** podrás escoger en qué mapa juegas contando con 3 distintos, antes de empezar la partida se podrá elegir el escenario:
@@ -253,13 +287,13 @@ Para la granja, se escogerá un mapa en el que podremos ver elementos como tract
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.017.jpeg)
 
-*Ilustración 7: Idea de mapa - Granja*
+*Ilustración 13: Idea de mapa - Granja*
 
 Finalmente se ha diseñado un fondo que actúe como escenario del videojuego, de tal forma que contenga elementos simples que hagan ver que el escenario es un simple añadido visual, que no afecte a la vista de los humanos y demás personajes.
 
 ![](IMAGENES/Granja2.png)
 
-*Ilustración 8: Escenario de granja*
+*Ilustración 14: Escenario de granja*
 
 ### **3.2. Nivel 2:  Ciudad**
 
@@ -267,19 +301,22 @@ En el nivel de la ciudad, será algo parecido a la siguiente imagen, un escenari
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.018.jpeg)![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.019.jpeg)
 
-*Ilustración 9: Idea de mapa - Ciudad*
+*Ilustración 15: Idea de mapa - Ciudad*
 
 Al igual que con la granja, también se ha diseñado un fondo de una ciudad que actúa como escenario visual del juego, en el que los personajes sean claramente distinguibles y guarde coherencia con el estilo.
 
 ![](IMAGENES/Ciudad.png)
 
-*Ilustración 10: Escenario de ciudad*
+*Ilustración 16: Escenario de ciudad*
 
 ### **3.3. Nivel 3:  Playa**
 
 Para la playa, será como las siguientes imágenes, un lugar donde se aprecian sombrillas, hamacas o barcos.
+
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.020.jpeg)![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.021.jpeg)
-*Ilustración 11: Idea de mapa - Playa*
+
+*Ilustración 17: Idea de mapa - Playa*
+
 ## <a name="_hny94wsh6l5s"></a><a name="_pf56dhm7t7m1"></a>
 
 ## <a name="_8xpebftqo7pc"></a>**4. LOGO DEL JUEGO**
@@ -288,30 +325,30 @@ Para la playa, será como las siguientes imágenes, un lugar donde se aprecian s
 
 ![ref2]
 
-*Ilustración 12: Logo horizontal*
+*Ilustración 18: Logo horizontal*
 
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.023.png)
 
-*Ilustración 13: Logo vertical*
+*Ilustración 19: Logo vertical*
 
 ## <a name="_olfolzwqujl1"></a>**5. MENÚ DE INICIO**
 Esta pantalla incluirá el logo del juego y tres botones adicionales, desde los cuáles podremos jugar, ir a las opciones y acceder a los créditos, que incluirán la información de todos los participantes del proyecto.
 Además de un botón para visitar el perfil del jugador, el chat del juego y el número de usuarios conectados.
 ![](IMAGENES/Pantalla_Inicial_final.png)
 
-*Ilustración 14: Pantalla de inicio*
+*Ilustración 20: Pantalla de inicio*
 
 ## <a name="_4zagq7yyoirj"></a>**6. INTERFAZ DE VICTORIA Y DERROTA**
 Se muestra sobre el mapa en el que se ha desarrollado la partida, con el usuario ganador en alto y el perdedor representado como una anve rota. Además se muuestran los puntos del jugador y el motivo de la victoria.
 
 ![](IMAGENES/PantallaPuntuacionCiudadAzul.png)
 
-*Ilustración 15: Pantalla de victoria del jugador 1 en la ciudad*
+*Ilustración 21: Pantalla de victoria del jugador 1 en la ciudad*
 
 ![](IMAGENES/PantallaPuntuacionGranjaRojo.png)
 
-*Ilustración 16: Pantalla de victoria del jugador 2 en la granja*
+*Ilustración 22: Pantalla de victoria del jugador 2 en la granja*
 
 Un mensaje de derrota en la pantalla del perdedor en la que se especifique los puntos obtenidos y el motivo de la derrota.
 
@@ -321,30 +358,30 @@ Se han diseñado las interfaces básicas necesarias para el desarrollo normal de
 ### <a name="_v1gmtfbu50b7"></a>**7.2. PANTALLA DE AJUSTES**
 ![](IMAGENES/Ajustes.png)
 
-*Ilustración 17: Pantalla de ajustes*
+*Ilustración 23: Pantalla de ajustes*
 
 ### <a name="_v1gmtfbu50b7"></a>**7.3. PANTALLA DE CREDITOS**
 ![](IMAGENES/Creditos.png)
 
-*Ilustración 18: Pantalla de créditos*
+*Ilustración 24: Pantalla de créditos*
 
 ### <a name="_v1gmtfbu50b7"></a>**7.4. PANTALLA DE ELECCIÓN DE MAPA**
 ![](IMAGENES/Mapas.png)
 
-*Ilustración 19: Pantalla de elección de mapa*
+*Ilustración 25: Pantalla de elección de mapa*
 
 ## <a name="_v1gmtfbu50b7"></a>**8. EJEMPLOS DE PARTIDA**
 Aquí se mostrarán las pantallas que muestren los ejemplos de como se verían las partidas del juego final.
 
 ![](IMAGENES/PartidaEjemplo.png)
 
-*Ilustración 20: Ejemplo de partida*
+*Ilustración 26: Ejemplo de partida*
 
 Además se ha diseñado una pequeña interfaz para el tutorial del juego.
 
 ![](IMAGENES/Tutorial.png)
 
-*Ilustración 21: Pantalla de tutorial*
+*Ilustración 27: Pantalla de tutorial*
 
 ## <a name="_v1gmtfbu50b7"></a>**9. MENÚS EN LÍNEA**
 Estos serán los menús que se mostrarán para los servicios en línea relacionados con las cuentas de los jugadores.
@@ -355,35 +392,35 @@ En esta pantalla los jugadores podrán registrarse con el usuario y contraseña 
 
 ![](IMAGENES/Pantalla_Reg_Final.png)
 
-*Ilustración 22: Pantalla de registro*
+*Ilustración 28: Pantalla de registro*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.2. INICIO DE SESIÓN**
 Pantalla de inicio de sesión para los jugadores que ya tengan una cuenta registrada.
 
 ![](IMAGENES/Pantalla_IS_Final.png)
 
-*Ilustración 23: Pantalla de inicio de sesión*
+*Ilustración 29: Pantalla de inicio de sesión*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.3. BORRAR CUENTA**
 Aquí el jugador podrá borrar sus credenciales, confirmando antes de realizar la acción en concreto.
 
 ![](IMAGENES/Pantalla_BC_Final.png)
 
-*Ilustración 24: Pantalla de borrar cuenta*
+*Ilustración 30: Pantalla de borrar cuenta*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.4. CAMBIAR CONTRASEÑA**
 Pantalla en la que el jugador cambiará la contraseña de su cuenta.
 
 ![](IMAGENES/Pantalla_CC_final.png)
 
-*Ilustración 25: Pantalla de cerrar sesión*
+*Ilustración 31: Pantalla de cerrar sesión*
 
 ### <a name="_v1gmtfbu50b7"></a>**9.5. PERFIL**
 Perfil del jugador.
 
 ![](IMAGENES/Pantalla_Perfil_final.png)
 
-*Ilustración 26: Pantalla de perfil*
+*Ilustración 32: Pantalla de perfil*
 
 ## <a name="_ofghojrc3ozq"></a>**10. BOTONES DE INTERFAZ**
 Estos son los botones diseñados para las interfaces mostradas previamente. Se han diseñado todos en una misma línea estética para no romper el diseño de cada interfaz.
@@ -391,23 +428,23 @@ Son botones básicos que muestran la acción a realizar en texto dentro del prop
 
 ![](IMAGENES/BotonIS.png)
 
-*Ilustración 27: Botón de iniciar sesión*
+*Ilustración 33: Botón de iniciar sesión*
 
 Los únicos botones que se han diseñado de diferente forma son los botones que llevan a la pantalla de perfil y el botón que viaja a la pantalla anterior, que se han diseñado con símbolos ya que son intuitivos y más estéticos que el texto.
 
 ![](IMAGENES/BotonAtrasFlecha.png)
 
-*Ilustración 28: Botón de atrás*
+*Ilustración 34: Botón de atrás*
 
 ![](IMAGENES/LogoUusuarioDEF.png)
 
-*Ilustración 29: Botón de perfil*
+*Ilustración 35: Botón de perfil*
 
 Además, para los campos de texto se ha escogido una tipografía concreta para indicar la accióna realizar en dicho campo.
 
 ![](IMAGENES/LetrasNuevaContraseña.png)
 
-*Ilustración 30: Tipografía del menú*
+*Ilustración 36: Tipografía del menú*
 
 ## <a name="_ofghojrc3ozq"></a>**11. POTENCIADORES**
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
@@ -416,31 +453,31 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 
 ![](IMAGENES/Cohete.png)
 
-*Ilustración 31: Multiplicador de velocidad*
+*Ilustración 37: Multiplicador de velocidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.2. MULTIPLICADOR DE PUNTOS**
 
 ![](IMAGENES/Multiplicador.png)
 
-*Ilustración 32: Multiplicador de puntos*
+*Ilustración 38: Multiplicador de puntos*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.3. AUMENTO DE CAPACIDAD**
 
 ![](IMAGENES/CapacidadAumentada.png)
 
-*Ilustración 33: Aumento de capacidad*
+*Ilustración 39: Aumento de capacidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.4. BLOQUEADOR**
 
 ![](IMAGENES/Bloqueo.png)
 
-*Ilustración 34: Bloqueador*
+*Ilustración 40: Bloqueador*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.5. RALENTIZADOR**
 
 ![](IMAGENES/Congelado.png)
 
-*Ilustración 35: Ralentizador*
+*Ilustración 41: Ralentizador*
 
 ## <a name="_ofghojrc3ozq"></a>**12. PERSONAJES FINALES**
 Aquí se muestran los personajes y objetos abducibles del juego en su versión final, es decir, la que permanecerá desde ya en el juego.
@@ -450,37 +487,37 @@ Para los jugadores se ha decidido realizar el diseño de una nave que será de c
 
 ![](IMAGENES/Player1.png)
 
-*Ilustración 36: Player 1*
+*Ilustración 42: Player 1*
 
 ![](IMAGENES/Player2.png)
 
-*Ilustración 37: Player 2*
+*Ilustración 43: Player 2*
 
 ### <a name="_v1gmtfbu50b7"></a>**12.2. HUMANOS**
 Existen diferentes tipos de humanos que pueden ser abducidos como ya se ha explicado.
 
 ![](IMAGENES/Personaje1AR.png)
 
-*Ilustración 38: Humano normal*
+*Ilustración 44: Humano normal*
 
 ![](IMAGENES/MilitarAR.png)
 
-*Ilustración 39: Militar*
+*Ilustración 45: Militar*
 
 ![](IMAGENES/SuperheroeAR.png)
 
-*Ilustración 40: Superheroe*
+*Ilustración 46: Superheroe*
 
 ### <a name="_v1gmtfbu50b7"></a>**12.3. OTROS ABDUCIBLES**
 Aquí los diseños de otros objetos u animales abducibles como la chatarra y las vacas.
 
 ![](IMAGENES/ChatarraAR.png)
 
-*Ilustración 41: Chatarra*
+*Ilustración 47: Chatarra*
 
 ![](IMAGENES/VacaAR.png)
 
-*Ilustración 42: Vaca*
+*Ilustración 48: Vaca*
 
 ---
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
@@ -495,7 +532,7 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
 ![](IMAGENES/Flujograma_V2.png)
-*Ilustración 43: Flujograma*
+*Ilustración 49: Flujograma*
 
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
