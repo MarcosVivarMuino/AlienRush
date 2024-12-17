@@ -497,3 +497,14 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
 [ref2]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.022.png
+
+---
+# <a name="_n409q3vvp6wr"></a>**COMPILACIÓN**
+A continuación se explican detalladamente los pasos a seguir para ejecutar el proyecto:
+
+### <a name="_v1gmtfbu50b7"></a>1.- Se descarga el SpringTool 4 de Eclipse.
+### <a name="_v1gmtfbu50b7"></a>2.- Se abre la carpeta con el proyecto de juego.
+### <a name="_v1gmtfbu50b7"></a>3.- Se abre la ruta src/main/java->GGTeam.F3API->F3APIRest2Aplication.java
+### <a name="_v1gmtfbu50b7"></a>4.- Se hace click derecho en el archivo->run as->Java Aplication.
+### <a name="_v1gmtfbu50b7"></a>5.- Se introduce la IP del dispositivo en el navegador seguido de ":8080". Ejemplo: 123.123.1.1:8080
+### <a name="_v1gmtfbu50b7"></a>6.- Se disfruta del juego.
