@@ -57,19 +57,10 @@ public class controladorUsuarios {
         }
     }
 	
-	@GetMapping("api/getIp")
+	@GetMapping("/conexion")
     @ResponseBody
-    public String getServerIp() {
-        try {
-            // Obtiene la dirección IP del servidor
-            InetAddress inetAddress = InetAddress.getLocalHost();
-            String serverIp = inetAddress.getHostAddress();
-            System.out.println(inetAddress);
-            return serverIp;
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            return "No se pudo obtener la dirección IP del servidor.";
-        }
+    public ResponseEntity<String> checkconexion() {
+		return new ResponseEntity<>(HttpStatus.OK);
     }
 	
 	@PostMapping("/usuarioInicio")

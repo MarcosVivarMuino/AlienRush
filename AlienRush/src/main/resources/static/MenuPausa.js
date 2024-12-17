@@ -27,7 +27,6 @@ var MenuPausa = new Phaser.Class({
         /************************* FONDO *************************/
         this.add.image(875, 440, 'fondoPausa');
       
-
         /************************* VARIABLES *************************/
         let botonReanudar = this.add.image(853, 440, 'botonReanudar')
         let botonMenu = this.add.image(853, 580, 'botonMenu')

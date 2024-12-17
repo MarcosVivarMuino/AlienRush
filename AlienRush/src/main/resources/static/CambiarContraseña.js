@@ -31,15 +31,7 @@ var CambiarContraseña = new Phaser.Class({
 		this.load.html('passform', 'assets/contra.html');
     },
 
-    create: function () {
-		fetch('/api/getIp')
-    			.then(response => response.text())
-    			.then(data => {
-				ipLocal = "http://"+data+":8080/"
-        		console.log(data); 
-    	});
-		
-				
+    create: function () {	
         /************************* FONDO *************************/
         //IMAGEN
         this.add.image(875, 440, 'fondoCambiarContraseña');

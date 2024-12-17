@@ -30,14 +30,6 @@ var BorrarCuenta = new Phaser.Class({
     },
 
     create: function () {
-		fetch('/api/getIp')
-    			.then(response => response.text())
-    			.then(data => {
-				ipLocal = "http://"+data+":8080/"
-        		console.log(data); 
-    	});
-		
-				
         /************************* FONDO *************************/
         //IMAGEN
         this.add.image(875, 440, 'fondoBorrarCuenta');

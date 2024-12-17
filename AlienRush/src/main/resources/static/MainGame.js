@@ -841,7 +841,6 @@ var MainGame = new Phaser.Class({
     },
     
     shutdown: function () {
-    
     // Destruir teclas registradas
     this.input.keyboard.removeKey(this.SPC);
     this.input.keyboard.removeKey(this.keyESC);

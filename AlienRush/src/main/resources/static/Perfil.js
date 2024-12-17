@@ -59,6 +59,8 @@ var Perfil = new Phaser.Class({
         let Confirmacion = this.add.image(1480, 440, 'Confirmacion').setVisible(false);
         let BotonSi = this.add.image(1410, 480, 'BotonSi').setVisible(false);
         let BotonNo = this.add.image(1545, 480, 'BotonNo').setVisible(false);
+        
+        iconoWifi = this.add.image(100, 200, 'Wifi').setScale(0.5);
         /************************* BOTONES *************************/
         //botonBorrarCuenta
         botonBorrarCuenta.setInteractive();
@@ -132,6 +134,32 @@ var Perfil = new Phaser.Class({
         })
         BotonAtrasFlecha.on("pointerover", () => { BotonAtrasFlecha.setScale(1.2); })
         BotonAtrasFlecha.on("pointerout", () => { BotonAtrasFlecha.setScale(1); })
-
+		
+		intervalConexion = setInterval(() => {
+        	this.checkConexion();
+    	}, 1000);
+    },
+    checkConexion: function(){
+		let local = this;
+		$.ajax({
+        method: "GET",
+        url: "/conexion",
+        error: function () {
+            iconoWifi.setTexture("noWifi").setScale(0.4);
+            clearInterval(intervalConexion);
+            local.reConnect();
+        },
+    });
+	},
+	reConnect: function () {
+        this.scene.launch("MenuSinConexion", {"sceneName": "Perfil"});
+        this.scene.bringToTop("MenuSinConexion");
+        this.scene.pause();
+    },
+    onResume : function() {
+       iconoWifi.setTexture("Wifi").setScale(0.5);
+       intervalConexion = setInterval(() => {
+        	this.checkConexion();
+    	}, 1000);
     }
 });

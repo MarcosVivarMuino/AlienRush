@@ -17,6 +17,8 @@ var MenuScene = new Phaser.Class({
         this.load.image('creditos', 'assets/Menu/BotonCreditos.png');
         this.load.image('iconoPerfil', 'assets/Menu/iconoPerfil.png');
         this.load.image('enviar', 'assets/SignScene/BotonAceptar.png');
+        this.load.image('Wifi', 'assets/Menu/Wifi.png');
+        this.load.image('noWifi', 'assets/Menu/noWifi.png');
 
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
         this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
@@ -25,18 +27,10 @@ var MenuScene = new Phaser.Class({
     },
 
     create: function () {
-		////////////////////////////////IP//////////////////////////////////////////
-		fetch('/api/getIp')
-    			.then(response => response.text())
-    			.then(data => {
-				ipLocal = "http://"+data+":8080/"
-        		console.log(ipLocal); 
-    	});
     	////////////////////////////////NUMJUGADORES/////////////////////////////////
-
 			$.ajax({
     			method: "POST",
-    			url: ipLocal + "numusuarios",
+    			url:"/numusuarios",
     			contentType: "application/json",
     			data: JSON.stringify(this.nombreUsuario),
     			success: function () {
@@ -46,9 +40,6 @@ var MenuScene = new Phaser.Class({
         			console.error("Error al agregar usuario a la lista.");
     		}
 		});
-
-		
-
         /************************* FONDO *************************/
         //IMAGEN
         this.add.image(875, 440, 'fondoMenu');
@@ -78,19 +69,20 @@ var MenuScene = new Phaser.Class({
         let ajustes = this.add.image(1470, 500, 'ajustes');
         let creditos = this.add.image(1470, 640, 'creditos');
         let iconoPerfil = this.add.image(100, 80, 'iconoPerfil').setScale(0.7);
+        iconoWifi = this.add.image(100, 200, 'Wifi').setScale(0.5);
 
 		////////////////////////////////////////CHAT///////////////////////////////////////////
 		// Fondo del chat
 	    const chatBackground = this.add.rectangle(0, 520, 500, 300, 0x000000).setOrigin(0).setAlpha(0.8);
 	
 	    // Texto de mensajes
-	    const chatMessages = this.add.text(0, 1500, '', {
+	    chatMessages = this.add.text(0, 1500, '', {
 	        font: '25px Arial',
 	        fill: '#ffffff',
 	        wordWrap: { width: 480 }
 	    }).setOrigin(0);
 		///////////////////////////////////MUESTREODEUSUARIOS//////////////////////////////////
-		const usuariosConectadosText = this.add.text(1250, 820, 'Usuarios conectados: 0', {
+		usuariosConectadosText = this.add.text(1250, 820, 'Usuarios conectados: 0', {
         	fontFamily: 'Impact, fantasy',
         	fill: '#ffffff',
         	fontSize: '50px'
@@ -143,22 +135,60 @@ var MenuScene = new Phaser.Class({
         iconoPerfil.on("pointerover", () => { iconoPerfil.setScale(0.9); })
         iconoPerfil.on("pointerout", () => { iconoPerfil.setScale(0.7); })
         
-    setInterval(() => {
-    	this.refreshChat(chatMessages, ipLocal);
-	}, 1000);
+        //////////////////////////////////////////////INTERVALOS/////////////////////////////////////////////////////////
+    	this.setIntervals();
+	},
 	
-	// Actualizar el número de usuarios conectados cada segundo
-    setInterval(() => {
-        this.refreshUsuariosConectados(usuariosConectadosText);
-    }, 1000);
-},
+	checkConexion: function(){
+		let local = this;
+		$.ajax({
+        method: "GET",
+        url: "/conexion",
+        error: function () {
+            iconoWifi.setTexture("noWifi").setScale(0.4);
+            local.stopIntervals();
+            local.reConnect();
+        },
+    });
+	},
+	
+	setIntervals: function(){
+		intervalChat = setInterval(() => {
+    		this.refreshChat(chatMessages);
+		}, 1000);
+	
+		// Actualizar el número de usuarios conectados cada segundo
+    	intervalUsers = setInterval(() => {
+        	this.refreshUsuariosConectados(usuariosConectadosText);
+    	}, 1000);
+    	
+    	intervalConexion = setInterval(() => {
+        	this.checkConexion();
+    	}, 1000);
+	},
+	
+	stopIntervals: function(){
+		clearInterval(intervalChat);
+		clearInterval(intervalUsers);
+		clearInterval(intervalConexion);
+	},
+	
+	 reConnect: function () {
+        this.scene.launch("MenuSinConexion", {"sceneName": "MenuScene"});
+        this.scene.bringToTop("MenuSinConexion");
+        this.scene.pause();
+    },
+    
+    onResume : function() {
+       iconoWifi.setTexture("Wifi").setScale(0.5);
+       this.setIntervals();
+    },
+	
     sendMessage: function (message) {
      const chatMessage = {
         NombreUsuario: this.nombreUsuario,
         mensaje: message
     };
-    
-     console.log("Enviando mensaje:", chatMessage);
 
     // Enviar el mensaje al servidor
     $.ajax({
@@ -175,7 +205,7 @@ var MenuScene = new Phaser.Class({
     });
 	},
 
-	refreshChat: function (chatMessages, ipLocal) {
+	refreshChat: function (chatMessages) {
     // Obtener mensajes del servidor
     $.ajax({
         method: "GET",
@@ -211,9 +241,9 @@ var MenuScene = new Phaser.Class({
             console.error("Error al actualizar chat");
         }
     });
-},
+	},
 
-refreshUsuariosConectados: function (usuariosConectadosText) {
+	refreshUsuariosConectados: function (usuariosConectadosText) {
     $.ajax({
         method: "GET",
         url:"/numusuarios",
@@ -224,6 +254,6 @@ refreshUsuariosConectados: function (usuariosConectadosText) {
             console.error("Error al obtener usuarios conectados");
         }
     });
-}
+	}
 
 });
