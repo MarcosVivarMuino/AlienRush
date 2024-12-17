@@ -17,8 +17,8 @@ var MenuSinConexion = new Phaser.Class({
 
     create: function () {
         /************************* FONDO *************************/
-        this.add.image(875, 440, 'fondoError');
-       
+        this.add.image(875, 440, 'fondoError');       
+		botonRecargar = this.add.image(860, 750, 'botonRecargar').setInteractive();
         /************************* BOTONES *************************/
         //Reconexion
         botonRecargar.on('pointerdown', () => {

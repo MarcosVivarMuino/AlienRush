@@ -141,7 +141,7 @@ var Perfil = new Phaser.Class({
         this.setIntervals();
 
     },
-    
+
     checkConexion: function(){
 		let local = this;
 		$.ajax({
@@ -149,7 +149,7 @@ var Perfil = new Phaser.Class({
         url: "/conexion",
         error: function () {
             iconoWifi.setTexture("noWifi").setScale(0.2);
-            local.stopIntervals(intervalConexion);
+            local.stopIntervals();
             local.reConnect();
         },
     });
@@ -168,7 +168,8 @@ var Perfil = new Phaser.Class({
 	reConnect: function () {
         this.scene.launch("MenuSinConexion", {"sceneName": "Perfil"});
         this.scene.bringToTop("MenuSinConexion");
-        this.scene.pause();
+		this.scene.pause();
+
     },
     onResume : function() {
        iconoWifi.setTexture("Wifi").setScale(0.2);

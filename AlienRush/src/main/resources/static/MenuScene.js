@@ -176,7 +176,8 @@ var MenuScene = new Phaser.Class({
 	 reConnect: function () {
         this.scene.launch("MenuSinConexion", {"sceneName": "MenuScene"});
         this.scene.bringToTop("MenuSinConexion");
-        this.scene.pause();
+		this.scene.pause();
+
     },
     
     onResume : function() {

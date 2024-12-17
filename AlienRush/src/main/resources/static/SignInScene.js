@@ -121,8 +121,10 @@ var SignInScene = new Phaser.Class({
         })
     
 		this.setIntervals();
+		
 
 	},
+	
     
     checkConexion: function(){
 		let local = this;
@@ -131,7 +133,7 @@ var SignInScene = new Phaser.Class({
         url: "/conexion",
         error: function () {
             iconoWifi.setTexture("noWifi").setScale(0.2);
-            local.stopIntervals(intervalConexion);
+            local.stopIntervals();
             local.reConnect();
         },
     });

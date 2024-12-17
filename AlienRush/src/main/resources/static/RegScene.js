@@ -14,9 +14,8 @@ var RegScene = new Phaser.Class({
 		this.load.image('RContrasena', 'assets/RegScene/LetrasRepiteContraseña.png');
 		this.load.image('Usuario', 'assets/RegScene/LetrasUsuario.png');
 		this.load.image('BotonIS', 'assets/RegScene/BotonIS.png');
-				
-        this.load.image('Wifi', 'assets/SinConex/Wifi.png');
-        this.load.image('noWifi', 'assets/SinConex/noWifi.png');
+		this.load.image('Wifi', 'assets/SinConex/Wifi.png');
+		this.load.image('noWifi', 'assets/SinConex/noWifi.png');
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
         this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
@@ -65,6 +64,7 @@ var RegScene = new Phaser.Class({
         
         ready1.setInteractive();
         BotonIS.setInteractive();
+		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
 
         /************************* BOTONES *************************/
         ready1.on("pointerdown",()=>{
@@ -134,38 +134,42 @@ var RegScene = new Phaser.Class({
         })
     	this.setIntervals();
 
-	},
-    
-    checkConexion: function(){
-		let local = this;
-		$.ajax({
-        method: "GET",
-        url: "/conexion",
-        error: function () {
-            iconoWifi.setTexture("noWifi").setScale(0.2);
-            local.stopIntervals(intervalConexion);
-            local.reConnect();
-        },
-    });
-	},
-	
-	setIntervals: function(){
-		intervalConexion = setInterval(() => {
-        	this.checkConexion();
-    	}, 1000);
-	},
-	
-	stopIntervals: function(){
-		clearInterval(intervalConexion);
-	},
-	
-	reConnect: function () {
-        this.scene.launch("MenuSinConexion", {"sceneName": "RegScene"});
-        this.scene.bringToTop("MenuSinConexion");
-        this.scene.pause();
-    },
-    onResume : function() {
-       iconoWifi.setTexture("Wifi").setScale(0.2);
-       this.setIntervals();
-    }
+		this.setIntervals();
+				
+
+			},
+			
+		    
+		    checkConexion: function(){
+				let local = this;
+				$.ajax({
+		        method: "GET",
+		        url: "/conexion",
+		        error: function () {
+		            iconoWifi.setTexture("noWifi").setScale(0.2);
+		            local.stopIntervals();
+		            local.reConnect();
+		        },
+		    });
+			},
+			
+			setIntervals: function(){
+				intervalConexion = setInterval(() => {
+		        	this.checkConexion();
+		    	}, 1000);
+			},
+			
+			stopIntervals: function(){
+				clearInterval(intervalConexion);
+			},
+			
+			reConnect: function () {
+		        this.scene.launch("MenuSinConexion", {"sceneName": "RegScene"});
+		        this.scene.bringToTop("MenuSinConexion");
+		        this.scene.pause();
+		    },
+		    onResume : function() {
+		       iconoWifi.setTexture("Wifi").setScale(0.2);
+		       this.setIntervals();
+		    }
 });

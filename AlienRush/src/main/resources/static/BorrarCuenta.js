@@ -20,7 +20,8 @@ var BorrarCuenta = new Phaser.Class({
 		this.load.image('Confirmacion', 'assets/BorrarCuenta/RecuadroEstasSeguro.png');
 		this.load.image('BotonSi', 'assets/BorrarCuenta/BotonSi.png');
 		this.load.image('BotonNo', 'assets/BorrarCuenta/BotonNo.png');
-		
+		this.load.image('Wifi', 'assets/SinConex/Wifi.png');
+		this.load.image('noWifi', 'assets/SinConex/noWifi.png');
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
 		
@@ -67,6 +68,8 @@ var BorrarCuenta = new Phaser.Class({
         let Confirmacion = this.add.image(1480, 440, 'Confirmacion').setVisible(false);
         let BotonSi = this.add.image(1410, 480, 'BotonSi').setVisible(false);
         let BotonNo = this.add.image(1545, 480, 'BotonNo').setVisible(false);
+		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
+
         /************************* BOTONES *************************/
         //BotonAceptar
         BotonAceptar.setInteractive();
@@ -171,7 +174,46 @@ var BorrarCuenta = new Phaser.Class({
         });
         BotonSi.on("pointerover", () => { BotonSi.setScale(1.2); });
         BotonSi.on("pointerout", () => { BotonSi.setScale(1); });
-    }
+
+		this.setIntervals();
+				
+
+			},
+			
+		    
+		    checkConexion: function(){
+				let local = this;
+				$.ajax({
+		        method: "GET",
+		        url: "/conexion",
+		        error: function () {
+		            iconoWifi.setTexture("noWifi").setScale(0.2);
+		            local.stopIntervals();
+		            local.reConnect();
+		        },
+		    });
+			},
+			
+			setIntervals: function(){
+				intervalConexion = setInterval(() => {
+		        	this.checkConexion();
+		    	}, 1000);
+			},
+			
+			stopIntervals: function(){
+				clearInterval(intervalConexion);
+			},
+			
+			reConnect: function () {
+		        this.scene.launch("MenuSinConexion", {"sceneName": "BorrarCuenta"});
+		        this.scene.bringToTop("MenuSinConexion");
+		        this.scene.pause();
+		    },
+		    onResume : function() {
+		       iconoWifi.setTexture("Wifi").setScale(0.2);
+		       this.setIntervals();
+		    }
+			
 });
 
 
