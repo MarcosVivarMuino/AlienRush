@@ -479,10 +479,6 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 
 *Ilustración 41: Ralentizador*
 
-## <a name="_ofghojrc3ozq"></a>**12. PERSONAJES FINALES**
-Aquí se muestran los personajes y objetos abducibles del juego en su versión final, es decir, la que permanecerá desde ya en el juego.
-
-
 ---
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
 “***Alien Rush***!” contará con músicas de fondo tanto en el menú como en la propia partida, con la intención de no hacer aburrida la escena ni el recorrido entre las diferentes pantallas.
