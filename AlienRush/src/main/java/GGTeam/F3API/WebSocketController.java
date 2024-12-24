@@ -1,66 +1,63 @@
 package GGTeam.F3API;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import GGTeam.F3API.Partida;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-//import com.example.demo.GameData;
-import F4WEB_SOCKET.Mensajes;
 
-@Controller
+@RestController
 public class WebSocketController {
 
-    private final SimpMessagingTemplate messagingTemplate;
+	  private final SimpMessagingTemplate messagingTemplate;
 
-    @Autowired
-    public WebSocketController(SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
-    }
-    
-    @MessageMapping("/posiPlayer")
-    @SendTo("/topic/posiPlayer")
-    public PosiPlayers actuPosiPlayer(@Payload PosiPlayers m, SimpMessageHeaderAccessor HA) {  
-        return m;
-    
-    }
-    
-    @MessageMapping("/muroRoto")
-    @SendTo("/topic/muroRoto")
-    public muroRoto actuMuroRoto(@Payload muroRoto m, SimpMessageHeaderAccessor HA) {  
-        return m;
-    
-    }
-    
-    @MessageMapping("/pillarPU")
-    @SendTo("/topic/pillarPU")
-    public PUcogido PUpillado(@Payload PUcogido m, SimpMessageHeaderAccessor HA) {
-        return m;
-    
-    }
-    
-    @MessageMapping("/usarPU")
-    @SendTo("/topic/usarPU")
-    public int PUUsado(@Payload int m, SimpMessageHeaderAccessor HA) {
-        return m;
-    
-    }
-    
-    @MessageMapping("/PersoCogido")
-    @SendTo("/topic/PersoCogido")
-    public int PersoCogido(@Payload int m, SimpMessageHeaderAccessor HA) {
-        return m;
-    
-    }
-    
-    @MessageMapping("/PersoListo")
-    @SendTo("/topic/PersoListo")
-    public int PersoListo(@Payload int m, SimpMessageHeaderAccessor HA) {
-        return m;
-    
-    }
+	    public WebSocketController(SimpMessagingTemplate messagingTemplate) {
+	        this.messagingTemplate = messagingTemplate;
+	    }
+
+	    // Actualizar toda la partida
+	    @MessageMapping("/actualizarPartida")
+	    @SendTo("/topic/actualizarPartida")
+	    public Partida actualizarPartida(@Payload Partida partida, SimpMessageHeaderAccessor headerAccessor) {
+	        String sessionId = headerAccessor.getSessionId();
+	        actualizarJugador(partida, sessionId);
+	        return partida;
+	    }
+
+	    // Actualizar la posición de los jugadores
+	    @MessageMapping("/actualizarPosiciones")
+	    @SendTo("/topic/actualizarPosiciones")
+	    public Partida actualizarPosiciones(@Payload Partida partida, SimpMessageHeaderAccessor headerAccessor) {
+	        String sessionId = headerAccessor.getSessionId();
+	        actualizarJugador(partida, sessionId);
+	        return partida;
+	    }
+
+	    // Actualizar los puntos de los jugadores
+	    @MessageMapping("/actualizarPuntos")
+	    @SendTo("/topic/actualizarPuntos")
+	    public Partida actualizarPuntos(@Payload Partida partida, SimpMessageHeaderAccessor headerAccessor) {
+	        String sessionId = headerAccessor.getSessionId();
+	        actualizarJugador(partida, sessionId);
+	        return partida;
+	    }
+
+	    // Actualizar las posiciones de los objetos
+	    @MessageMapping("/actualizarObjetos")
+	    @SendTo("/topic/actualizarObjetos")
+	    public Partida actualizarObjetos(@Payload Partida partida, SimpMessageHeaderAccessor headerAccessor) {
+	        return partida;
+	    }
+
+	    private void actualizarJugador(Partida partida, String sessionId) {
+	        if (sessionId.equals(partida.getJugador1Id())) {
+	            partida.actualizarJugador1();
+	        } else if (sessionId.equals(partida.getJugador2Id())) {
+	            partida.actualizarJugador2();
+	        }
+	    }
     
 }
