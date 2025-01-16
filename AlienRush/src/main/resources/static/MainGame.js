@@ -52,6 +52,12 @@ var MainGame = new Phaser.Class({
         this.load.image('MRPU', 'assets/AssetsMainGame/Potenciadores/MovimientoRapidoPU.png');
         this.load.image('MPPU', 'assets/AssetsMainGame/Potenciadores/MultiplicadorPuntosPU.png');
         this.load.image('RPU', 'assets/AssetsMainGame/Potenciadores/RalentizadorPU.png');
+        this.load.image('mas10', 'assets/AssetsMainGame/HUD/mas10.png');
+		this.load.image('mas20', 'assets/AssetsMainGame/HUD/mas20.png');
+		this.load.image('mas60', 'assets/AssetsMainGame/HUD/mas60.png');
+        this.load.image('mas30', 'assets/AssetsMainGame/HUD/mas30.png');
+        this.load.image('menos1', 'assets/AssetsMainGame/HUD/menos1.png');
+        this.load.image('masPU', 'assets/AssetsMainGame/HUD/masPU.png');
         // Partida
         this.load.image('Player1', 'assets/AssetsMainGame/Personajes/Player1.png');
         this.load.image('Player2', 'assets/AssetsMainGame/Personajes/Player2.png');
@@ -514,6 +520,12 @@ var MainGame = new Phaser.Class({
     absorberObjeto: function (player) {
         this.detectarColision(player, Humanos, 95, (humano) => {
             player.score += 10 * player.multiplicador;
+			if(player.multiplicador == 1.5){
+				
+				this.mostrarFeedback(humano.x, humano.y, 'mas20');
+			}else{
+				this.mostrarFeedback(humano.x, humano.y, 'mas10');
+			}
             this.actuScore();
             absorber.play();
             humano.destroy();
@@ -522,13 +534,19 @@ var MainGame = new Phaser.Class({
     
         this.detectarColision(player, Vacas, 110, (vaca) => {
             player.score += 30 * player.multiplicador;
-            this.actuScore();
+			if(player.multiplicador == 1.5){
+				this.mostrarFeedback(vaca.x, vaca.y, 'mas60');
+			}else{
+				this.mostrarFeedback(vaca.x, vaca.y, 'mas30');
+			}            
+			this.actuScore();
             absorber.play();
             vaca.destroy();
             this.generarVaca();
         });
     
         this.detectarColision(player, Escombros, 95, (escombro) => {
+            this.mostrarFeedback(escombro.x, escombro.y, 'menos1');
             this.perderVida(player);
             daño.play();
             this.generarEscombro(escombro);
@@ -536,6 +554,7 @@ var MainGame = new Phaser.Class({
     
         if (player.canPU) {
             this.detectarColision(player, PUHumanos, 95, (PUHuman) => {
+                this.mostrarFeedback(PUHuman.x, PUHuman.y, 'masPU');
                 this.darPowerUp(player);
                 cogerPowerUp.play();
                 PUHuman.destroy();
@@ -644,6 +663,20 @@ var MainGame = new Phaser.Class({
     actuScore: function () {
         Score1.setText(` ${player1.score}`);
         Score2.setText(` ${player2.score}`);
+    },
+
+    mostrarFeedback: function(x, y, tipo){
+        var image = this.add.image(x, y, tipo);
+        this.tweens.add({
+            targets: image, 
+            scale: 1.5, 
+            alpha: 0,
+            duration: 1000, 
+            ease: 'Power1', 
+            onComplete: () => {
+                image.destroy(); 
+            }
+        });
     },
 
     iniciarTemporizador: function () {

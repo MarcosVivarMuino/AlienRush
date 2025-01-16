@@ -42,6 +42,13 @@ public class controladorUsuarios {
         if (!usuariosConectados.contains(nombreUsuario)) {
             usuariosConectados.add(nombreUsuario); // Añade el usuario si no está en la lista
             System.out.println("Usuario conectado: " + nombreUsuario);
+            
+            // Añadir mensaje al chat
+            ChatMessage mensaje = new ChatMessage();
+            mensaje.setNombre("Sistema");
+            mensaje.setMessage(nombreUsuario + " se ha unido a la sesión.");
+            controladorChat.listUsu.add(mensaje);
+            
         } else {
             System.out.println("El usuario ya está conectado: " + nombreUsuario);
         }
@@ -52,6 +59,12 @@ public class controladorUsuarios {
     public void eliminarUsuario(@RequestBody String nombreUsuario) {
         if (usuariosConectados.remove(nombreUsuario)) { // Elimina el usuario si está en la lista
             System.out.println("Usuario desconectado: " + nombreUsuario);
+            // Añadir mensaje al chat
+            ChatMessage mensaje = new ChatMessage();
+            mensaje.setNombre("Sistema");
+            mensaje.setMessage(nombreUsuario + " ha cerrado sesión.");
+            controladorChat.listUsu.add(mensaje);
+            
         } else {
             System.out.println("El usuario no estaba conectado: " + nombreUsuario);
         }

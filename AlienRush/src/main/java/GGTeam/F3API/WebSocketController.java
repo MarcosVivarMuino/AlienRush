@@ -23,7 +23,7 @@ public class WebSocketController {
 	    @SendTo("/topic/actualizarPartida")
 	    public Partida actualizarPartida(@Payload Partida partida, SimpMessageHeaderAccessor headerAccessor) {
 	        String sessionId = headerAccessor.getSessionId();
-	        actualizarJugador(partida, sessionId);
+	        //actualizarJugador(partida, sessionId);
 	        return partida;
 	    }
 
@@ -32,7 +32,7 @@ public class WebSocketController {
 	    @SendTo("/topic/actualizarPosiciones")
 	    public Partida actualizarPosiciones(@Payload Partida partida, SimpMessageHeaderAccessor headerAccessor) {
 	        String sessionId = headerAccessor.getSessionId();
-	        actualizarJugador(partida, sessionId);
+	        //actualizarJugador(partida, sessionId);
 	        return partida;
 	    }
 
@@ -41,7 +41,7 @@ public class WebSocketController {
 	    @SendTo("/topic/actualizarPuntos")
 	    public Partida actualizarPuntos(@Payload Partida partida, SimpMessageHeaderAccessor headerAccessor) {
 	        String sessionId = headerAccessor.getSessionId();
-	        actualizarJugador(partida, sessionId);
+	        //actualizarJugador(partida, sessionId);
 	        return partida;
 	    }
 
@@ -52,12 +52,12 @@ public class WebSocketController {
 	        return partida;
 	    }
 
-	    private void actualizarJugador(Partida partida, String sessionId) {
+	   /* private void actualizarJugador(Partida partida, String sessionId) {
 	        if (sessionId.equals(partida.getJugador1Id())) {
 	            partida.actualizarJugador1();
 	        } else if (sessionId.equals(partida.getJugador2Id())) {
 	            partida.actualizarJugador2();
 	        }
-	    }
+	    }*/
     
 }

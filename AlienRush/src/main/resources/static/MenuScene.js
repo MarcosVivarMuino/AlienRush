@@ -40,6 +40,7 @@ var MenuScene = new Phaser.Class({
         			console.error("Error al agregar usuario a la lista.");
     		}
 		});
+		
         /************************* FONDO *************************/
         //IMAGEN
         this.add.image(875, 440, 'fondoMenu');
@@ -89,7 +90,18 @@ var MenuScene = new Phaser.Class({
     	});
 	    // Entrada de texto para el mensaje
 	    const chatInput = this.add.dom(210, 850).createFromCache('nameform');
-	    
+		// Capturar el evento de tecla "Enter"
+		const inputField = chatInput.getChildByName('nameField');
+		inputField.addEventListener("keypress", function (event) {
+		    if (event.key === "Enter") {
+		        // Cuando se presiona "Enter", enviar el mensaje
+		        if (inputField && inputField.value.trim() !== '') {
+		            this.sendMessage(inputField.value);
+		            inputField.value = '';  // Limpiar el campo de texto después de enviar el mensaje
+		        }
+		    }
+		}.bind(this));
+		
 	    btnEnviar = this.add.image(460, 850, 'enviar').setInteractive().setScale(0.4);
 	
 	    btnEnviar.on('pointerdown', () => {

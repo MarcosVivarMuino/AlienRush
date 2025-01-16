@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class controladorChat {
 
-	List<ChatMessage> listUsu = new CopyOnWriteArrayList<>();
-	
-	@GetMapping("/chat")
-	public List<ChatMessage> getChat() {
-		return listUsu;
-	}
-	
-	@PostMapping("/chat")
-	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<ChatMessage> newMessage(@RequestBody ChatMessage ChatMessage) {
-		 // Procesa el mensaje recibido
-			listUsu.add(ChatMessage);
-			return new ResponseEntity<>(HttpStatus.OK);
-	}
+    // Lista estática para los mensajes del chat (compartida entre todos)
+    public static List<ChatMessage> listUsu = new CopyOnWriteArrayList<>();
+
+    @GetMapping("/chat")
+    public List<ChatMessage> getChat() {
+        return listUsu;
+    }
+
+    @PostMapping("/chat")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ChatMessage> newMessage(@RequestBody ChatMessage ChatMessage) {
+        listUsu.add(ChatMessage);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
