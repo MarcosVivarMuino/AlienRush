@@ -100,7 +100,7 @@ var SignInScene = new Phaser.Class({
 				});
             }
 			else{
-				this.add.image(875, 220, 'completaCambios');
+				this.add.image(875, 220, 'completaCampos');
 			}
         })
         
