@@ -1,5 +1,4 @@
 var Lobby = new Phaser.Class({
-
     Extends: Phaser.Scene,
 
     initialize: function () {
@@ -34,84 +33,87 @@ var Lobby = new Phaser.Class({
             GlobalMusic.musicaVictoria.stop();
         }
 
-        /************************* VARIABLES *************************/
-        let jugadoresText = this.add.text(200, 200, '', {
-            fontFamily: 'Impact, fantasy',
-        	fill: '#ffffff',
-        	fontSize: '40px'
-        });
-        
-        let lobbyIdText = this.add.text(this.cameras.main.width - 150, this.cameras.main.height - 50, '', {
-        	fontFamily: 'Impact, fantasy',
-        	fill: '#ffffff',
-        	fontSize: '40px'
-    	}).setOrigin(1);
+/************************* VARIABLES *************************/
+let jugador1 = this.add.text(1650, 400, '', {
+    fontFamily: 'Impact, fantasy',
+    fill: '#ffffff',
+    fontSize: '40px',
+    align: 'right',
+}).setOrigin(1);
 
-        let listoButton = this.add.image(this.cameras.main.width / 2, this.cameras.main.height - 100, 'listo').setInteractive();
-        
-        let atrasButton = this.add.image(100, 100, 'atras').setInteractive();
+let jugador2 = this.add.text(1650, 650, '', {
+    fontFamily: 'Impact, fantasy',
+    fill: '#ffffff',
+    fontSize: '40px',
+    align: 'right',
+}).setOrigin(1);
 
-        // Obtener ID del lobby y nombre de usuario
-        let lobbyId = this.registry.get('lobbyId') || 0;
-        let userName = this.registry.get('userName') || 'Jugador';
+let lobbyIdText = this.add.text(1565, 250, '', {
+    fontFamily: 'Impact, fantasy',
+    fill: '#ffffff',
+    fontSize: '40px',
+}).setOrigin(1);
 
-        lobbyIdText.setText(`Lobby ID: ${lobbyId}`);
+let listoButton = this.add.image(1475, this.cameras.main.height - 100, 'listo').setInteractive();
+let atrasButton = this.add.image(100, 100, 'atras').setInteractive();
 
-        // Configuración del cliente STOMP
-        let socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
-        let stompClient = Stomp.over(socket);
+// Obtener ID del lobby y nombre de usuario
+let lobbyId = this.registry.get('lobbyId') || 0;
+let userName = this.registry.get('userName') || 'Jugador';
 
-        stompClient.connect({}, () => {
-            console.log('Conectado a WebSocket');
+lobbyIdText.setText(`Lobby ID: ${lobbyId}`);
 
-            stompClient.subscribe(`/topic/lobby/${lobbyId}`, (message) => {
-    		let lobby = JSON.parse(message.body);
-    		// Actualizar lista de jugadores
-    		let jugadores = Object.entries(lobby.jugadoresListos)
-        		.map(([jugador, listo]) => `${jugador} - ${listo ? 'Listo' : 'No listo'}`);
-    		jugadoresText.setText(jugadores.map(([jugador, listo]) => {
-    		let estadoIcono = listo ? 'listoIcon' : 'noListoIcon';
-    		return `${jugador} ${estadoIcono}`;
-			}).join('\n'));
+// Configuración del cliente STOMP
+let socket = new SockJS('/ws');
+let stompClient = Stomp.over(socket);
 
+stompClient.connect({}, () => {
+    console.log('Conectado a WebSocket');
 
-    		// Iniciar juego si ambos jugadores están listos
-    		if (lobby.todosListos) {
-        		stompClient.disconnect();
-        		this.scene.start('GameScene', { lobbyId: lobbyId });
-    		}
-		});
+    // Aquí no hace falta llamar a unirseLobby, solo se recibe la actualización.
+stompClient.subscribe(`/topic/lobbyActualizado/${lobbyId}`, (message) => {
+    let lobby = JSON.parse(message.body);
 
+    // Actualizar el texto de los jugadores
+    let player1Name = lobby.player1 || 'Esperando...';
+    let player2Name = lobby.player2 || 'Esperando...';
+    
+    jugador1.setText(`Jugador 1: ${player1Name}`);
+    jugador2.setText(`Jugador 2: ${player2Name}`);
 
-            // Notificar al servidor que el jugador se ha unido
-            stompClient.send('/app/unirseLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
-        }, (error) => {
-            console.error('Error al conectar al WebSocket:', error);
-        });
+    // Iniciar juego si todos los jugadores están listos
+    if (lobby.numeroJugadores === 2 && lobby.todosListos) {
+        stompClient.disconnect();
+        this.scene.start('GameScene', { lobbyId: lobbyId });
+    }
+});
 
-        // Evento para el botón "Listo"
-        listoButton.on('pointerdown', () => {
-            stompClient.send('/app/marcarListo', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
-        });
+}, (error) => {
+    console.error('Error al conectar al WebSocket:', error);
+});
 
-        listoButton.on('pointerover', () => { listoButton.setScale(1.2); });
-        listoButton.on('pointerout', () => { listoButton.setScale(1); });
+// Evento para el botón "Listo"
+listoButton.on('pointerdown', () => {
+    stompClient.send('/app/marcarListo', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
+});
+listoButton.on('pointerover', () => { listoButton.setScale(1.2); });
+listoButton.on('pointerout', () => { listoButton.setScale(1); });
 
-        this.events.on('shutdown', () => {
-            if (stompClient && stompClient.connected) {
-                stompClient.send('/app/salirLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
-                stompClient.disconnect();
-            }
-        });
-        
-        atrasButton.on('pointerdown', () => {
-    	// Notificar al servidor que el jugador sale del lobby
-    	stompClient.send('/app/salirLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
-    	this.scene.start('CrearUnirseSala');
-		});
+// Evento para el botón "Atrás"
+atrasButton.on('pointerdown', () => {
+    stompClient.send('/app/salirLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
+    this.scene.start('CrearUnirseSala');
+});
+atrasButton.on('pointerover', () => { atrasButton.setScale(1.2); });
+atrasButton.on('pointerout', () => { atrasButton.setScale(1); });
 
+// Manejo de desconexión al salir de la escena
+this.events.on('shutdown', () => {
+    if (stompClient && stompClient.connected) {
+        stompClient.send('/app/salirLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
+        stompClient.disconnect();
+    }
+});
 
-        atrasButton.on('pointerover', () => { atrasButton.setScale(1.2); });
-        atrasButton.on('pointerout', () => { atrasButton.setScale(1); });
     }
 });

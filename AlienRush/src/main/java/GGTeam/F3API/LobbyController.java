@@ -1,5 +1,6 @@
 package GGTeam.F3API;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -42,7 +43,7 @@ public class LobbyController {
         String user = payload.get("user");
         int lobbyId = Integer.parseInt(payload.get("lobbyId"));
         
-        System.out.println("Usuario: "+user+" y lobbyId: "+lobbyId );
+        System.out.println("Usuario: " + user + " intentando unirse al lobbyId: " + lobbyId);
 
         Lobby lobby = lobbys.stream()
                 .filter(l -> l.getId() == lobbyId)
@@ -50,15 +51,17 @@ public class LobbyController {
                 .orElse(null);
 
         if (lobby == null) {
+            System.out.println("Lobby no encontrado");
             messagingTemplate.convertAndSendToUser(user, "/queue/errors", "Lobby no encontrado");
             return;
         }
 
         boolean joined = lobby.agregarJugador(user);
         if (joined) {
-        	System.out.println("/topic/lobbyActualizado/" + lobbyId );
-            messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId);
+            System.out.println("Jugador " + user + " se unió al lobby " + lobbyId);
+            messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId, lobby);
         } else {
+            System.out.println("El lobby está lleno");
             messagingTemplate.convertAndSendToUser(user, "/queue/errors", "El lobby está lleno");
         }
     }

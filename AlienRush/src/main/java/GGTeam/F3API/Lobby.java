@@ -2,14 +2,24 @@ package GGTeam.F3API;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 public class Lobby {
 
     private final Map<String, Boolean> jugadoresListos = new ConcurrentHashMap<>();
+    private String player1;  // Aquí debe ser solo el nombre del jugador, no un objeto
+    private String player2;  // Lo mismo para el segundo jugador
     private int contJug = 0;
     private int id;
 
     public boolean agregarJugador(String jugador) {
-        if (contJug < 2) {
+        if (contJug == 0) {
+            player1 = jugador;  // Asignamos el nombre del primer jugador
+        } else if (contJug == 1) {
+            player2 = jugador;  // Asignamos el nombre del segundo jugador
+        }
+
+        if (contJug < 3) {
             jugadoresListos.put(jugador, false);
             contJug++;
             return true;
@@ -46,12 +56,15 @@ public class Lobby {
         return contJug;
     }
     
-    public boolean estaVacio() {
-    	if(contJug == 0) {
-    		return true;
-    	}else {
-    		return false;
-    	}
+    public String getPlayer1Name() {
+        return (player1 != null) ? player1 : "Esperando...";  // Devolvemos el nombre directamente
     }
-    	
+
+    public String getPlayer2Name() {
+        return (player2 != null) ? player2 : "Esperando...";  // Devolvemos el nombre directamente
+    }
+    
+    public boolean estaVacio() {
+        return contJug == 0;
+    }
 }

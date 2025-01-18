@@ -71,29 +71,26 @@ var CrearUnirseSala = new Phaser.Class({
             // Botón Aceptar
            BotonAceptar.setInteractive();
            BotonAceptar.on("pointerdown", () => {
-    		const inputElement = campoTexto.getChildByName('nameField');
-    		const lobbyId = inputElement.value;
+    const inputElement = campoTexto.getChildByName('nameField');
+    const lobbyId = inputElement.value;
 
-    		if (lobbyId !== '') {
-        	stompClient.send('/app/unirseLobby', {}, JSON.stringify({ user: userName, lobbyId: lobbyId }));
+    if (lobbyId !== '') {
+        // Aquí solo se llama a unirseLobby una vez
+        stompClient.send('/app/unirseLobby', {}, JSON.stringify({ user: userName, lobbyId: lobbyId }));
 
-        	if (stompClient.connected) {
-    			stompClient.subscribe(`/topic/lobbyActualizado/${lobbyId}`, (message) => {
-				alert("aqui entra");
-        		let lobby = JSON.parse(message.body);
-        		if (lobby) {
-            		this.registry.set('lobbyId', lobbyId);
-            		this.scene.start('Lobby');
-        		} else {
-            		alert('Error al unirse al lobby');
-        		}
-    			});
-			} else {
-    			alert('No conectado al WebSocket');
-			}
+        // Después de unirse, solo se suscribe a las actualizaciones del lobby
+        stompClient.subscribe(`/topic/lobbyActualizado/${lobbyId}`, (message) => {
+            let lobby = JSON.parse(message.body);
+            if (lobby) {
+                this.registry.set('lobbyId', lobbyId);
+                this.scene.start('Lobby');
+            } else {
+                alert('Error al unirse al lobby');
+            }
+        });
+    }
+});
 
-    		}
-			});
 			
 			
             BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); });
