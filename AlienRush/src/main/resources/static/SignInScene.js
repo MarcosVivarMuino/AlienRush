@@ -17,6 +17,8 @@ var SignInScene = new Phaser.Class({
         this.load.image('noWifi', 'assets/SinConex/noWifi.png');
         this.load.image('botonRecargar', 'assets/SinConex/BotonRecargar.png');
         this.load.image('fondoError', 'assets/SinConex/fondoError.png');
+        this.load.image('completaCampos', 'assets/SignScene/AlertaCompletaCampos.png');
+        this.load.image('usuarioInvalido', 'assets/SignScene/AlertaUsuarioInvalido.png');
 
 		
 		//Audio
@@ -94,11 +96,11 @@ var SignInScene = new Phaser.Class({
                        self.scene.start("MenuScene", {"nombreUsuario" :inputTextId.value});
 					}
 				}).fail(function(data){
-					alert("Usuario invalido o no registrado");
+					this.add.image(875, 220, 'usuarioInvalido');
 				});
             }
 			else{
-				alert("Rellena ambos campos");
+				this.add.image(875, 220, 'completaCambios');
 			}
         })
         

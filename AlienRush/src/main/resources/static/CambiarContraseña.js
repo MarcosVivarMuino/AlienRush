@@ -24,6 +24,9 @@ var CambiarContraseña = new Phaser.Class({
 		this.load.image('NContrasena', 'assets/CambiarContraseña/LetrasNuevaContraseña.png');
 		this.load.image('Wifi', 'assets/SinConex/Wifi.png');
 		this.load.image('noWifi', 'assets/SinConex/noWifi.png');
+
+        this.load.image('completaCampos', 'assets/CambiarContraseña/AlertaCompletaCampos.png');
+        this.load.image('contraIncorrecta', 'assets/CambiarContraseña/AlertaContraIncorrecta.png');
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
 		
@@ -89,7 +92,7 @@ var CambiarContraseña = new Phaser.Class({
 				BotonAtrasFlecha.setVisible(false);
 				
 			} else {
-			    alert("Por favor, completa ambos campos.");
+			    this.add.image(875, 220, 'completaCampos').setScale(1);
 			}
         })
         BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); })
@@ -140,12 +143,12 @@ var CambiarContraseña = new Phaser.Class({
                 }.bind(this))
 				
                 .fail(function (data) {
-                    alert("La contraseña no es correcta");
+                    this.add.image(875, 220, 'contraIncorrecta').setScale(1);
                    
 				});
 				
             }else{
-				alert("Rellena ambos campos");
+				this.add.image(875, 220, 'completaCampos').setScale(1);
 			}
 
         });

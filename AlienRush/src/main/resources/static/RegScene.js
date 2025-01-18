@@ -16,6 +16,9 @@ var RegScene = new Phaser.Class({
 		this.load.image('BotonIS', 'assets/RegScene/BotonIS.png');
 		this.load.image('Wifi', 'assets/SinConex/Wifi.png');
 		this.load.image('noWifi', 'assets/SinConex/noWifi.png');
+		this.load.image('completaCampos', 'assets/RegScene/AlertaCompletaCampos.png');
+        this.load.image('usuarioRegistrado', 'assets/RegScene/AlertaUsuarioRegistrado.png');
+		this.load.image('contraNoCoincide', 'assets/RegScene/AlertaContraNoCoincide.png');
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
         this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
@@ -102,14 +105,14 @@ var RegScene = new Phaser.Class({
 						})
 						
 						.fail(function(data){
-							alert("Usuario ya registrado.");
+							this.add.image(875, 220, 'usuarioRegistrado').setScale(1);
 						});
 					}else{
-						alert("Las contraseñas no coinciden");
+						this.add.image(875, 220, 'contraNoCoincide').setScale(1);
 					}
                    
 				}else{
-					alert("Rellena todos los campos");
+					this.add.image(875, 220, 'completaCampos').setScale(1);
 				}
         })
         

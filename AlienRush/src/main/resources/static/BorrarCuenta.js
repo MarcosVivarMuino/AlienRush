@@ -22,6 +22,10 @@ var BorrarCuenta = new Phaser.Class({
 		this.load.image('BotonNo', 'assets/BorrarCuenta/BotonNo.png');
 		this.load.image('Wifi', 'assets/SinConex/Wifi.png');
 		this.load.image('noWifi', 'assets/SinConex/noWifi.png');
+		this.load.image('completaCampos', 'assets/BorrarCuenta/AlertaCompletaCampos.png');
+		this.load.image('contraNoCoincide', 'assets/BorrarCuenta/AlertaContraNoCoincide.png');
+		this.load.image('contraIncorrecta', 'assets/BorrarCuenta/AlertaContraIncorrecta.png');
+
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
 		
@@ -88,7 +92,7 @@ var BorrarCuenta = new Phaser.Class({
 				BotonAtrasFlecha.setVisible(false);
 				
 			} else {
-			    alert("Por favor, completa ambos campos.");
+			    this.add.image(875, 220, 'completaCampos').setScale(1);
 			}
         })
         BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); })
@@ -160,15 +164,15 @@ var BorrarCuenta = new Phaser.Class({
 	                }.bind(this))
 					
 	                .fail(function (data) {
-	                    alert("Contraseña incorrecta.");
+	                    this.add.image(875, 220, 'contraIncorrecta').setScale(1);
 	                   
 					});
 				}else{
-					alert("Las contraseñas no coinciden");
+					this.add.image(875, 220, 'contraNoCoincide').setScale(1);
 
 				}
 			}else{
-				alert("Rellena ambos campos");
+				this.add.image(875, 220, 'completaCampos').setScale(1);
 			}
 
         });
