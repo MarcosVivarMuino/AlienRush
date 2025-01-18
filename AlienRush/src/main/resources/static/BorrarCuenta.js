@@ -79,7 +79,7 @@ var BorrarCuenta = new Phaser.Class({
 		let alerta1 = this.add.image(1480, 400, 'contraIncorrecta').setVisible(false);;
 		let alerta2 = this.add.image(1480, 400, 'contraNoCoincide').setVisible(false);;
 		let alerta3 = this.add.image(1480, 400, 'completaCampos').setVisible(false);;
-		let BotonX = this.add.image(1350, 350, 'BotonX').setVisible(false);;
+		let BotonX = this.add.image(1260, 315, 'BotonX').setVisible(false);;
 
         /************************* BOTONES *************************/
         //BotonAceptar
@@ -99,7 +99,7 @@ var BorrarCuenta = new Phaser.Class({
 				BotonAtrasFlecha.setVisible(false);
 				
 			} else {
-			    this.add.image(875, 220, 'completaCampos').setScale(1);
+				lanzarAlerta(alerta3);
 			}
         })
         BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); })
@@ -141,7 +141,6 @@ var BorrarCuenta = new Phaser.Class({
 	                    "password": inputTextPw.value
 	                };
 					
-					console.log(usuario);
 	
 	                $.ajax({
 	                    method: "DELETE",
@@ -171,22 +170,28 @@ var BorrarCuenta = new Phaser.Class({
 	                }.bind(this))
 					
 	                .fail(function (data) {
-	                   alerta1.setVisible(true);
-					   BotonX.setVisible(true);
+						lanzarAlerta(alerta1);
 					});
 				}else{
-					alerta2.setVisible(true);
-					BotonX.setVisible(true);
-
-
+					lanzarAlerta(alerta2);
 				}
 			}else{
-				alerta3.setVisible(true);
-				BotonX.setVisible(true);
-
+				lanzarAlerta(alerta3);
 			}
 
         });
+		
+		function lanzarAlerta(alerta){
+			alerta.setVisible(true);
+			BotonX.setVisible(true);
+			cuadroContra.setVisible(false);
+			cuadroRContra.setVisible(false);
+			BotonAceptar.setVisible(false);
+			BotonAtrasFlecha.setVisible(false);
+			Confirmacion.setVisible(false);
+            BotonSi.setVisible(false);
+            BotonNo.setVisible(false);
+		}
         BotonSi.on("pointerover", () => { BotonSi.setScale(1.2); });
         BotonSi.on("pointerout", () => { BotonSi.setScale(1); });
 
@@ -194,16 +199,14 @@ var BorrarCuenta = new Phaser.Class({
         BotonX.setInteractive();
         BotonX.on("pointerdown", () => {
             // Ocultar cuadro de confirmación
-            Confirmacion.setVisible(false);
-            BotonSi.setVisible(false);
-            BotonNo.setVisible(false);
-			cuadroContra.setVisible(false);
-			cuadroRContra.setVisible(false);
-			BotonAceptar.setVisible(false);
-			BotonAtrasFlecha.setVisible(false);
-			alerta1.setVisible(false)
-			alerta2.setVisible(false)
-			alerta3.setVisible(false)
+			cuadroContra.setVisible(true);
+			cuadroRContra.setVisible(true);
+			BotonAceptar.setVisible(true);
+			BotonAtrasFlecha.setVisible(true);
+			alerta1.setVisible(false);
+			alerta2.setVisible(false);
+			alerta3.setVisible(false);
+			BotonX.setVisible(false);
 
         });
         BotonX.on("pointerover", () => { BotonX.setScale(1.2); });
@@ -211,45 +214,44 @@ var BorrarCuenta = new Phaser.Class({
 		
 		this.setIntervals();
 				
-
-			},
+	},
 			
-		    
-		    checkConexion: function(){
-				let local = this;
-				$.ajax({
-		        method: "GET",
-		        url: "/conexion",
-		        error: function () {
-		            iconoWifi.setTexture("noWifi").setScale(0.2);
-		            local.stopIntervals();
-		            local.reConnect();
-		        },
-		    });
-			},
-			
-			setIntervals: function(){
-				intervalConexion = setInterval(() => {
-		        	this.checkConexion();
-		    	}, 1000);
-			},
-			
-			stopIntervals: function(){
-				clearInterval(intervalConexion);
-			},
-			
-			reConnect: function () {
-		        this.scene.launch("MenuSinConexion", {"sceneName": "BorrarCuenta"});
-		        this.scene.bringToTop("MenuSinConexion");
-		        this.scene.pause();
-		    },
-		    onResume : function() {
-		       iconoWifi.setTexture("Wifi").setScale(0.2);
-		       this.setIntervals();
-		       this.scene.bringToTop("BorrarCuenta");
-       		   this.input.enabled = true;
-		    }
-			
+	    
+    checkConexion: function(){
+		let local = this;
+		$.ajax({
+        method: "GET",
+        url: "/conexion",
+        error: function () {
+            iconoWifi.setTexture("noWifi").setScale(0.2);
+            local.stopIntervals();
+            local.reConnect();
+        },
+    });
+	},
+	
+	setIntervals: function(){
+		intervalConexion = setInterval(() => {
+        	this.checkConexion();
+    	}, 1000);
+	},
+	
+	stopIntervals: function(){
+		clearInterval(intervalConexion);
+	},
+	
+	reConnect: function () {
+        this.scene.launch("MenuSinConexion", {"sceneName": "BorrarCuenta"});
+        this.scene.bringToTop("MenuSinConexion");
+        this.scene.pause();
+    },
+    onResume : function() {
+       iconoWifi.setTexture("Wifi").setScale(0.2);
+       this.setIntervals();
+       this.scene.bringToTop("BorrarCuenta");
+	   this.input.enabled = true;
+    }
+		
 });
 
 

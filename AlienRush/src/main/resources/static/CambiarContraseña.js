@@ -75,6 +75,11 @@ var CambiarContraseña = new Phaser.Class({
         let BotonNo = this.add.image(1545, 480, 'BotonNo').setVisible(false);
 		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
 
+		
+		//Alertas
+		let alerta1 = this.add.image(1480, 400, 'contraIncorrecta').setVisible(false);;
+		let alerta3 = this.add.image(1480, 400, 'completaCampos').setVisible(false);;
+		let BotonX = this.add.image(1260, 315, 'BotonX').setVisible(false);;
         /************************* BOTONES *************************/
         //BotonAceptar
         BotonAceptar.setInteractive();
@@ -92,7 +97,7 @@ var CambiarContraseña = new Phaser.Class({
 				BotonAtrasFlecha.setVisible(false);
 				
 			} else {
-			    this.add.image(875, 220, 'completaCampos').setScale(1);
+				lanzarAlerta(alerta3);
 			}
         })
         BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); })
@@ -127,7 +132,6 @@ var CambiarContraseña = new Phaser.Class({
 					"nuevaPassword": inputTextNewPw.value
 					
                 };
-				console.log(usuario);
                 $.ajax({
                     method: "PUT",
                     url:"/usuario",
@@ -143,58 +147,87 @@ var CambiarContraseña = new Phaser.Class({
                 }.bind(this))
 				
                 .fail(function (data) {
-                    this.add.image(1480, 400, 'contraIncorrecta').setScale(1);
+					lanzarAlerta(alerta1);
                    
 				});
 				
             }else{
-				this.add.image(1480, 400, 'completaCampos').setScale(1);
+				lanzarAlerta(alerta3);
 			}
 
         });
         BotonSi.on("pointerover", () => { BotonSi.setScale(1.2); });
         BotonSi.on("pointerout", () => { BotonSi.setScale(1); });
 
+
+		function lanzarAlerta(alerta){
+			alerta.setVisible(true);
+			BotonX.setVisible(true);
+			cuadroContra.setVisible(false);
+			cuadroNuevaContra.setVisible(false);
+			BotonAceptar.setVisible(false);
+			BotonAtrasFlecha.setVisible(false);
+			Confirmacion.setVisible(false);
+		    BotonSi.setVisible(false);
+		    BotonNo.setVisible(false);
+		}
+		// x
+        BotonX.setInteractive();
+        BotonX.on("pointerdown", () => {
+            // Ocultar cuadro de confirmación
+			cuadroContra.setVisible(true);
+			cuadroNuevaContra.setVisible(true);
+			BotonAceptar.setVisible(true);
+			BotonAtrasFlecha.setVisible(true);
+			alerta1.setVisible(false);
+			alerta3.setVisible(false);
+			BotonX.setVisible(false);
+
+        });
+        BotonX.on("pointerover", () => { BotonX.setScale(1.2); });
+        BotonX.on("pointerout", () => { BotonX.setScale(1); });
+		
+				
 		this.setIntervals();
 				
 
-			},
-			
-		    
-		    checkConexion: function(){
-				let local = this;
-				$.ajax({
-		        method: "GET",
-		        url: "/conexion",
-		        error: function () {
-		            iconoWifi.setTexture("noWifi").setScale(0.2);
-		            local.stopIntervals();
-		            local.reConnect();
-		        },
-		    });
-			},
-			
-			setIntervals: function(){
-				intervalConexion = setInterval(() => {
-		        	this.checkConexion();
-		    	}, 1000);
-			},
-			
-			stopIntervals: function(){
-				clearInterval(intervalConexion);
-			},
-			
-			reConnect: function () {
-		        this.scene.launch("MenuSinConexion", {"sceneName": "CambiarContraseña"});
-		        this.scene.bringToTop("MenuSinConexion");
-		        this.scene.pause();
-		    },
-		    onResume : function() {
-		       iconoWifi.setTexture("Wifi").setScale(0.2);
-		       this.setIntervals();
-		       this.scene.bringToTop("CambiarContraseña");
-       		   this.input.enabled = true;
-		    }
+		},
+		
+	    
+	    checkConexion: function(){
+			let local = this;
+			$.ajax({
+	        method: "GET",
+	        url: "/conexion",
+	        error: function () {
+	            iconoWifi.setTexture("noWifi").setScale(0.2);
+	            local.stopIntervals();
+	            local.reConnect();
+	        },
+	    });
+		},
+		
+		setIntervals: function(){
+			intervalConexion = setInterval(() => {
+	        	this.checkConexion();
+	    	}, 1000);
+		},
+		
+		stopIntervals: function(){
+			clearInterval(intervalConexion);
+		},
+		
+		reConnect: function () {
+	        this.scene.launch("MenuSinConexion", {"sceneName": "CambiarContraseña"});
+	        this.scene.bringToTop("MenuSinConexion");
+	        this.scene.pause();
+	    },
+	    onResume : function() {
+	       iconoWifi.setTexture("Wifi").setScale(0.2);
+	       this.setIntervals();
+	       this.scene.bringToTop("CambiarContraseña");
+   		   this.input.enabled = true;
+	    }
 });
 
 

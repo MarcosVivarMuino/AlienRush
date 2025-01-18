@@ -60,13 +60,19 @@ var SignInScene = new Phaser.Class({
         const elementPw1 = this.add.dom(1465, 460).createFromCache('passform');
 		ready1 = this.add.image(1470, 670, 'Aceptar').setScale(1);
 		BotonR = this.add.image(1470, 790, 'BotonR').setScale(1);
-		this.add.image(1350, 320, 'Usuario').setScale(1);
-		this.add.image(1380, 420, 'Contrasena').setScale(1);
+		text1 = this.add.image(1350, 320, 'Usuario').setScale(1);
+		text2 = this.add.image(1380, 420, 'Contrasena').setScale(1);
         
         ready1.setInteractive();
         BotonR.setInteractive();
 		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
 
+		//Alertas
+		let alerta2 = this.add.image(1480, 400, 'usuarioInvalido').setVisible(false);;
+		let alerta3 = this.add.image(1480, 400, 'completaCampos').setVisible(false);;
+		let BotonX = this.add.image(1260, 315, 'BotonX').setVisible(false);;
+
+		
         /************************* BOTONES *************************/
         ready1.on("pointerdown",()=>{
             const inputTextId = elementId1.getChildByName('nameField');
@@ -96,14 +102,42 @@ var SignInScene = new Phaser.Class({
                        self.scene.start("MenuScene", {"nombreUsuario" :inputTextId.value});
 					}
 				}).fail(function(data){
-					this.add.image(875, 220, 'usuarioInvalido');
-				});
+					lanzarAlerta(alerta2);
+			});
             }
 			else{
-				this.add.image(875, 220, 'completaCampos');
-			}
+				lanzarAlerta(alerta3);			}
         })
         
+		function lanzarAlerta(alerta){
+			alerta.setVisible(true);
+			BotonX.setVisible(true);
+			elementId1.setVisible(false);
+			elementPw1.setVisible(false);
+			ready1.setVisible(false);
+			BotonR.setVisible(false);
+   
+			text1.setVisible(false);
+			text2.setVisible(false);
+		}
+
+		// x
+        BotonX.setInteractive();
+        BotonX.on("pointerdown", () => {
+            // Ocultar cuadro de confirmación
+			elementId1.setVisible(true);
+			elementPw1.setVisible(true);
+			ready1.setVisible(true);
+			BotonR.setVisible(true);
+			alerta2.setVisible(false);
+			alerta3.setVisible(false);
+			BotonX.setVisible(false);
+			text1.setVisible(true);
+			text2.setVisible(true);
+        });
+		BotonX.on("pointerover", () => { BotonX.setScale(1.2); });
+		BotonX.on("pointerout", () => { BotonX.setScale(1); });
+				
         ready1.on("pointerover",()=>{
             ready1.setScale(1.2);
         })

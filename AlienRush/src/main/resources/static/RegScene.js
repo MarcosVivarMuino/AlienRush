@@ -61,13 +61,19 @@ var RegScene = new Phaser.Class({
         cont = this;
         ready1 = this.add.image(1470, 670, 'Aceptar').setScale(1);
 		BotonIS = this.add.image(1470, 790, 'BotonIS').setScale(1);
-        this.add.image(1350, 320, 'Usuario').setScale(1);
-        this.add.image(1380, 420, 'Contrasena').setScale(1);
-        this.add.image(1470, 520, 'RContrasena').setScale(1);
+        let text1 = this.add.image(1350, 320, 'Usuario').setScale(1);
+        let text2 = this.add.image(1380, 420, 'Contrasena').setScale(1);
+        let text3 = this.add.image(1470, 520, 'RContrasena').setScale(1);
         
         ready1.setInteractive();
         BotonIS.setInteractive();
 		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
+
+		//Alertas
+		let alerta1 = this.add.image(1480, 400, 'usuarioRegistrado').setVisible(false);;
+		let alerta2 = this.add.image(1480, 400, 'contraNoCoincide').setVisible(false);;
+		let alerta3 = this.add.image(1480, 400, 'completaCampos').setVisible(false);;
+		let BotonX = this.add.image(1260, 315, 'BotonX').setVisible(false);;
 
         /************************* BOTONES *************************/
         ready1.on("pointerdown",()=>{
@@ -105,17 +111,52 @@ var RegScene = new Phaser.Class({
 						})
 						
 						.fail(function(data){
-							this.add.image(875, 220, 'usuarioRegistrado').setScale(1);
+							lanzarAlerta(alerta1);
 						});
 					}else{
-						this.add.image(875, 220, 'contraNoCoincide').setScale(1);
+						lanzarAlerta(alerta2);
 					}
                    
 				}else{
-					this.add.image(875, 220, 'completaCampos').setScale(1);
+					lanzarAlerta(alerta3);
 				}
         })
-        
+		
+		function lanzarAlerta(alerta){
+			alerta.setVisible(true);
+			BotonX.setVisible(true);
+			elementId1.setVisible(false);
+			elementPw1.setVisible(false);
+			elementPw2.setVisible(false);
+			ready1.setVisible(false);
+			BotonIS.setVisible(false);
+   
+			text1.setVisible(false);
+			text2.setVisible(false);
+			text3.setVisible(false);
+		}
+
+		// x
+        BotonX.setInteractive();
+        BotonX.on("pointerdown", () => {
+            // Ocultar cuadro de confirmación
+			elementId1.setVisible(true);
+			elementPw1.setVisible(true);
+			elementPw2.setVisible(true);
+			ready1.setVisible(true);
+			BotonIS.setVisible(true);
+			alerta1.setVisible(false);
+			alerta2.setVisible(false);
+			alerta3.setVisible(false);
+			BotonX.setVisible(false);
+			text1.setVisible(true);
+			text2.setVisible(true);
+			text3.setVisible(true);
+        });
+		BotonX.on("pointerover", () => { BotonX.setScale(1.2); });
+		BotonX.on("pointerout", () => { BotonX.setScale(1); });
+
+
         ready1.on("pointerover",()=>{
             ready1.setScale(1.2);
         })
