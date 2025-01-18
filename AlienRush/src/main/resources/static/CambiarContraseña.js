@@ -143,12 +143,12 @@ var CambiarContraseña = new Phaser.Class({
                 }.bind(this))
 				
                 .fail(function (data) {
-                    this.add.image(875, 220, 'contraIncorrecta').setScale(1);
+                    this.add.image(1480, 400, 'contraIncorrecta').setScale(1);
                    
 				});
 				
             }else{
-				this.add.image(875, 220, 'completaCampos').setScale(1);
+				this.add.image(1480, 400, 'completaCampos').setScale(1);
 			}
 
         });

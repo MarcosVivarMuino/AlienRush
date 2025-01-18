@@ -25,6 +25,7 @@ var BorrarCuenta = new Phaser.Class({
 		this.load.image('completaCampos', 'assets/BorrarCuenta/AlertaCompletaCampos.png');
 		this.load.image('contraNoCoincide', 'assets/BorrarCuenta/AlertaContraNoCoincide.png');
 		this.load.image('contraIncorrecta', 'assets/BorrarCuenta/AlertaContraIncorrecta.png');
+		this.load.image('BotonX', 'assets/BorrarCuenta/BotonX.png');
 
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
@@ -73,6 +74,12 @@ var BorrarCuenta = new Phaser.Class({
         let BotonSi = this.add.image(1410, 480, 'BotonSi').setVisible(false);
         let BotonNo = this.add.image(1545, 480, 'BotonNo').setVisible(false);
 		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
+		
+		//Alertas
+		let alerta1 = this.add.image(1480, 400, 'contraIncorrecta').setVisible(false);;
+		let alerta2 = this.add.image(1480, 400, 'contraNoCoincide').setVisible(false);;
+		let alerta3 = this.add.image(1480, 400, 'completaCampos').setVisible(false);;
+		let BotonX = this.add.image(1350, 350, 'BotonX').setVisible(false);;
 
         /************************* BOTONES *************************/
         //BotonAceptar
@@ -164,21 +171,44 @@ var BorrarCuenta = new Phaser.Class({
 	                }.bind(this))
 					
 	                .fail(function (data) {
-	                    this.add.image(875, 220, 'contraIncorrecta').setScale(1);
-	                   
+	                   alerta1.setVisible(true);
+					   BotonX.setVisible(true);
 					});
 				}else{
-					this.add.image(875, 220, 'contraNoCoincide').setScale(1);
+					alerta2.setVisible(true);
+					BotonX.setVisible(true);
+
 
 				}
 			}else{
-				this.add.image(875, 220, 'completaCampos').setScale(1);
+				alerta3.setVisible(true);
+				BotonX.setVisible(true);
+
 			}
 
         });
         BotonSi.on("pointerover", () => { BotonSi.setScale(1.2); });
         BotonSi.on("pointerout", () => { BotonSi.setScale(1); });
 
+		// x
+        BotonX.setInteractive();
+        BotonX.on("pointerdown", () => {
+            // Ocultar cuadro de confirmación
+            Confirmacion.setVisible(false);
+            BotonSi.setVisible(false);
+            BotonNo.setVisible(false);
+			cuadroContra.setVisible(false);
+			cuadroRContra.setVisible(false);
+			BotonAceptar.setVisible(false);
+			BotonAtrasFlecha.setVisible(false);
+			alerta1.setVisible(false)
+			alerta2.setVisible(false)
+			alerta3.setVisible(false)
+
+        });
+        BotonX.on("pointerover", () => { BotonX.setScale(1.2); });
+        BotonX.on("pointerout", () => { BotonX.setScale(1); });
+		
 		this.setIntervals();
 				
 
