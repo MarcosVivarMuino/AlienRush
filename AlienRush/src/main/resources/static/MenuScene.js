@@ -115,7 +115,7 @@ var MenuScene = new Phaser.Class({
         //JUGAR
         play.setInteractive();
         play.on("pointerdown", () => {
-            this.scene.start("ElegirEscenario", {"nombreUsuario": this.nombreUsuario});
+            this.scene.start("CrearUnirSala", {"nombreUsuario": this.nombreUsuario});
         })
         play.on("pointerover", () => { play.setScale(1.2); })
         play.on("pointerout", () => { play.setScale(1); })
