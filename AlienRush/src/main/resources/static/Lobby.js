@@ -35,10 +35,10 @@ var Lobby = new Phaser.Class({
         }
 
         /************************* VARIABLES *************************/
-        let jugadoresText = this.add.text(20, 50, '', {
-            fontFamily: 'Arial',
-            fill: '#ffffff',
-            fontSize: '24px'
+        let jugadoresText = this.add.text(200, 200, '', {
+            fontFamily: 'Impact, fantasy',
+        	fill: '#ffffff',
+        	fontSize: '40px'
         });
         
         let lobbyIdText = this.add.text(this.cameras.main.width - 150, this.cameras.main.height - 50, '', {
@@ -64,21 +64,24 @@ var Lobby = new Phaser.Class({
         stompClient.connect({}, () => {
             console.log('Conectado a WebSocket');
 
-            // Suscribirse a actualizaciones del lobby
             stompClient.subscribe(`/topic/lobby/${lobbyId}`, (message) => {
-                let lobby = JSON.parse(message.body);
+    		let lobby = JSON.parse(message.body);
+    		// Actualizar lista de jugadores
+    		let jugadores = Object.entries(lobby.jugadoresListos)
+        		.map(([jugador, listo]) => `${jugador} - ${listo ? 'Listo' : 'No listo'}`);
+    		jugadoresText.setText(jugadores.map(([jugador, listo]) => {
+    		let estadoIcono = listo ? 'listoIcon' : 'noListoIcon';
+    		return `${jugador} ${estadoIcono}`;
+			}).join('\n'));
 
-                // Actualizar lista de jugadores
-                let jugadores = Object.entries(lobby.jugadoresListos)
-                    .map(([jugador, listo]) => `${jugador} - ${listo ? 'Listo' : 'No listo'}`);
-                jugadoresText.setText(jugadores.join('\n'));
 
-                // Iniciar juego si ambos jugadores están listos
-                if (lobby.todosListos) {
-                    stompClient.disconnect();
-                    this.scene.start('GameScene', { lobbyId: lobbyId });
-                }
-            });
+    		// Iniciar juego si ambos jugadores están listos
+    		if (lobby.todosListos) {
+        		stompClient.disconnect();
+        		this.scene.start('GameScene', { lobbyId: lobbyId });
+    		}
+		});
+
 
             // Notificar al servidor que el jugador se ha unido
             stompClient.send('/app/unirseLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
@@ -101,10 +104,12 @@ var Lobby = new Phaser.Class({
             }
         });
         
-        // Evento para el botón "Listo"
         atrasButton.on('pointerdown', () => {
-           this.scene.start('CrearUnirseSala');
-        });
+    	// Notificar al servidor que el jugador sale del lobby
+    	stompClient.send('/app/salirLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
+    	this.scene.start('CrearUnirseSala');
+		});
+
 
         atrasButton.on('pointerover', () => { atrasButton.setScale(1.2); });
         atrasButton.on('pointerout', () => { atrasButton.setScale(1); });

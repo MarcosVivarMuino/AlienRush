@@ -25,9 +25,9 @@
 	<script src="CambiarContraseña.js"></script>
 	<script src="MenuSinConexion.js"></script>
 	<script src="CrearUnirseSala.js"></script>
-
-    
-  
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script src="Lobby.js"></script>
 
 </head>
 
@@ -183,7 +183,7 @@
             height: 880,
             autoCenter: Phaser.Scale.CENTER_BOTH,
             mode: Phaser.Scale.FIT,
-            scene: [CrearUnirseSala, SignInScene, Victoria1, MenuSinConexion, RegScene, MenuScene, BorrarCuenta, CambiarContraseña,  ElegirEscenario, MainGame,  Creditos, Ajustes, MenuPausa,  Victoria2, Empate, Perfil],
+            scene: [CrearUnirseSala, Lobby, SignInScene, Victoria1, MenuSinConexion, RegScene, MenuScene, BorrarCuenta, CambiarContraseña,  ElegirEscenario, MainGame,  Creditos, Ajustes, MenuPausa,  Victoria2, Empate, Perfil],
             physics: {
                 default: 'arcade',
                 arcade: {

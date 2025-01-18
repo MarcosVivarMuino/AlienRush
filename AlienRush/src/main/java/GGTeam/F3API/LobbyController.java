@@ -37,11 +37,12 @@ public class LobbyController {
         return newLobby;
     }
 
-    // Unirse a un lobby existente
     @MessageMapping("/unirseLobby")
     public void unirseLobby(@Payload Map<String, String> payload) {
         String user = payload.get("user");
         int lobbyId = Integer.parseInt(payload.get("lobbyId"));
+        
+        System.out.println("Usuario: "+user+" y lobbyId: "+lobbyId );
 
         Lobby lobby = lobbys.stream()
                 .filter(l -> l.getId() == lobbyId)
@@ -55,7 +56,8 @@ public class LobbyController {
 
         boolean joined = lobby.agregarJugador(user);
         if (joined) {
-            messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId, lobby);
+        	System.out.println("/topic/lobbyActualizado/" + lobbyId );
+            messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId);
         } else {
             messagingTemplate.convertAndSendToUser(user, "/queue/errors", "El lobby está lleno");
         }
