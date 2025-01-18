@@ -455,30 +455,131 @@ var MainGame = new Phaser.Class({
                 });
             });
         }
+		
+		let socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
+		let stompClient = Stomp.over(socket);
+
+
+		// Conectar al servidor
+		stompClient.connect({}, function (frame) {
+		    console.log('Conectado: ' + frame);
+
+		    // Suscribirse a un canal para recibir mensajes (por ejemplo, posiciones)
+		    stompClient.subscribe('/topic/positions', function (message) {
+		        const data = JSON.parse(message.body);
+		        console.log("Posiciones actualizadas:", data);
+		        actualizarObjetos(data); // Actualiza los objetos en el juego
+		    });
+
+		    // Suscribirse a un canal de inicio de partida
+		    stompClient.subscribe('/topic/start', function (message) {
+		        const data = JSON.parse(message.body);
+		        console.log("Partida iniciada:", data);
+		    });
+		});
+
+		const lobbyId = this.registry.get('lobbyId') || 0;
+		stompClient.send("/app/start", {}, JSON.stringify({ id: lobbyId }));
+	
+		enviarDatosAlWS(lobbyId);
+
+		
+		function enviarDatosAlWS(partidaId) {
+		    const data = {
+		        id: partidaId,
+		        player1X: player1.x,
+		        player1Y: player1.y,
+		        player1Score: player1.score,
+				player1Vidas: player1.vidas,
+				player1Speed: player1.speed,
+				player1Size: player1.size,
+				player1Multiplicador: player1.multiplicador,
+				player1CanPU: plasyer1.canPU,
+				player2X: player2.x,
+				player2Y: player2.y,
+			    player2Score: player2.score,
+				player2Vidas: player2.vidas,
+				player2Speed: player2.speed,
+				player2Size: player2.size,
+				player2Multiplicador: player2.multiplicador,
+				player2CanPU: player2.canPU,
+				humanos: Humanos,
+				vacas: Vacas,
+				escombros: Escombros,
+				militares: Militares,
+				PUHumanos: PUHumanos,
+				pausa: paused
+
+			};
+
+		    stompClient.send("/app/update", {}, JSON.stringify(data));
+		}
+		
     },
 
     update: function () {
         // Iniciar juego si no ha comenzado
         if (!this.gameStarted && (Phaser.Input.Keyboard.JustDown(this.keyY))) {
             this.iniciarJuego();
+			this.enviarEstadoAlServidor();
+
         }
     
         if (this.gameStarted) {
-            // Actualizar controles de los jugadores
-            this.actualizarControles();
     
-            // Pausar el juego
-            if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
+		    if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
                 this.pausarJuego();
+				this.enviarEstadoAlServidor();
+
             }
-    
-            // Detectar acciones de los jugadores
+			
+			this.actualizarControles();
             this.detectarAcciones();
-    
-            // Actualizar animaciones
             this.actualizarTam();
+			
+			//ESTADO DEL JUEGO AL WEBSOCKET
+			this.enviarEstadoAlServidor();
+
         }
     },
+	
+	enviarEstadoAlServidor: function () {
+	    const lobbyId = this.registry.get('lobbyId') || 0;
+
+	    // Construir el estado actual del juego con las claves correctas
+	    const data = {
+	        id: lobbyId,
+	        player1X: player1.x,
+	        player1Y: player1.y,
+	        player1Score: player1.score,
+	        player1Vidas: player1.vidas,
+	        player1Speed: player1.speed,
+	        player1Size: player1.size,
+	        player1Multiplicador: player1.multiplicador,
+	        player1CanPU: player1.canPU,
+	        
+	        player2X: player2.x,
+	        player2Y: player2.y,
+	        player2Score: player2.score,
+	        player2Vidas: player2.vidas,
+	        player2Speed: player2.speed,
+	        player2Size: player2.size,
+	        player2Multiplicador: player2.multiplicador,
+	        player2CanPU: player2.canPU,
+
+	        humanos: Humanos.map(humano => ({ x: humano.x, y: humano.y })),
+	        vacas: Vacas.map(vaca => ({ x: vaca.x, y: vaca.y })),
+	        militares: Militares.map(militar => ({ x: militar.x, y: militar.y })),
+	        PUHumanos: PUHumanos.map(PUHuman => ({ x: PUHuman.x, y: PUHuman.y })),
+	        escombros: Escombros.map(escombro => ({ x: escombro.x, y: escombro.y })),
+	        pausa: this.gamePaused
+	    };
+
+	    // Enviar el estado al servidor mediante STOMP
+	    stompClient.send("/app/update", {}, JSON.stringify(data));
+	},
+
+
     
     // Inicia el juego
     iniciarJuego: function () {
