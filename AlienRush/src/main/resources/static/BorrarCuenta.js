@@ -79,7 +79,7 @@ var BorrarCuenta = new Phaser.Class({
 		let alerta1 = this.add.image(1480, 400, 'contraIncorrecta').setVisible(false);;
 		let alerta2 = this.add.image(1480, 400, 'contraNoCoincide').setVisible(false);;
 		let alerta3 = this.add.image(1480, 400, 'completaCampos').setVisible(false);;
-		let BotonX = this.add.image(1260, 315, 'BotonX').setVisible(false);;
+		let BotonX = this.add.image(1260, 465, 'BotonX').setVisible(false);;
 
         /************************* BOTONES *************************/
         //BotonAceptar

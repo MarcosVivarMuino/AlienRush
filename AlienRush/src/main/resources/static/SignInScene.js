@@ -20,7 +20,8 @@ var SignInScene = new Phaser.Class({
         this.load.image('completaCampos', 'assets/SignScene/AlertaCompletaCampos.png');
         this.load.image('usuarioInvalido', 'assets/SignScene/AlertaUsuarioInvalido.png');
 
-		
+		this.load.image('BotonX', 'assets/CambiarContraseña/BotonX.png');
+
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
         this.load.image('fondoCarga','assets/Background/pantallaCarga.png');
@@ -70,7 +71,7 @@ var SignInScene = new Phaser.Class({
 		//Alertas
 		let alerta2 = this.add.image(1480, 400, 'usuarioInvalido').setVisible(false);;
 		let alerta3 = this.add.image(1480, 400, 'completaCampos').setVisible(false);;
-		let BotonX = this.add.image(1260, 315, 'BotonX').setVisible(false);;
+		let BotonX = this.add.image(1260, 465, 'BotonX').setVisible(false);;
 
 		
         /************************* BOTONES *************************/

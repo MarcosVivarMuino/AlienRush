@@ -65,7 +65,6 @@ var MenuScene = new Phaser.Class({
         } 
 
 
-        /************************* VARIABLES *************************/
         let play = this.add.image(1470, 360, 'play');
         let ajustes = this.add.image(1470, 500, 'ajustes');
         let creditos = this.add.image(1470, 640, 'creditos');
@@ -115,7 +114,7 @@ var MenuScene = new Phaser.Class({
         //JUGAR
         play.setInteractive();
         play.on("pointerdown", () => {
-            this.scene.start("CrearUnirSala", {"nombreUsuario": this.nombreUsuario});
+            this.scene.start("CrearUnirseSala", {"nombreUsuario": this.nombreUsuario});
         })
         play.on("pointerover", () => { play.setScale(1.2); })
         play.on("pointerout", () => { play.setScale(1); })

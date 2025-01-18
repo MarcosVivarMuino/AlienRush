@@ -456,8 +456,8 @@ var MainGame = new Phaser.Class({
             });
         }
 		
-		let socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
-		let stompClient = Stomp.over(socket);
+		socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
+		stompClient = Stomp.over(socket);
 
 
 		// Conectar al servidor
@@ -475,13 +475,17 @@ var MainGame = new Phaser.Class({
 		    stompClient.subscribe('/topic/start', function (message) {
 		        const data = JSON.parse(message.body);
 		        console.log("Partida iniciada:", data);
+				
+				
 		    });
+			
+			const lobbyId = 0;
+			stompClient.send("/app/start", {}, JSON.stringify({ id: lobbyId }));
+			enviarDatosAlWS(lobbyId);
+
 		});
 
-		const lobbyId = this.registry.get('lobbyId') || 0;
-		stompClient.send("/app/start", {}, JSON.stringify({ id: lobbyId }));
 	
-		enviarDatosAlWS(lobbyId);
 
 		
 		function enviarDatosAlWS(partidaId) {
