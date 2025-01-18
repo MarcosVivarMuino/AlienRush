@@ -22,6 +22,11 @@ var BorrarCuenta = new Phaser.Class({
 		this.load.image('BotonNo', 'assets/BorrarCuenta/BotonNo.png');
 		this.load.image('Wifi', 'assets/SinConex/Wifi.png');
 		this.load.image('noWifi', 'assets/SinConex/noWifi.png');
+		this.load.image('completaCampos', 'assets/BorrarCuenta/AlertaCompletaCampos.png');
+		this.load.image('contraNoCoincide', 'assets/BorrarCuenta/AlertaContraNoCoincide.png');
+		this.load.image('contraIncorrecta', 'assets/BorrarCuenta/AlertaContraIncorrecta.png');
+		this.load.image('BotonX', 'assets/BorrarCuenta/BotonX.png');
+
 		//Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
 		
@@ -69,6 +74,12 @@ var BorrarCuenta = new Phaser.Class({
         let BotonSi = this.add.image(1410, 480, 'BotonSi').setVisible(false);
         let BotonNo = this.add.image(1545, 480, 'BotonNo').setVisible(false);
 		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
+		
+		//Alertas
+		let alerta1 = this.add.image(1480, 400, 'contraIncorrecta').setVisible(false);;
+		let alerta2 = this.add.image(1480, 400, 'contraNoCoincide').setVisible(false);;
+		let alerta3 = this.add.image(1480, 400, 'completaCampos').setVisible(false);;
+		let BotonX = this.add.image(1260, 315, 'BotonX').setVisible(false);;
 
         /************************* BOTONES *************************/
         //BotonAceptar
@@ -88,7 +99,7 @@ var BorrarCuenta = new Phaser.Class({
 				BotonAtrasFlecha.setVisible(false);
 				
 			} else {
-			    alert("Por favor, completa ambos campos.");
+				lanzarAlerta(alerta3);
 			}
         })
         BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); })
@@ -130,7 +141,6 @@ var BorrarCuenta = new Phaser.Class({
 	                    "password": inputTextPw.value
 	                };
 					
-					console.log(usuario);
 	
 	                $.ajax({
 	                    method: "DELETE",
@@ -160,62 +170,88 @@ var BorrarCuenta = new Phaser.Class({
 	                }.bind(this))
 					
 	                .fail(function (data) {
-	                    alert("Contraseña incorrecta.");
-	                   
+						lanzarAlerta(alerta1);
 					});
 				}else{
-					alert("Las contraseñas no coinciden");
-
+					lanzarAlerta(alerta2);
 				}
 			}else{
-				alert("Rellena ambos campos");
+				lanzarAlerta(alerta3);
 			}
 
         });
+		
+		function lanzarAlerta(alerta){
+			alerta.setVisible(true);
+			BotonX.setVisible(true);
+			cuadroContra.setVisible(false);
+			cuadroRContra.setVisible(false);
+			BotonAceptar.setVisible(false);
+			BotonAtrasFlecha.setVisible(false);
+			Confirmacion.setVisible(false);
+            BotonSi.setVisible(false);
+            BotonNo.setVisible(false);
+		}
         BotonSi.on("pointerover", () => { BotonSi.setScale(1.2); });
         BotonSi.on("pointerout", () => { BotonSi.setScale(1); });
 
+		// x
+        BotonX.setInteractive();
+        BotonX.on("pointerdown", () => {
+            // Ocultar cuadro de confirmación
+			cuadroContra.setVisible(true);
+			cuadroRContra.setVisible(true);
+			BotonAceptar.setVisible(true);
+			BotonAtrasFlecha.setVisible(true);
+			alerta1.setVisible(false);
+			alerta2.setVisible(false);
+			alerta3.setVisible(false);
+			BotonX.setVisible(false);
+
+        });
+        BotonX.on("pointerover", () => { BotonX.setScale(1.2); });
+        BotonX.on("pointerout", () => { BotonX.setScale(1); });
+		
 		this.setIntervals();
 				
-
-			},
+	},
 			
-		    
-		    checkConexion: function(){
-				let local = this;
-				$.ajax({
-		        method: "GET",
-		        url: "/conexion",
-		        error: function () {
-		            iconoWifi.setTexture("noWifi").setScale(0.2);
-		            local.stopIntervals();
-		            local.reConnect();
-		        },
-		    });
-			},
-			
-			setIntervals: function(){
-				intervalConexion = setInterval(() => {
-		        	this.checkConexion();
-		    	}, 1000);
-			},
-			
-			stopIntervals: function(){
-				clearInterval(intervalConexion);
-			},
-			
-			reConnect: function () {
-		        this.scene.launch("MenuSinConexion", {"sceneName": "BorrarCuenta"});
-		        this.scene.bringToTop("MenuSinConexion");
-		        this.scene.pause();
-		    },
-		    onResume : function() {
-		       iconoWifi.setTexture("Wifi").setScale(0.2);
-		       this.setIntervals();
-		       this.scene.bringToTop("BorrarCuenta");
-       		   this.input.enabled = true;
-		    }
-			
+	    
+    checkConexion: function(){
+		let local = this;
+		$.ajax({
+        method: "GET",
+        url: "/conexion",
+        error: function () {
+            iconoWifi.setTexture("noWifi").setScale(0.2);
+            local.stopIntervals();
+            local.reConnect();
+        },
+    });
+	},
+	
+	setIntervals: function(){
+		intervalConexion = setInterval(() => {
+        	this.checkConexion();
+    	}, 1000);
+	},
+	
+	stopIntervals: function(){
+		clearInterval(intervalConexion);
+	},
+	
+	reConnect: function () {
+        this.scene.launch("MenuSinConexion", {"sceneName": "BorrarCuenta"});
+        this.scene.bringToTop("MenuSinConexion");
+        this.scene.pause();
+    },
+    onResume : function() {
+       iconoWifi.setTexture("Wifi").setScale(0.2);
+       this.setIntervals();
+       this.scene.bringToTop("BorrarCuenta");
+	   this.input.enabled = true;
+    }
+		
 });
 
 
