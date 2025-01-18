@@ -7,67 +7,106 @@ var Lobby = new Phaser.Class({
     },
 
     preload() {
-        //Imagenes
-        this.load.image('fondoLobby', '.png');
-        this.load.image('listo', '.png');
+        // Imágenes
+        this.load.image('fondoLobby', 'assets/Lobby/PantallaLobby.png');
+        this.load.image('listo', 'assets/Lobby/BotonListoAR.png');
+        this.load.image('atras', 'assets/Perfil/BotonAtrasFlecha.png');
 
-        //Audio
+        // Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
     },
-        
+
     create() {
-        // Agrega el fondo
+        // Fondo
         this.add.image(0, 0, 'fondoLobby').setOrigin(0, 0);
 
-        //AUDIO
-        // Inicializar música del menú si no existe
+        // AUDIO
         if (!GlobalMusic.musicaMenu) {
             GlobalMusic.musicaMenu = this.sound.add('musicaMenu', { loop: true });
         }
-        
-        // Reproducir música solo si está activada
+
         if (GlobalMusic.musicaActiva && !GlobalMusic.musicaMenu.isPlaying) {
             GlobalMusic.musicaMenu.play();
         }
-        
-        // Asegurarnos de detener la música del juego
+
         if (GlobalMusic.musicaJuego && GlobalMusic.musicaJuego.isPlaying) {
             GlobalMusic.musicaJuego.stop();
             GlobalMusic.musicaVictoria.stop();
         }
 
         /************************* VARIABLES *************************/
-        let listo = this.add.image(1470, 360, 'listo');
-
-        ///////////////////////////////////MUESTREODEUSUARIOS//////////////////////////////////
-		usuariosConectadosText = this.add.text(20, 470, 'Usuarios conectados: 0', {
+        let jugadoresText = this.add.text(20, 50, '', {
+            fontFamily: 'Arial',
+            fill: '#ffffff',
+            fontSize: '24px'
+        });
+        
+        let lobbyIdText = this.add.text(this.cameras.main.width - 150, this.cameras.main.height - 50, '', {
         	fontFamily: 'Impact, fantasy',
         	fill: '#ffffff',
         	fontSize: '40px'
-    	});
+    	}).setOrigin(1);
 
-        //JUGAR
-        play.setInteractive();
-        play.on("pointerdown", () => {
-            this.scene.start("MainGame", {"nombreUsuario": this.nombreUsuario});
-        })
-        play.on("pointerover", () => { listo.setScale(1.2); })
-        play.on("pointerout", () => { listo.setScale(1); })
+        let listoButton = this.add.image(this.cameras.main.width / 2, this.cameras.main.height - 100, 'listo').setInteractive();
+        
+        let atrasButton = this.add.image(100, 100, 'atras').setInteractive();
 
-        // Botón para iniciar el juego
-        const startButton = this.add.text(this.cameras.main.centerX, 200, 'Listo', {
-            fontSize: '24px',
-            color: '#ff0000',
-            fontFamily: 'Arial',
-            backgroundColor: '#ffffff',
-            padding: { x: 10, y: 5 },
-        })
-        .setOrigin(0.5)
-        .setInteractive();
+        // Obtener ID del lobby y nombre de usuario
+        let lobbyId = this.registry.get('lobbyId') || 0;
+        let userName = this.registry.get('userName') || 'Jugador';
 
-        // Al hacer clic en el botón, inicia la escena del juego
-        startButton.on('pointerdown', () => {
-            this.scene.start('GameScene'); // Cambia 'GameScene' por el nombre de tu escena principal
+        lobbyIdText.setText(`Lobby ID: ${lobbyId}`);
+
+        // Configuración del cliente STOMP
+        let socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
+        let stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, () => {
+            console.log('Conectado a WebSocket');
+
+            // Suscribirse a actualizaciones del lobby
+            stompClient.subscribe(`/topic/lobby/${lobbyId}`, (message) => {
+                let lobby = JSON.parse(message.body);
+
+                // Actualizar lista de jugadores
+                let jugadores = Object.entries(lobby.jugadoresListos)
+                    .map(([jugador, listo]) => `${jugador} - ${listo ? 'Listo' : 'No listo'}`);
+                jugadoresText.setText(jugadores.join('\n'));
+
+                // Iniciar juego si ambos jugadores están listos
+                if (lobby.todosListos) {
+                    stompClient.disconnect();
+                    this.scene.start('GameScene', { lobbyId: lobbyId });
+                }
+            });
+
+            // Notificar al servidor que el jugador se ha unido
+            stompClient.send('/app/unirseLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
+        }, (error) => {
+            console.error('Error al conectar al WebSocket:', error);
         });
+
+        // Evento para el botón "Listo"
+        listoButton.on('pointerdown', () => {
+            stompClient.send('/app/marcarListo', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
+        });
+
+        listoButton.on('pointerover', () => { listoButton.setScale(1.2); });
+        listoButton.on('pointerout', () => { listoButton.setScale(1); });
+
+        this.events.on('shutdown', () => {
+            if (stompClient && stompClient.connected) {
+                stompClient.send('/app/salirLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
+                stompClient.disconnect();
+            }
+        });
+        
+        // Evento para el botón "Listo"
+        atrasButton.on('pointerdown', () => {
+           this.scene.start('CrearUnirseSala');
+        });
+
+        atrasButton.on('pointerover', () => { atrasButton.setScale(1.2); });
+        atrasButton.on('pointerout', () => { atrasButton.setScale(1); });
     }
 });
