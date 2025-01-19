@@ -80,7 +80,6 @@ stompClient.connect({}, () => {
     console.error('Error al conectar al WebSocket:', error);
 });
 
-
 	function onPonerNombres(message) {
     console.log(message.body);
     let lobby = JSON.parse(message.body);
@@ -103,6 +102,8 @@ stompClient.connect({}, () => {
     // Verificar si el juego puede comenzar
     if (lobby.todosListos) {
         stompClient.disconnect();
+        self.registry.set('player1Name', player1Name);
+        self.registry.set('player2Name', player2Name);
         self.scene.start('MainGameMultijugador', { lobbyId: lobby.id });
     }
 }
