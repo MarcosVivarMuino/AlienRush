@@ -39,7 +39,7 @@ var ModoJuego = new Phaser.Class({
 
         BotonOnline.setInteractive();
         BotonOnline.on("pointerdown", () => {
-            this.scene.start("MainGameMultijugador");
+            this.scene.start("CrearUnirseSala");
 
         });
         BotonOnline.on("pointerover", () => { BotonOnline.setScale(1.2); });

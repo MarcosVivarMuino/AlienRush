@@ -446,6 +446,44 @@ var MainGameMultijugador = new Phaser.Class({
             });
         }
 		
+		// Método para enviar el estado del juego al servidor cuando se inicia
+		function enviarEstadoAlServidor () {
+			    const lobbyId = this.registry.get('lobbyId') || 0;
+
+			    // Construir el estado del juego
+			    const data = {
+			        id: lobbyId,
+			        player1X: this.player1.x,
+			        player1Y: this.player1.y,
+			        player1Score: this.player1.score,
+			        player1Vidas: this.player1.vidas,
+			        player1Speed: this.player1.speed,
+			        player1Size: this.player1.size,
+			        player1Multiplicador: this.player1.multiplicador,
+			        player1CanPU: this.player1.canPU,
+			        player1Nombre: this.player1.nombre,
+
+			        player2X: this.player2.x,
+			        player2Y: this.player2.y,
+			        player2Score: this.player2.score,
+			        player2Vidas: this.player2.vidas,
+			        player2Speed: this.player2.speed,
+			        player2Size: this.player2.size,
+			        player2Multiplicador: this.player2.multiplicador,
+			        player2CanPU: this.player2.canPU,
+			        player2Nombre: this.player2.nombre,
+
+			        humanos: this.humanos.map(humano => ({ x: humano.x, y: humano.y })),
+			        vacas: this.vacas.map(vaca => ({ x: vaca.x, y: vaca.y })),
+			        militares: this.militares.map(militar => ({ x: militar.x, y: militar.y })),
+			        PUHumanos: this.PUHumanos.map(PUHuman => ({ x: PUHuman.x, y: PUHuman.y })),
+			        escombros: this.escombros.map(escombro => ({ x: escombro.x, y: escombro.y })),
+			        pausa: this.gamePaused
+			    };
+
+			    // Enviar los datos al servidor usando STOMP
+			    stompClient.send("/app/start", {}, JSON.stringify(data));
+			}
 
 		
 		socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
@@ -589,44 +627,7 @@ var MainGameMultijugador = new Phaser.Class({
 	    this.PUHumanos.push(PUHuman);
 	},
 
-	// Método para enviar el estado del juego al servidor cuando se inicia
-	enviarEstadoAlServidor: function () {
-	    const lobbyId = this.registry.get('lobbyId') || 0;
-
-	    // Construir el estado del juego
-	    const data = {
-	        id: lobbyId,
-	        player1X: this.player1.x,
-	        player1Y: this.player1.y,
-	        player1Score: this.player1.score,
-	        player1Vidas: this.player1.vidas,
-	        player1Speed: this.player1.speed,
-	        player1Size: this.player1.size,
-	        player1Multiplicador: this.player1.multiplicador,
-	        player1CanPU: this.player1.canPU,
-	        player1Nombre: this.player1.nombre,
-
-	        player2X: this.player2.x,
-	        player2Y: this.player2.y,
-	        player2Score: this.player2.score,
-	        player2Vidas: this.player2.vidas,
-	        player2Speed: this.player2.speed,
-	        player2Size: this.player2.size,
-	        player2Multiplicador: this.player2.multiplicador,
-	        player2CanPU: this.player2.canPU,
-	        player2Nombre: this.player2.nombre,
-
-	        humanos: this.humanos.map(humano => ({ x: humano.x, y: humano.y })),
-	        vacas: this.vacas.map(vaca => ({ x: vaca.x, y: vaca.y })),
-	        militares: this.militares.map(militar => ({ x: militar.x, y: militar.y })),
-	        PUHumanos: this.PUHumanos.map(PUHuman => ({ x: PUHuman.x, y: PUHuman.y })),
-	        escombros: this.escombros.map(escombro => ({ x: escombro.x, y: escombro.y })),
-	        pausa: this.gamePaused
-	    };
-
-	    // Enviar los datos al servidor usando STOMP
-	    stompClient.send("/app/start", {}, JSON.stringify(data));
-	},
+	
 
 		
     // Pausa el juego

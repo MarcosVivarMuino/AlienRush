@@ -103,7 +103,7 @@ stompClient.connect({}, () => {
     // Verificar si el juego puede comenzar
     if (lobby.todosListos) {
         stompClient.disconnect();
-        self.scene.start('MainGame', { lobbyId: lobby.id });
+        self.scene.start('MainGameMultijugador', { lobbyId: lobby.id });
     }
 }
 

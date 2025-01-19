@@ -72,43 +72,43 @@ var CrearUnirseSala = new Phaser.Class({
             // Botón Aceptar
            BotonAceptar.setInteractive();
            BotonAceptar.on("pointerdown", () => {
-    const inputElement = campoTexto.getChildByName('nameField');
-    const lobbyId = inputElement.value;
+		    const inputElement = campoTexto.getChildByName('nameField');
+		    const lobbyId = inputElement.value;
+		
+		    if (lobbyId !== '') {
+		        // Aquí solo se llama a unirseLobby una vez
+		        stompClient.send('/app/unirseLobby', {}, JSON.stringify({ user: userName, lobbyId: lobbyId }));
+		
+		        // Después de unirse, solo se suscribe a las actualizaciones del lobby
+		        stompClient.subscribe(`/topic/lobbyActualizado/${lobbyId}`, (message) => {
+		            let lobby = JSON.parse(message.body);
+		            if (lobby) {
+		                this.registry.set('lobbyId', lobbyId);
+		                this.scene.start('Lobby');
+		            } else {
+		                alert('Error al unirse al lobby');
+		            }
+		        });
+		    }
+		});
+		
+					
+			
+        BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); });
+        BotonAceptar.on("pointerout", () => { BotonAceptar.setScale(1); });
 
-    if (lobbyId !== '') {
-        // Aquí solo se llama a unirseLobby una vez
-        stompClient.send('/app/unirseLobby', {}, JSON.stringify({ user: userName, lobbyId: lobbyId }));
-
-        // Después de unirse, solo se suscribe a las actualizaciones del lobby
-        stompClient.subscribe(`/topic/lobbyActualizado/${lobbyId}`, (message) => {
-            let lobby = JSON.parse(message.body);
-            if (lobby) {
-                this.registry.set('lobbyId', lobbyId);
-                this.scene.start('Lobby');
-            } else {
-                alert('Error al unirse al lobby');
-            }
+        // Botón Cancelar
+        BotonCancelar.setInteractive();
+        BotonCancelar.on("pointerdown", () => {
+            BotonCS.setVisible(true);
+            BotonUS.setVisible(true);
+            campoTexto.setVisible(false);
+            BotonAceptar.setVisible(false);
+            BotonCancelar.setVisible(false);
+            texto.setVisible(false);
         });
-    }
-});
-
-			
-			
-            BotonAceptar.on("pointerover", () => { BotonAceptar.setScale(1.2); });
-            BotonAceptar.on("pointerout", () => { BotonAceptar.setScale(1); });
-
-            // Botón Cancelar
-            BotonCancelar.setInteractive();
-            BotonCancelar.on("pointerdown", () => {
-                BotonCS.setVisible(true);
-                BotonUS.setVisible(true);
-                campoTexto.setVisible(false);
-                BotonAceptar.setVisible(false);
-                BotonCancelar.setVisible(false);
-                texto.setVisible(false);
-            });
-            BotonCancelar.on("pointerover", () => { BotonCancelar.setScale(1.2); });
-            BotonCancelar.on("pointerout", () => { BotonCancelar.setScale(1); });
+        BotonCancelar.on("pointerover", () => { BotonCancelar.setScale(1.2); });
+        BotonCancelar.on("pointerout", () => { BotonCancelar.setScale(1); });
         });
         
         this.events.on('shutdown', () => {
@@ -121,7 +121,7 @@ var CrearUnirseSala = new Phaser.Class({
         // Botón Atrás
         BotonAtrasFlecha.setInteractive();
         BotonAtrasFlecha.on("pointerdown", () => {
-            this.scene.start("MenuScene");
+            this.scene.start("ModoJuego");
         });
         BotonAtrasFlecha.on("pointerover", () => { BotonAtrasFlecha.setScale(1.2); });
         BotonAtrasFlecha.on("pointerout", () => { BotonAtrasFlecha.setScale(1); });
