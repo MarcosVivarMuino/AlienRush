@@ -10,6 +10,8 @@ var Lobby = new Phaser.Class({
         this.load.image('fondoLobby', 'assets/Lobby/PantallaLobby.png');
         this.load.image('listo', 'assets/Lobby/BotonListoAR.png');
         this.load.image('atras', 'assets/Perfil/BotonAtrasFlecha.png');
+		this.load.image('fondoGranja', 'assets/AssetsMainGame/Escenarios/Granja2.png')
+		this.load.image('fondoCiudad', 'assets/AssetsMainGame/Escenarios/Ciudad.png')
 
         // Audio
         this.load.audio('musicaMenu', 'audio/musicaMenu.mp3');
@@ -103,7 +105,9 @@ stompClient.connect({}, () => {
     // Verificar si el juego puede comenzar
     if (lobby.todosListos) {
         stompClient.disconnect();
-        self.scene.start('MainGameMultijugador', { lobbyId: lobby.id });
+        self.scene.start('MainGameMultijugador', { });
+		this.registry.set('fondoGranja', fondoGranja);
+
     }
 }
 
