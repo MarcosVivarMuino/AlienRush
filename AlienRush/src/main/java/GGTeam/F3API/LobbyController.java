@@ -1,6 +1,5 @@
 package GGTeam.F3API;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -10,7 +9,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import GGTeam.F3API.*;
 
 
 @Controller
@@ -28,13 +26,15 @@ public class LobbyController {
     @MessageMapping("/crearLobby")
     @SendTo("/topic/lobbyCreado")
     public Lobby crearLobby(@Payload String user) {
-        Lobby newLobby = new Lobby();
-        newLobby.agregarJugador(user);
+        Lobby newLobby = new Lobby();      
+        boolean joined = newLobby.agregarJugador(user);
         newLobby.setId(contLobbys);
         contLobbys++;
         lobbys.add(newLobby);
-
-        messagingTemplate.convertAndSend("/topic/lobbyCreado", newLobby);
+        if(joined) {
+        	 System.out.println("Jugador " + user + " creo el lobby " + newLobby.getId());
+             messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + newLobby.getId(), newLobby);
+        }
         return newLobby;
     }
 
@@ -49,13 +49,13 @@ public class LobbyController {
                 .filter(l -> l.getId() == lobbyId)
                 .findFirst()
                 .orElse(null);
-
+        
         if (lobby == null) {
             System.out.println("Lobby no encontrado");
             messagingTemplate.convertAndSendToUser(user, "/queue/errors", "Lobby no encontrado");
             return;
         }
-
+        
         boolean joined = lobby.agregarJugador(user);
         if (joined) {
             System.out.println("Jugador " + user + " se unió al lobby " + lobbyId);
@@ -66,7 +66,6 @@ public class LobbyController {
         }
     }
 
-    // Marcar un jugador como listo
     @MessageMapping("/marcarListo")
     public void marcarListo(@Payload Map<String, String> payload) {
         String user = payload.get("user");
@@ -81,17 +80,16 @@ public class LobbyController {
             messagingTemplate.convertAndSendToUser(user, "/queue/errors", "Lobby no encontrado");
             return;
         }
-
         lobby.marcarListo(user);
-        messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId, lobby);
 
-        // Comprobar si todos están listos y notificar para iniciar la partida
-        if (lobby.todosListos()) {
-            messagingTemplate.convertAndSend("/topic/lobbyListo/" + lobbyId, "Todos los jugadores están listos. ¡Iniciando partida!");
-        }
+        // Debugging
+        System.out.println("Info lobby: usuario 1: " + lobby.getPlayer1Name() + ", listo?: " + lobby.isPlayer1Listo()
+                + ", usuario 2: " + lobby.getPlayer2Name() + ", listo?: " + lobby.isPlayer2Listo());
+
+        // Enviar actualización del lobby
+        messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId, lobby);
     }
 
-    // Salir de un lobby
     @MessageMapping("/salirLobby")
     public void salirLobby(@Payload Map<String, String> payload) {
         String user = payload.get("user");
@@ -104,6 +102,8 @@ public class LobbyController {
 
         if (lobby != null) {
             lobby.salirJugador(user);
+
+            // Enviar la actualización del lobby
             messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId, lobby);
 
             // Eliminar el lobby si está vacío
@@ -113,6 +113,22 @@ public class LobbyController {
             }
         } else {
             messagingTemplate.convertAndSendToUser(user, "/queue/errors", "Lobby no encontrado");
+        }
+    }
+    
+    @MessageMapping("/lobbyActualizado")
+    public void devolverLobby(@Payload int lobbyId) {
+        // Buscar el lobby correspondiente
+        Lobby lobby = lobbys.stream()
+                .filter(l -> l.getId() == lobbyId)
+                .findFirst()
+                .orElse(null);
+
+        if (lobby != null) {
+            messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId, lobby);
+        } else {
+            // Enviar error si el lobby no existe
+            messagingTemplate.convertAndSend("/queue/errors", "Lobby no encontrado para id: " + lobbyId);
         }
     }
 }
