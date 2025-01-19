@@ -40,6 +40,10 @@ var MainGameMultijugador = new Phaser.Class({
             percentText.destroy();
         });
 
+		if(this.fondo == null){
+			this.fondo = this.registry.get('fondoGranja');
+		}
+		
         // Archivos
         this.load.image('pulsaEsp', 'assets/Background/pulsaEsp.png');
         // HUD
@@ -140,7 +144,8 @@ var MainGameMultijugador = new Phaser.Class({
         this.gameStarted = false; // El juego no comienza hasta pulsar ESP
         this.temporizadorEvento = null; // Guardará el evento del temporizador
 
-        this.add.image(875, 440, this.fondo).setScale(1); // Creacion del fondo
+		let fondoElegido = this.registry.get('fondoGranja');
+        this.add.image(875, 440, fondoElegido).setScale(1); // Creacion del fondo
         this.pantallaEsp = this.add.image(875, 440, 'pulsaEsp').setDepth(10); // Mostrar pantalla inicial
 
         
@@ -446,100 +451,120 @@ var MainGameMultijugador = new Phaser.Class({
             });
         }
 		
-		// Método para enviar el estado del juego al servidor cuando se inicia
-		function enviarEstadoAlServidor () {
-			    const lobbyId = this.registry.get('lobbyId') || 0;
 
-			    // Construir el estado del juego
-			    const data = {
-			        id: lobbyId,
-			        player1X: this.player1.x,
-			        player1Y: this.player1.y,
-			        player1Score: this.player1.score,
-			        player1Vidas: this.player1.vidas,
-			        player1Speed: this.player1.speed,
-			        player1Size: this.player1.size,
-			        player1Multiplicador: this.player1.multiplicador,
-			        player1CanPU: this.player1.canPU,
-			        player1Nombre: this.player1.nombre,
+		 // Establecer la conexión WebSocket
+    socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
 
-			        player2X: this.player2.x,
-			        player2Y: this.player2.y,
-			        player2Score: this.player2.score,
-			        player2Vidas: this.player2.vidas,
-			        player2Speed: this.player2.speed,
-			        player2Size: this.player2.size,
-			        player2Multiplicador: this.player2.multiplicador,
-			        player2CanPU: this.player2.canPU,
-			        player2Nombre: this.player2.nombre,
+    stompClient.connect({}, () => {
+    console.log('Conectado a WebSocket');
 
-			        humanos: this.humanos.map(humano => ({ x: humano.x, y: humano.y })),
-			        vacas: this.vacas.map(vaca => ({ x: vaca.x, y: vaca.y })),
-			        militares: this.militares.map(militar => ({ x: militar.x, y: militar.y })),
-			        PUHumanos: this.PUHumanos.map(PUHuman => ({ x: PUHuman.x, y: PUHuman.y })),
-			        escombros: this.escombros.map(escombro => ({ x: escombro.x, y: escombro.y })),
-			        pausa: this.gamePaused
-			    };
+    // Obtener información del lobby
+    const lobbyId = this.registry.get('lobbyId') || 0;
+    const player1Name = this.registry.get('player1Name') || 'Jugador1';
+    const player2Name = this.registry.get('player2Name') || 'Jugador2';
 
-			    // Enviar los datos al servidor usando STOMP
-			    stompClient.send("/app/start", {}, JSON.stringify(data));
-			}
+    // Crear el objeto lobby para enviar al servidor
+    const lobby = {
+        id: lobbyId,
+        player1Name: player1Name,
+        player2Name: player2Name
+    };
 
-		
-		socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
-		stompClient = Stomp.over(socket);
+    // Suscribirse a las actualizaciones de la partida
+    stompClient.subscribe(`/topic/partida/actualizada/${lobbyId}`, (message) => {
+        const partida = JSON.parse(message.body);
+        console.log('Partida actualizada:', partida);
+        this.sincronizarPartida(partida);
+    });
+
+    // Enviar el lobby al servidor para iniciar la partida
+    stompClient.send('/app/partida/iniciar', {}, JSON.stringify(lobby));
+});
 
 
-		// Conectar al servidor
-		stompClient.connect({}, function (frame) {
-		    console.log('Conectado: ' + frame);
+    this.stompClient = stompClient;
+},
 
-		    // Suscribirse a un canal para recibir mensajes (por ejemplo, posiciones)
-		    stompClient.subscribe('/topic/positions', function (message) {
-		        const data = JSON.parse(message.body);
-		        console.log("Posiciones actualizadas:", data);
-		        actualizarObjetos(data); // Actualiza los objetos en el juego
-		    });
+// Sincronizar los datos de la partida con el servidor
+sincronizarPartida: function (data) {
+	console.log(data);
+    // Actualizar posición, puntuación y estado de los jugadores
+    player1.x = data.player1X;
+    player1.y = data.player1Y;
+    player1.score = data.player1Score;
+    player1.vidas = data.player1Vidas;
 
-		    // Suscribirse a un canal de inicio de partida
-		    stompClient.subscribe('/topic/start', function (message) {
-		        const data = JSON.parse(message.body);
-		        console.log("Partida iniciada:", data);
-				
-				
-		    });
-			
-			const lobbyId = 0;
-			stompClient.send("/app/start", {}, JSON.stringify({ id: lobbyId }));
-			enviarEstadoAlServidor();
+    player2.x = data.player2X;
+    player2.y = data.player2Y;
+    player2.score = data.player2Score;
+    player2.vidas = data.player2Vidas;
 
-		});
-	
-		
+    // Sincronizar objetos del juego
+    this.sincronizarObjetos(Humanos, data.humanos);
+    this.sincronizarObjetos(Vacas, data.vacas);
+    this.sincronizarObjetos(Militares, data.militares);
+    this.sincronizarObjetos(PUHumanos, data.PUHumanos);
+    this.sincronizarObjetos(Escombros, data.escombros);
+
+    console.log('Partida sincronizada con el servidor');
+},
+
+// Sincronizar una lista de objetos
+sincronizarObjetos: function (listaLocal, listaRemota) {
+    listaLocal.forEach((objeto, index) => {
+        if (listaRemota[index]) {
+            objeto.x = listaRemota[index].x;
+            objeto.y = listaRemota[index].y;
+        }
+    });
+},
+
+// Enviar el estado inicial del jugador al servidor
+enviarEstadoInicial: function (stompClient, lobbyId, userName) {
+    const data = {
+        lobbyId: lobbyId,
+        playerX: player1.x,
+        playerY: player1.y,
+        playerScore: player1.score,
+        playerVidas: player1.vidas,
+        playerNombre: userName
+    };
+
+    stompClient.send('/app/partida/actualizar', {}, JSON.stringify(data));
     },
 
     update: function () {
         // Iniciar juego si no ha comenzado
-        if (!this.gameStarted && (Phaser.Input.Keyboard.JustDown(this.keyY))) {
+        if (!this.gameStarted) {
             this.iniciarJuego();
-			this.enviarEstadoAlServidor();
         }
     
         if (this.gameStarted) {
-    
-		    if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
-                this.pausarJuego();
-				this.enviarEstadoAlServidor();
-            }
-			
-			this.actualizarControles();
-            this.detectarAcciones();
-            this.actualizarTam();
-			
-			//ESTADO DEL JUEGO AL WEBSOCKET
-			this.enviarEstadoAlServidor();
+    this.actualizarControles();  // Actualiza los controles del juego
 
-        }
+    // Obtener los datos del jugador actual (jugador 1)
+    const dataJugador1 = {
+        nombre: player1.nombre,
+        partidaId: this.registry.get('lobbyId'),
+        playerX: player1.x,
+        playerY: player1.y,
+        playerScore: player1.score,
+        playerVidas: player1.vidas,
+        playerSpeed: player1.speed,
+        playerSize: player1.size,
+        playerMultiplicador: player1.multiplicador,
+        playerCanPU: player1.canPU
+    };
+
+    // Verificar si la conexión WebSocket está activa antes de enviar
+    if (this.stompClient && this.stompClient.connected) {
+        // Enviar los datos del jugador actual (por ejemplo, jugador 1)
+        this.stompClient.send('/app/partida/actualizar', {}, JSON.stringify(dataJugador1));
+    } else {
+        console.error('WebSocket no conectado. Espera a que la conexión se establezca.');
+    }
+}
     },
 	
     
@@ -548,86 +573,8 @@ var MainGameMultijugador = new Phaser.Class({
         this.gameStarted = true;
         this.pantallaEsp.destroy();
         this.iniciarTemporizador();
-		
-		// Inicializar jugadores con valores predeterminados
-	    this.player1 = this.crearJugador(100, 100, 'Player1', 'Jugador 1');
-	    this.player2 = this.crearJugador(1500, 100, 'Player2', 'Jugador 2');
-	    
-	    // Crear objetos en el juego
-	    this.generarObjetos();
-
-	    // Enviar los datos de la partida al servidor
-	    this.enviarEstadoAlServidor();
     },
     
-	crearJugador: function (x, y, sprite, nombre) {
-	    let jugador = this.add.sprite(x, y, sprite);
-	    jugador.nombre = nombre;
-	    jugador.score = 0;
-	    jugador.vidas = 5;
-	    jugador.speed = 10;
-	    jugador.size = 0.8;
-	    jugador.multiplicador = 1;
-	    jugador.canPU = true;
-	    jugador.x = x;
-	    jugador.y = y;
-	    return jugador;
-	},
-	
-	generarObjetos: function () {
-	    // Genera objetos en posiciones aleatorias
-	    this.humanos = [];
-	    this.vacas = [];
-	    this.militares = [];
-	    this.PUHumanos = [];
-	    this.escombros = [];
-
-	    for (let i = 0; i < 5; i++) { 
-	        this.generarHumano();
-	        this.generarVaca();
-	        this.generarEscombro();
-	        this.generarMilitar();
-	        this.generarHumanoEspecial();
-	    }
-	},
-
-	generarHumano: function () {
-	    let x = Phaser.Math.Between(10, 1750);
-	    let y = Phaser.Math.Between(20, 880);
-	    let humano = this.add.sprite(x, y, 'humano1');
-	    humano.play('caminar_humano1');
-	    this.humanos.push(humano);
-	},
-
-	generarVaca: function () {
-	    let x = Phaser.Math.Between(20, 1700);
-	    let y = Phaser.Math.Between(30, 800);
-	    let vaca = this.add.sprite(x, y, 'Vaca');
-	    this.vacas.push(vaca);
-	},
-
-	generarEscombro: function () {
-	    let x = Phaser.Math.Between(20, 1700);
-	    let y = Phaser.Math.Between(30, 800);
-	    let escombro = this.add.sprite(x, y, 'Escombro');
-	    this.escombros.push(escombro);
-	},
-
-	generarMilitar: function () {
-	    let x = Phaser.Math.Between(20, 1700);
-	    let y = Phaser.Math.Between(30, 800);
-	    let militar = this.add.sprite(x, y, 'Militar');
-	    this.militares.push(militar);
-	},
-
-	generarHumanoEspecial: function () {
-	    let x = Phaser.Math.Between(20, 1700);
-	    let y = Phaser.Math.Between(30, 800);
-	    let PUHuman = this.add.sprite(x, y, 'PU_Human');
-	    this.PUHumanos.push(PUHuman);
-	},
-
-	
 
 		
     // Pausa el juego
@@ -642,10 +589,6 @@ var MainGameMultijugador = new Phaser.Class({
     
     // Actualiza controles de los jugadores
     actualizarControles: function () {
-        // Controles de player 2
-        player2.body.position.x += this.keyL.isDown ? player2.speed : this.keyJ.isDown ? -player2.speed : 0;
-        player2.body.position.y += this.keyK.isDown ? player2.speed : this.keyI.isDown ? -player2.speed : 0;
-    
         // Controles de player 1
         player1.body.position.x += this.keyD.isDown ? player1.speed : this.keyA.isDown ? -player1.speed : 0;
         player1.body.position.y += this.keyS.isDown ? player1.speed : this.keyW.isDown ? -player1.speed : 0;
@@ -654,9 +597,7 @@ var MainGameMultijugador = new Phaser.Class({
     // Detecta acciones de los jugadores
     detectarAcciones: function () {
         if (Phaser.Input.Keyboard.JustDown(this.keySPC)) this.absorberObjeto(player1);
-        if (Phaser.Input.Keyboard.JustDown(this.keyENTER)) this.absorberObjeto(player2);
         if (Phaser.Input.Keyboard.JustDown(this.keyE)) this.usarPU(player1);
-        if (Phaser.Input.Keyboard.JustDown(this.keyO)) this.usarPU(player2);
     },
     
     // Absorbe objetos cercanos a un jugador
