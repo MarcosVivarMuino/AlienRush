@@ -37,7 +37,8 @@ var CrearUnirseSala = new Phaser.Class({
         let socket = new SockJS('/ws'); // Asegúrate de que este endpoint coincide con tu servidor
         let stompClient = Stomp.over(socket);
 
-        let userName = this.registry.get('userName') || 'Ma';
+        let userName = this.registry.get('userName');
+        console.log(userName);
 
         stompClient.connect({}, () => {
             console.log('Conectado a WebSocket');
@@ -45,7 +46,7 @@ var CrearUnirseSala = new Phaser.Class({
             // Botón para crear sala
             BotonCS.setInteractive();
             BotonCS.on("pointerdown", () => {
-                stompClient.send('/app/crearLobby', {}, JSON.stringify({ user: userName }));
+                stompClient.send('/app/crearLobby', {}, userName);
                 stompClient.subscribe('/topic/lobbyCreado', (message) => {
                     let lobby = JSON.parse(message.body);
                     this.registry.set('lobbyId', lobby.id);

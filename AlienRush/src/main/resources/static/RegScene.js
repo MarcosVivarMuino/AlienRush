@@ -106,6 +106,7 @@ var RegScene = new Phaser.Class({
 							console.log(data);
 							console.log(textStatus+" "+jqXHR.statusCode());
 							if(textStatus == "success"){
+								   self.registry.set('userName', inputTextId.value);
 		                           self.scene.start("MenuScene", {"nombreUsuario": inputTextId.value});
 							}
 						})

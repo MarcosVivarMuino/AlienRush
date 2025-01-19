@@ -41,7 +41,6 @@ public class controladorUsuarios {
     public void agregarUsuario(@RequestBody String nombreUsuario) {
         if (!usuariosConectados.contains(nombreUsuario)) {
             usuariosConectados.add(nombreUsuario); // Añade el usuario si no está en la lista
-            System.out.println("Usuario conectado: " + nombreUsuario);
             
             // Añadir mensaje al chat
             ChatMessage mensaje = new ChatMessage();
