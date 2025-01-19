@@ -23,6 +23,8 @@
 	<script src="RegScene.js"></script>
 	<script src="BorrarCuenta.js"></script>
 	<script src="CambiarContraseña.js"></script>
+    <script src="ModoJuego.js"></script>
+	<script src="MainGameMultijugador.js"></script>
 	<script src="MenuSinConexion.js"></script>
 	<script src="CrearUnirseSala.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
@@ -183,8 +185,7 @@
             height: 880,
             autoCenter: Phaser.Scale.CENTER_BOTH,
             mode: Phaser.Scale.FIT,
-            scene: [SignInScene,   MainGame, CrearUnirseSala, Lobby, Victoria1, MenuSinConexion, RegScene, MenuScene, BorrarCuenta, CambiarContraseña,  ElegirEscenario,   Creditos, Ajustes, MenuPausa,  Victoria2, Empate, Perfil],
-            physics: {
+            scene: [ModoJuego, SignInScene,  MainGameMultijugador, MainGame, CrearUnirseSala, Lobby, Victoria1, MenuSinConexion, RegScene, MenuScene, BorrarCuenta, CambiarContraseña,  ElegirEscenario,   Creditos, Ajustes, MenuPausa,  Victoria2, Empate, Perfil],            physics: {
                 default: 'arcade',
                 arcade: {
                     debug: false

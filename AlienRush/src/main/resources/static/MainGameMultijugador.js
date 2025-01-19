@@ -485,8 +485,6 @@ var MainGameMultijugador = new Phaser.Class({
 
 		});
 
-	
-
 		
 		function enviarDatosAlWS(partidaId) {
 		    const data = {

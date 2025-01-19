@@ -454,75 +454,7 @@ var MainGame = new Phaser.Class({
                     ease: 'Power1'
                 });
             });
-<<<<<<< Updated upstream
-        }
-		
-		socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
-		stompClient = Stomp.over(socket);
-
-
-		// Conectar al servidor
-		stompClient.connect({}, function (frame) {
-		    console.log('Conectado: ' + frame);
-
-		    // Suscribirse a un canal para recibir mensajes (por ejemplo, posiciones)
-		    stompClient.subscribe('/topic/positions', function (message) {
-		        const data = JSON.parse(message.body);
-		        console.log("Posiciones actualizadas:", data);
-		        actualizarObjetos(data); // Actualiza los objetos en el juego
-		    });
-
-		    // Suscribirse a un canal de inicio de partida
-		    stompClient.subscribe('/topic/start', function (message) {
-		        const data = JSON.parse(message.body);
-		        console.log("Partida iniciada:", data);
-				
-				
-		    });
-			
-			const lobbyId = 0;
-			stompClient.send("/app/start", {}, JSON.stringify({ id: lobbyId }));
-			enviarDatosAlWS(lobbyId);
-
-		});
-
-	
-
-		
-		function enviarDatosAlWS(partidaId) {
-		    const data = {
-		        id: partidaId,
-		        player1X: player1.x,
-		        player1Y: player1.y,
-		        player1Score: player1.score,
-				player1Vidas: player1.vidas,
-				player1Speed: player1.speed,
-				player1Size: player1.size,
-				player1Multiplicador: player1.multiplicador,
-				player1CanPU: plasyer1.canPU,
-				player2X: player2.x,
-				player2Y: player2.y,
-			    player2Score: player2.score,
-				player2Vidas: player2.vidas,
-				player2Speed: player2.speed,
-				player2Size: player2.size,
-				player2Multiplicador: player2.multiplicador,
-				player2CanPU: player2.canPU,
-				humanos: Humanos,
-				vacas: Vacas,
-				escombros: Escombros,
-				militares: Militares,
-				PUHumanos: PUHumanos,
-				pausa: paused
-
-			};
-
-		    stompClient.send("/app/update", {}, JSON.stringify(data));
-		}
-		
-=======
         }		
->>>>>>> Stashed changes
     },
 
     update: function () {
