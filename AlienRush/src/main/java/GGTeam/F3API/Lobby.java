@@ -9,8 +9,11 @@ public class Lobby {
     private final Map<String, Boolean> jugadoresListos = new ConcurrentHashMap<>();
     private String player1;  // Aquí debe ser solo el nombre del jugador, no un objeto
     private String player2;  // Lo mismo para el segundo jugador
+    private boolean player1Listo = false;
+    private boolean player2Listo = false;
     private int contJug = 0;
     private int id;
+    private boolean todosListos = false;
 
     public boolean agregarJugador(String jugador) {
         if (contJug == 0) {
@@ -19,7 +22,7 @@ public class Lobby {
             player2 = jugador;  // Asignamos el nombre del segundo jugador
         }
 
-        if (contJug < 3) {
+        if (contJug < 2) {
             jugadoresListos.put(jugador, false);
             contJug++;
             return true;
@@ -30,18 +33,28 @@ public class Lobby {
     public void marcarListo(String jugador) {
         if (jugadoresListos.containsKey(jugador)) {
             jugadoresListos.put(jugador, true);
+            if (jugador.equals(player1)) {
+                player1Listo = true;
+            } else if (jugador.equals(player2)) {
+                player2Listo = true;
+            }
         }
+        isTodosListos();
     }
+
 
     public void salirJugador(String jugador) {
         if (jugadoresListos.containsKey(jugador)) {
             jugadoresListos.remove(jugador);
+            if (jugador.equals(player1)) {
+                player1 = null;
+                player1Listo = false;
+            } else if (jugador.equals(player2)) {
+                player2 = null;
+                player2Listo = false;
+            }
             contJug--;
         }
-    }
-
-    public boolean todosListos() {
-        return contJug == 2 && jugadoresListos.values().stream().allMatch(Boolean::booleanValue);
     }
 
     public void setId(int newId) {
@@ -51,7 +64,22 @@ public class Lobby {
     public int getId() {
         return id;
     }
+    
+    public boolean isPlayer1Listo() {
+        return player1Listo;
+    }
 
+    public boolean isPlayer2Listo() {
+        return player2Listo;
+    }
+    
+    public boolean isTodosListos() {
+    	if(contJug == 2 && player1Listo == true && player2Listo == true) {
+            todosListos = true;
+            }
+        return todosListos;
+    }
+    
     public int getNumeroJugadores() {
         return contJug;
     }

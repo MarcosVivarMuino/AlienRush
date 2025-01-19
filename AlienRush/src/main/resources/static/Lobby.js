@@ -34,17 +34,17 @@ var Lobby = new Phaser.Class({
         }
 
 /************************* VARIABLES *************************/
-let jugador1 = this.add.text(1650, 400, '', {
+let jugador1 = this.add.text(1500, 400, '', {
     fontFamily: 'Impact, fantasy',
     fill: '#ffffff',
-    fontSize: '40px',
+    fontSize: '50px',
     align: 'right',
 }).setOrigin(1);
 
-let jugador2 = this.add.text(1650, 650, '', {
+let jugador2 = this.add.text(1500, 650, '', {
     fontFamily: 'Impact, fantasy',
     fill: '#ffffff',
-    fontSize: '40px',
+    fontSize: '50px',
     align: 'right',
 }).setOrigin(1);
 
@@ -60,6 +60,7 @@ let atrasButton = this.add.image(100, 100, 'atras').setInteractive();
 // Obtener ID del lobby y nombre de usuario
 let lobbyId = this.registry.get('lobbyId') || 0;
 let userName = this.registry.get('userName') || 'Jugador';
+const self = this;
 
 lobbyIdText.setText(`Lobby ID: ${lobbyId}`);
 
@@ -70,35 +71,53 @@ let stompClient = Stomp.over(socket);
 stompClient.connect({}, () => {
     console.log('Conectado a WebSocket');
 
-    // Aquí no hace falta llamar a unirseLobby, solo se recibe la actualización.
-stompClient.subscribe(`/topic/lobbyActualizado/${lobbyId}`, (message) => {
-    let lobby = JSON.parse(message.body);
+    // Suscribirse a las actualizaciones del lobby
+    stompClient.subscribe(`/topic/lobbyActualizado/${lobbyId}`, onPonerNombres);
 
-    // Actualizar el texto de los jugadores
-    let player1Name = lobby.player1 || 'Esperando...';
-    let player2Name = lobby.player2 || 'Esperando...';
-    
-    jugador1.setText(`Jugador 1: ${player1Name}`);
-    jugador2.setText(`Jugador 2: ${player2Name}`);
-
-    // Iniciar juego si todos los jugadores están listos
-    if (lobby.numeroJugadores === 2 && lobby.todosListos) {
-        stompClient.disconnect();
-        this.scene.start('GameScene', { lobbyId: lobbyId });
-    }
-});
-
+    // Solicitar información del lobby enviando el ID
+    stompClient.send('/app/lobbyActualizado', {}, JSON.stringify(lobbyId));
 }, (error) => {
     console.error('Error al conectar al WebSocket:', error);
 });
 
+
+	function onPonerNombres(message) {
+    console.log(message.body);
+    let lobby = JSON.parse(message.body);
+
+    // Actualizar los nombres de los jugadores
+    let player1Name = lobby.player1Name || 'Esperando...';
+    let player2Name = lobby.player2Name || 'Esperando...';
+
+    jugador1.setText(player1Name);
+    jugador2.setText(player2Name);
+
+    // Cambiar el color del texto de su nombre a verde si está listo
+    if (lobby.player1Listo) {
+        jugador1.setStyle({ color: '#00FF00' });  // Verde
+    }
+    if (lobby.player2Listo) {
+        jugador2.setStyle({ color: '#00FF00' });  // Verde
+    }
+
+    // Verificar si el juego puede comenzar
+    if (lobby.todosListos) {
+        stompClient.disconnect();
+        self.scene.start('MainGame', { lobbyId: lobby.id });
+    }
+}
+
 // Evento para el botón "Listo"
 listoButton.on('pointerdown', () => {
+    // Enviar el mensaje al servidor indicando que el jugador está listo
     stompClient.send('/app/marcarListo', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
+    stompClient.send('/app/lobbyActualizado', {}, JSON.stringify(lobbyId));
+    listoButton.setVisible(false);
 });
+
+// Cambio de escala cuando el puntero está sobre el botón
 listoButton.on('pointerover', () => { listoButton.setScale(1.2); });
 listoButton.on('pointerout', () => { listoButton.setScale(1); });
-
 // Evento para el botón "Atrás"
 atrasButton.on('pointerdown', () => {
     stompClient.send('/app/salirLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
@@ -111,6 +130,7 @@ atrasButton.on('pointerout', () => { atrasButton.setScale(1); });
 this.events.on('shutdown', () => {
     if (stompClient && stompClient.connected) {
         stompClient.send('/app/salirLobby', {}, JSON.stringify({ lobbyId: lobbyId, user: userName }));
+        stompClient.send('/app/lobbyActualizado', {}, JSON.stringify(lobbyId));
         stompClient.disconnect();
     }
 });
