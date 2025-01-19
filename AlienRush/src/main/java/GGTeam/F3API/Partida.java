@@ -60,9 +60,6 @@ public class Partida {
         
     }
 
-    public boolean isPausa() {return pausa;}
-    public void setPausa(boolean pausa) { this.pausa = pausa;}
-    
     //Getters y Setters partida
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

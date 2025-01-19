@@ -31,7 +31,7 @@ var ModoJuego = new Phaser.Class({
        
         BotonLocal.setInteractive();
         BotonLocal.on("pointerdown", () => {
-            this.scene.start("ElegirEscenario");
+            this.scene.start("MainGame");
 
         });
         BotonLocal.on("pointerover", () => { BotonLocal.setScale(1.2); });

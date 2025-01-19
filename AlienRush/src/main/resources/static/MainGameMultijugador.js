@@ -40,10 +40,6 @@ var MainGameMultijugador = new Phaser.Class({
             percentText.destroy();
         });
 
-		if(this.fondo == null){
-			this.fondo = this.registry.get('fondoGranja');
-		}
-		
         // Archivos
         this.load.image('pulsaEsp', 'assets/Background/pulsaEsp.png');
         // HUD
@@ -144,8 +140,7 @@ var MainGameMultijugador = new Phaser.Class({
         this.gameStarted = false; // El juego no comienza hasta pulsar ESP
         this.temporizadorEvento = null; // Guardará el evento del temporizador
 
-		let fondoElegido = this.registry.get('fondoGranja');
-        this.add.image(875, 440, fondoElegido).setScale(1); // Creacion del fondo
+        this.add.image(875, 440, this.fondo).setScale(1); // Creacion del fondo
         this.pantallaEsp = this.add.image(875, 440, 'pulsaEsp').setDepth(10); // Mostrar pantalla inicial
 
         
@@ -451,11 +446,50 @@ var MainGameMultijugador = new Phaser.Class({
             });
         }
 		
+		// Método para enviar el estado del juego al servidor cuando se inicia
+		function enviarEstadoAlServidor () {
+			    const lobbyId = this.registry.get('lobbyId') || 0;
 
+			    // Construir el estado del juego
+			    const data = {
+			        id: lobbyId,
+			        player1X: this.player1.x,
+			        player1Y: this.player1.y,
+			        player1Score: this.player1.score,
+			        player1Vidas: this.player1.vidas,
+			        player1Speed: this.player1.speed,
+			        player1Size: this.player1.size,
+			        player1Multiplicador: this.player1.multiplicador,
+			        player1CanPU: this.player1.canPU,
+			        player1Nombre: this.player1.nombre,
+
+			        player2X: this.player2.x,
+			        player2Y: this.player2.y,
+			        player2Score: this.player2.score,
+			        player2Vidas: this.player2.vidas,
+			        player2Speed: this.player2.speed,
+			        player2Size: this.player2.size,
+			        player2Multiplicador: this.player2.multiplicador,
+			        player2CanPU: this.player2.canPU,
+			        player2Nombre: this.player2.nombre,
+
+			        humanos: this.humanos.map(humano => ({ x: humano.x, y: humano.y })),
+			        vacas: this.vacas.map(vaca => ({ x: vaca.x, y: vaca.y })),
+			        militares: this.militares.map(militar => ({ x: militar.x, y: militar.y })),
+			        PUHumanos: this.PUHumanos.map(PUHuman => ({ x: PUHuman.x, y: PUHuman.y })),
+			        escombros: this.escombros.map(escombro => ({ x: escombro.x, y: escombro.y })),
+			        pausa: this.gamePaused
+			    };
+
+			    // Enviar los datos al servidor usando STOMP
+			    stompClient.send("/app/start", {}, JSON.stringify(data));
+			}
+
+		
 		socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
 		stompClient = Stomp.over(socket);
 
-		self = this;
+
 		// Conectar al servidor
 		stompClient.connect({}, function (frame) {
 		    console.log('Conectado: ' + frame);
@@ -475,55 +509,35 @@ var MainGameMultijugador = new Phaser.Class({
 				
 		    });
 			
-			const lobbyId = self.registry.get('lobbyId') || 0;
+			const lobbyId = 0;
 			stompClient.send("/app/start", {}, JSON.stringify({ id: lobbyId }));
 			enviarEstadoAlServidor();
 
 		});
+	
 		
-		// Método para enviar el estado del juego al servidor cuando se inicia
-		function enviarEstadoAlServidor () {
-			    // Construir el estado del juego
-			    const data = {
-			        id: lobbyId,
-			        player1X: this.player1.x,
-			        player1Y: this.player1.y,
-			        player1Score: this.player1.score,
-			        player1Vidas: this.player1.vidas,
-			        player1Speed: this.player1.speed,
-			        player1Size: this.player1.size,
-			        player1Multiplicador: this.player1.multiplicador,
-			        player1CanPU: this.player1.canPU,
-			        player1Nombre: this.player1.nombre,
-
-			        humanos: this.humanos.map(humano => ({ x: humano.x, y: humano.y })),
-			        vacas: this.vacas.map(vaca => ({ x: vaca.x, y: vaca.y })),
-			        militares: this.militares.map(militar => ({ x: militar.x, y: militar.y })),
-			        PUHumanos: this.PUHumanos.map(PUHuman => ({ x: PUHuman.x, y: PUHuman.y })),
-			        escombros: this.escombros.map(escombro => ({ x: escombro.x, y: escombro.y })),
-			        pausa: this.gamePaused
-			    };
-
-			    // Enviar los datos al servidor usando STOMP
-			    stompClient.send("/app/start", {}, JSON.stringify(data, self.registry.get('userName')));
-			}
     },
 
     update: function () {
         // Iniciar juego si no ha comenzado
-        if (!this.gameStarted) {
+        if (!this.gameStarted && (Phaser.Input.Keyboard.JustDown(this.keyY))) {
             this.iniciarJuego();
+			this.enviarEstadoAlServidor();
         }
     
         if (this.gameStarted) {
     
 		    if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
                 this.pausarJuego();
+				this.enviarEstadoAlServidor();
             }
 			
 			this.actualizarControles();
             this.detectarAcciones();
             this.actualizarTam();
+			
+			//ESTADO DEL JUEGO AL WEBSOCKET
+			this.enviarEstadoAlServidor();
 
         }
     },
@@ -534,8 +548,86 @@ var MainGameMultijugador = new Phaser.Class({
         this.gameStarted = true;
         this.pantallaEsp.destroy();
         this.iniciarTemporizador();
+		
+		// Inicializar jugadores con valores predeterminados
+	    this.player1 = this.crearJugador(100, 100, 'Player1', 'Jugador 1');
+	    this.player2 = this.crearJugador(1500, 100, 'Player2', 'Jugador 2');
+	    
+	    // Crear objetos en el juego
+	    this.generarObjetos();
+
+	    // Enviar los datos de la partida al servidor
+	    this.enviarEstadoAlServidor();
     },
     
+	crearJugador: function (x, y, sprite, nombre) {
+	    let jugador = this.add.sprite(x, y, sprite);
+	    jugador.nombre = nombre;
+	    jugador.score = 0;
+	    jugador.vidas = 5;
+	    jugador.speed = 10;
+	    jugador.size = 0.8;
+	    jugador.multiplicador = 1;
+	    jugador.canPU = true;
+	    jugador.x = x;
+	    jugador.y = y;
+	    return jugador;
+	},
+	
+	generarObjetos: function () {
+	    // Genera objetos en posiciones aleatorias
+	    this.humanos = [];
+	    this.vacas = [];
+	    this.militares = [];
+	    this.PUHumanos = [];
+	    this.escombros = [];
+
+	    for (let i = 0; i < 5; i++) { 
+	        this.generarHumano();
+	        this.generarVaca();
+	        this.generarEscombro();
+	        this.generarMilitar();
+	        this.generarHumanoEspecial();
+	    }
+	},
+
+	generarHumano: function () {
+	    let x = Phaser.Math.Between(10, 1750);
+	    let y = Phaser.Math.Between(20, 880);
+	    let humano = this.add.sprite(x, y, 'humano1');
+	    humano.play('caminar_humano1');
+	    this.humanos.push(humano);
+	},
+
+	generarVaca: function () {
+	    let x = Phaser.Math.Between(20, 1700);
+	    let y = Phaser.Math.Between(30, 800);
+	    let vaca = this.add.sprite(x, y, 'Vaca');
+	    this.vacas.push(vaca);
+	},
+
+	generarEscombro: function () {
+	    let x = Phaser.Math.Between(20, 1700);
+	    let y = Phaser.Math.Between(30, 800);
+	    let escombro = this.add.sprite(x, y, 'Escombro');
+	    this.escombros.push(escombro);
+	},
+
+	generarMilitar: function () {
+	    let x = Phaser.Math.Between(20, 1700);
+	    let y = Phaser.Math.Between(30, 800);
+	    let militar = this.add.sprite(x, y, 'Militar');
+	    this.militares.push(militar);
+	},
+
+	generarHumanoEspecial: function () {
+	    let x = Phaser.Math.Between(20, 1700);
+	    let y = Phaser.Math.Between(30, 800);
+	    let PUHuman = this.add.sprite(x, y, 'PU_Human');
+	    this.PUHumanos.push(PUHuman);
+	},
+
+	
 
 		
     // Pausa el juego
@@ -550,6 +642,10 @@ var MainGameMultijugador = new Phaser.Class({
     
     // Actualiza controles de los jugadores
     actualizarControles: function () {
+        // Controles de player 2
+        player2.body.position.x += this.keyL.isDown ? player2.speed : this.keyJ.isDown ? -player2.speed : 0;
+        player2.body.position.y += this.keyK.isDown ? player2.speed : this.keyI.isDown ? -player2.speed : 0;
+    
         // Controles de player 1
         player1.body.position.x += this.keyD.isDown ? player1.speed : this.keyA.isDown ? -player1.speed : 0;
         player1.body.position.y += this.keyS.isDown ? player1.speed : this.keyW.isDown ? -player1.speed : 0;
@@ -558,7 +654,9 @@ var MainGameMultijugador = new Phaser.Class({
     // Detecta acciones de los jugadores
     detectarAcciones: function () {
         if (Phaser.Input.Keyboard.JustDown(this.keySPC)) this.absorberObjeto(player1);
+        if (Phaser.Input.Keyboard.JustDown(this.keyENTER)) this.absorberObjeto(player2);
         if (Phaser.Input.Keyboard.JustDown(this.keyE)) this.usarPU(player1);
+        if (Phaser.Input.Keyboard.JustDown(this.keyO)) this.usarPU(player2);
     },
     
     // Absorbe objetos cercanos a un jugador

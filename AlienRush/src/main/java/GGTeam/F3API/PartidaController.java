@@ -6,72 +6,44 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Controller
 public class PartidaController {
-	private final List<Partida> partidas = new CopyOnWriteArrayList<>();
+    private final ConcurrentHashMap<Integer, Partida> partidas = new ConcurrentHashMap<>();
 
-	@MessageMapping("/update")
-	@SendTo("/topic/positions")
-	public Partida actualizarPartida(Partida partida) {
-	    // Obtener el ID de la partida a actualizar
-	    int idPartida = partida.getId();
-
-	    // Buscar la partida existente en la lista
-	    Partida partidaExistente = partidas.stream()
-	            .filter(p -> p.getId() == idPartida)
-	            .findFirst()
-	            .orElse(null);
-
-	    if (partidaExistente == null) {
-	        throw new IllegalStateException("La partida con ID " + idPartida + " no existe.");
-	    }
-
-	    // Actualizar los atributos de la partida existente
-	    partidaExistente.setPlayer1X(partida.getPlayer1X());
-	    partidaExistente.setPlayer1Y(partida.getPlayer1Y());
-	    partidaExistente.setPlayer1Score(partida.getPlayer1Score());
-	    partidaExistente.setPlayer1Vidas(partida.getPlayer1Vidas());
-	    partidaExistente.setPlayer1Speed(partida.getPlayer1Speed());
-	    partidaExistente.setPlayer1Size(partida.getPlayer1Size());
-	    partidaExistente.setPlayer1Multiplicador(partida.getPlayer1Multiplicador());
-	    partidaExistente.setPlayer1CantPU(partida.getPlayer1CantPU());
-	    partidaExistente.setPlayer1Nombre(partida.getPlayer1Nombre());
-
-	    partidaExistente.setHumanos(partida.getHumanos());
-	    partidaExistente.setVacas(partida.getVacas());
-	    partidaExistente.setMilitares(partida.getMilitares());
-	    partidaExistente.setPUHumanos(partida.getPUHumanos());
-	    partidaExistente.setEscombros(partida.getEscombros());
-
-	    partidaExistente.setPausa(partida.isPausa());
-
-	    // Actualizar objetos en movimiento
-	    partidaExistente.moverObjetos();
-
-	    // Devolver el estado actualizado de la partida
-	    return partidaExistente;
-	}
+    @MessageMapping("/update")
+    @SendTo("/topic/positions")
+    public Partida actualizarPartida(Partida partida) {
+        partidas.put(partida.getId(), partida);
+        partida.moverObjetos();
+        return partida;
+    }
 
     @MessageMapping("/start")
     @SendTo("/topic/start")
-    public Partida iniciarPartida(int idPartida) {
-        // Buscar la partida en la lista
-        Partida partida = partidas.stream()
-                .filter(p -> p.getId() == idPartida)
-                .findFirst()
-                .orElse(null);
+    public Partida iniciarPartida(Lobby lobby) {
+        int lobbyId = lobby.getId();
 
-        if (partida == null) {
-            // Crear nueva partida si no existe
-            partida = new Partida();
-            partida.setId(idPartida);
-            partidas.add(partida); // Agregar la nueva partida a la lista
-        }
+        // Crear o recuperar la partida
+        Partida nuevaPartida = partidas.computeIfAbsent(lobbyId, id -> {
+            Partida p = new Partida();
+            p.setId(lobbyId);
+            return p;
+        });
 
-        return partida;
+        // Inicializar la partida con los nombres de los jugadores del lobby
+        nuevaPartida.inicializarPartida(
+            lobby.getId(),
+            lobby.getPlayer1Name(),  // Usamos los nombres directamente
+            lobby.getPlayer2Name(),  // Lo mismo aquí
+            nuevaPartida.getHumanos(),
+            nuevaPartida.getVacas(),
+            nuevaPartida.getMilitares(),
+            nuevaPartida.getPUHumanos(),
+            nuevaPartida.getEscombros()
+        );
+
+        System.out.println("Partida iniciada para el lobby: " + lobbyId);
+        return nuevaPartida;
     }
-        
-           
 }
