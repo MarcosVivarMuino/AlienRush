@@ -318,20 +318,10 @@ var MainGameMultijugador = new Phaser.Class({
         this.keySPC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Interactuar
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E); // Power Up
 
-        // Controles Jugador 2
-        this.keyI = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);  // Arriba
-        this.keyJ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);  // Izquierda
-        this.keyL = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);  // Derecha
-        this.keyK = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);  // Derecha
-        this.keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);  // Interactuar
-        this.keyO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);  // Power Up
-
         // Menu de Pause
         this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.paused = false;
 
-        // Y
-        this.keyY = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Y); 
 
         ///////////////////////////////////////////////////////////////////////FUNCIONES////////////////////////////////////////////////////////////////////////////
         function moverHumanosAleatoriamente() {
@@ -456,6 +446,8 @@ var MainGameMultijugador = new Phaser.Class({
             });
         }
 		
+
+		
 		socket = new SockJS('/ws'); // Endpoint configurado en tu `WebSocketConfig`
 		stompClient = Stomp.over(socket);
 
@@ -481,41 +473,10 @@ var MainGameMultijugador = new Phaser.Class({
 			
 			const lobbyId = 0;
 			stompClient.send("/app/start", {}, JSON.stringify({ id: lobbyId }));
-			enviarDatosAlWS(lobbyId);
+			enviarEstadoAlServidor();
 
 		});
-
-		
-		function enviarDatosAlWS(partidaId) {
-		    const data = {
-		        id: partidaId,
-		        player1X: player1.x,
-		        player1Y: player1.y,
-		        player1Score: player1.score,
-				player1Vidas: player1.vidas,
-				player1Speed: player1.speed,
-				player1Size: player1.size,
-				player1Multiplicador: player1.multiplicador,
-				player1CanPU: plasyer1.canPU,
-				player2X: player2.x,
-				player2Y: player2.y,
-			    player2Score: player2.score,
-				player2Vidas: player2.vidas,
-				player2Speed: player2.speed,
-				player2Size: player2.size,
-				player2Multiplicador: player2.multiplicador,
-				player2CanPU: player2.canPU,
-				humanos: Humanos,
-				vacas: Vacas,
-				escombros: Escombros,
-				militares: Militares,
-				PUHumanos: PUHumanos,
-				pausa: paused
-
-			};
-
-		    stompClient.send("/app/update", {}, JSON.stringify(data));
-		}
+	
 		
     },
 
@@ -524,7 +485,6 @@ var MainGameMultijugador = new Phaser.Class({
         if (!this.gameStarted && (Phaser.Input.Keyboard.JustDown(this.keyY))) {
             this.iniciarJuego();
 			this.enviarEstadoAlServidor();
-
         }
     
         if (this.gameStarted) {
@@ -532,7 +492,6 @@ var MainGameMultijugador = new Phaser.Class({
 		    if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
                 this.pausarJuego();
 				this.enviarEstadoAlServidor();
-
             }
 			
 			this.actualizarControles();
@@ -545,51 +504,131 @@ var MainGameMultijugador = new Phaser.Class({
         }
     },
 	
-	enviarEstadoAlServidor: function () {
-	    const lobbyId = this.registry.get('lobbyId') || 0;
-
-	    // Construir el estado actual del juego con las claves correctas
-	    const data = {
-	        id: lobbyId,
-	        player1X: player1.x,
-	        player1Y: player1.y,
-	        player1Score: player1.score,
-	        player1Vidas: player1.vidas,
-	        player1Speed: player1.speed,
-	        player1Size: player1.size,
-	        player1Multiplicador: player1.multiplicador,
-	        player1CanPU: player1.canPU,
-	        
-	        player2X: player2.x,
-	        player2Y: player2.y,
-	        player2Score: player2.score,
-	        player2Vidas: player2.vidas,
-	        player2Speed: player2.speed,
-	        player2Size: player2.size,
-	        player2Multiplicador: player2.multiplicador,
-	        player2CanPU: player2.canPU,
-
-	        humanos: Humanos.map(humano => ({ x: humano.x, y: humano.y })),
-	        vacas: Vacas.map(vaca => ({ x: vaca.x, y: vaca.y })),
-	        militares: Militares.map(militar => ({ x: militar.x, y: militar.y })),
-	        PUHumanos: PUHumanos.map(PUHuman => ({ x: PUHuman.x, y: PUHuman.y })),
-	        escombros: Escombros.map(escombro => ({ x: escombro.x, y: escombro.y })),
-	        pausa: this.gamePaused
-	    };
-
-	    // Enviar el estado al servidor mediante STOMP
-	    stompClient.send("/app/update", {}, JSON.stringify(data));
-	},
-
-
     
     // Inicia el juego
     iniciarJuego: function () {
         this.gameStarted = true;
         this.pantallaEsp.destroy();
         this.iniciarTemporizador();
+		
+		// Inicializar jugadores con valores predeterminados
+	    this.player1 = this.crearJugador(100, 100, 'Player1', 'Jugador 1');
+	    this.player2 = this.crearJugador(1500, 100, 'Player2', 'Jugador 2');
+	    
+	    // Crear objetos en el juego
+	    this.generarObjetos();
+
+	    // Enviar los datos de la partida al servidor
+	    this.enviarEstadoAlServidor();
     },
     
+	crearJugador: function (x, y, sprite, nombre) {
+	    let jugador = this.add.sprite(x, y, sprite);
+	    jugador.nombre = nombre;
+	    jugador.score = 0;
+	    jugador.vidas = 5;
+	    jugador.speed = 10;
+	    jugador.size = 0.8;
+	    jugador.multiplicador = 1;
+	    jugador.canPU = true;
+	    jugador.x = x;
+	    jugador.y = y;
+	    return jugador;
+	},
+	
+	generarObjetos: function () {
+	    // Genera objetos en posiciones aleatorias
+	    this.humanos = [];
+	    this.vacas = [];
+	    this.militares = [];
+	    this.PUHumanos = [];
+	    this.escombros = [];
+
+	    for (let i = 0; i < 5; i++) { 
+	        this.generarHumano();
+	        this.generarVaca();
+	        this.generarEscombro();
+	        this.generarMilitar();
+	        this.generarHumanoEspecial();
+	    }
+	},
+
+	generarHumano: function () {
+	    let x = Phaser.Math.Between(10, 1750);
+	    let y = Phaser.Math.Between(20, 880);
+	    let humano = this.add.sprite(x, y, 'humano1');
+	    humano.play('caminar_humano1');
+	    this.humanos.push(humano);
+	},
+
+	generarVaca: function () {
+	    let x = Phaser.Math.Between(20, 1700);
+	    let y = Phaser.Math.Between(30, 800);
+	    let vaca = this.add.sprite(x, y, 'Vaca');
+	    this.vacas.push(vaca);
+	},
+
+	generarEscombro: function () {
+	    let x = Phaser.Math.Between(20, 1700);
+	    let y = Phaser.Math.Between(30, 800);
+	    let escombro = this.add.sprite(x, y, 'Escombro');
+	    this.escombros.push(escombro);
+	},
+
+	generarMilitar: function () {
+	    let x = Phaser.Math.Between(20, 1700);
+	    let y = Phaser.Math.Between(30, 800);
+	    let militar = this.add.sprite(x, y, 'Militar');
+	    this.militares.push(militar);
+	},
+
+	generarHumanoEspecial: function () {
+	    let x = Phaser.Math.Between(20, 1700);
+	    let y = Phaser.Math.Between(30, 800);
+	    let PUHuman = this.add.sprite(x, y, 'PU_Human');
+	    this.PUHumanos.push(PUHuman);
+	},
+
+	// Método para enviar el estado del juego al servidor cuando se inicia
+	enviarEstadoAlServidor: function () {
+	    const lobbyId = this.registry.get('lobbyId') || 0;
+
+	    // Construir el estado del juego
+	    const data = {
+	        id: lobbyId,
+	        player1X: this.player1.x,
+	        player1Y: this.player1.y,
+	        player1Score: this.player1.score,
+	        player1Vidas: this.player1.vidas,
+	        player1Speed: this.player1.speed,
+	        player1Size: this.player1.size,
+	        player1Multiplicador: this.player1.multiplicador,
+	        player1CanPU: this.player1.canPU,
+	        player1Nombre: this.player1.nombre,
+
+	        player2X: this.player2.x,
+	        player2Y: this.player2.y,
+	        player2Score: this.player2.score,
+	        player2Vidas: this.player2.vidas,
+	        player2Speed: this.player2.speed,
+	        player2Size: this.player2.size,
+	        player2Multiplicador: this.player2.multiplicador,
+	        player2CanPU: this.player2.canPU,
+	        player2Nombre: this.player2.nombre,
+
+	        humanos: this.humanos.map(humano => ({ x: humano.x, y: humano.y })),
+	        vacas: this.vacas.map(vaca => ({ x: vaca.x, y: vaca.y })),
+	        militares: this.militares.map(militar => ({ x: militar.x, y: militar.y })),
+	        PUHumanos: this.PUHumanos.map(PUHuman => ({ x: PUHuman.x, y: PUHuman.y })),
+	        escombros: this.escombros.map(escombro => ({ x: escombro.x, y: escombro.y })),
+	        pausa: this.gamePaused
+	    };
+
+	    // Enviar los datos al servidor usando STOMP
+	    stompClient.send("/app/start", {}, JSON.stringify(data));
+	},
+
+		
     // Pausa el juego
     pausarJuego: function () {
         if (!this.paused) {

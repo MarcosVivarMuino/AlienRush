@@ -15,7 +15,8 @@ public class Partida {
     private float player1Size;
     private float player1Multiplicador;
     private boolean player1CanPU;
-    
+    private String player1Nombre;
+
     // Jugador 2
     private int player2X;
     private int player2Y;
@@ -25,7 +26,8 @@ public class Partida {
     private float player2Size;
     private float player2Multiplicador;
     private boolean player2CanPU;
-    
+    private String player2Nombre;
+
     // Objetos en la escena
     private List<Objeto> humanos;
     private List<Objeto> vacas;
@@ -61,6 +63,22 @@ public class Partida {
     //Getters y Setters partida
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+    
+    public String getPlayer1Nombre() {
+        return player1Nombre;
+    }
+
+    public void setPlayer1Nombre(String player1Nombre) {
+        this.player1Nombre = player1Nombre;
+    }
+
+    public String getPlayer2Nombre() {
+        return player2Nombre;
+    }
+
+    public void setPlayer2Nombre(String player2Nombre) {
+        this.player2Nombre = player2Nombre;
+    }
 
     //Getters y Setters para los jugadores
     public int getPlayer1X() { return player1X; }
@@ -130,9 +148,12 @@ public class Partida {
     public List<Objeto> getEscombros() { return escombros; }
     public void setEscombros(List<Objeto> escombros) { this.escombros = escombros; }
 
-    public void inicializarPartida(int id, List<Objeto> humanos, List<Objeto> vacas, List<Objeto> militares,
+    public void inicializarPartida(int id, String usuario1, String usuario2, List<Objeto> humanos, 
+    		List<Objeto> vacas, List<Objeto> militares,
         List<Objeto> PUHumanos, List<Objeto> powerUps) {
-		this.id = id;
+        this.id = id;
+        this.player1Nombre = usuario1;
+        this.player2Nombre = usuario2;
 		this.humanos = humanos != null ? humanos : new ArrayList<>();
 		this.vacas = vacas != null ? vacas : new ArrayList<>();
 		this.militares = militares != null ? militares : new ArrayList<>();

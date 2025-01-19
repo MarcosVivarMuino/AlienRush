@@ -5,6 +5,7 @@ public class Usuario {
     private String password;
     private String nuevaPassword;
 
+    
     // Getters y Setters
     public String getNombre() {
         return nombre;
