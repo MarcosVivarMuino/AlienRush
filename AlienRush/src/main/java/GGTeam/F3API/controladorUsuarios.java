@@ -82,7 +82,7 @@ public class controladorUsuarios {
 	    }
 
 	    for (Usuario usuario : listUsu) {
-	        if (usuario.getNombre().equals(u.getNombre()) && usuario.getPassword().equals(u.getPassword())) {
+	        if (usuario.getNombre().equals(u.getNombre()) && usuario.getPassword().equals(u.getPassword()) && !usuariosConectados.contains(u.getNombre())) {
 	            return new ResponseEntity<>(usuario, HttpStatus.OK); // Usuario encontrado y credenciales correctas
 	        }
 	    }
