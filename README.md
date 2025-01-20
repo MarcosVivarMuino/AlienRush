@@ -424,7 +424,7 @@ Perfil del jugador.
 
 ### <a name="_v1gmtfbu50b7"></a>**9.6. LOBBY**
 Pantalla de lobby a la que se conectarán ambos jugadores.
-![](AlienRush\src\main\resources\static\assets\Lobby\PantallaLobby.png)
+![](IMAGENES/PantallaLobby.png)
 
 *Ilustración 33: Pantalla de Lobby*
 
@@ -454,11 +454,11 @@ Además, para los campos de texto se ha escogido una tipografía concreta para i
 
 Por otro lado, se han añadido botones de mejora de las alertas que da el juego en diferentes ocasiones.
 
-![](AlienRush\src\main\resources\static\assets\BorrarCuenta\AlertaCompletaCampos.png)
-![](AlienRush\src\main\resources\static\assets\BorrarCuenta\AlertaContraIncorrecta.png)
-![](AlienRush\src\main\resources\static\assets\BorrarCuenta\AlertaContraNoCoincide.png)
-![](AlienRush\src\main\resources\static\assets\RegScene\AlertaUsuarioRegistrado.png)
-![](AlienRush\src\main\resources\static\assets\CambiarContraseña\BotonX.png)
+![](IMAGENES/AlertaCompletaCampos.png)
+![](IMAGENES/AlertaContraIncorrecta.png)
+![](IMAGENES/AlertaContraNoCoincide.png)
+![](IMAGENES/AlertaUsuarioRegistrado.png)
+![](IMAGENES/BotonX.png)
 
 *Ilustración 38: Alertas del juego*
 
