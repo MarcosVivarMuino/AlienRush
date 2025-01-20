@@ -452,16 +452,6 @@ Además, para los campos de texto se ha escogido una tipografía concreta para i
 
 *Ilustración 37: Tipografía del menú*
 
-Por otro lado, se han añadido botones de mejora de las alertas que da el juego en diferentes ocasiones.
-
-![](IMAGENES/AlertaCompletaCampos.png)
-![](IMAGENES/AlertaContraIncorrecta.png)
-![](IMAGENES/AlertaContraNoCoincide.png)
-![](IMAGENES/AlertaUsuarioRegistrado.png)
-![](IMAGENES/BotonX.png)
-
-*Ilustración 38: Alertas del juego*
-
 ## <a name="_ofghojrc3ozq"></a>**11. POTENCIADORES**
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
 
@@ -469,31 +459,31 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 
 ![](IMAGENES/Cohete.png)
 
-*Ilustración 39: Multiplicador de velocidad*
+*Ilustración 38: Multiplicador de velocidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.2. MULTIPLICADOR DE PUNTOS**
 
 ![](IMAGENES/Multiplicador.png)
 
-*Ilustración 40: Multiplicador de puntos*
+*Ilustración 39: Multiplicador de puntos*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.3. AUMENTO DE CAPACIDAD**
 
 ![](IMAGENES/CapacidadAumentada.png)
 
-*Ilustración 41: Aumento de capacidad*
+*Ilustración 40: Aumento de capacidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.4. BLOQUEADOR**
 
 ![](IMAGENES/Bloqueo.png)
 
-*Ilustración 42: Bloqueador*
+*Ilustración 41: Bloqueador*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.5. RALENTIZADOR**
 
 ![](IMAGENES/Congelado.png)
 
-*Ilustración 43: Ralentizador*
+*Ilustración 42: Ralentizador*
 
 ---
 
@@ -514,7 +504,7 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
 ![](IMAGENES/FlujogramaF3.png)
-*Ilustración 44: Flujograma*
+*Ilustración 43: Flujograma*
 
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
