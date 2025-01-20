@@ -422,29 +422,45 @@ Perfil del jugador.
 
 *Ilustración 32: Pantalla de perfil*
 
+### <a name="_v1gmtfbu50b7"></a>**9.6. LOBBY**
+Pantalla de lobby a la que se conectarán ambos jugadores.
+![](AlienRush\src\main\resources\static\assets\Lobby\PantallaLobby.png)
+
+*Ilustración 33: Pantalla de Lobby*
+
 ## <a name="_ofghojrc3ozq"></a>**10. BOTONES DE INTERFAZ**
 Estos son los botones diseñados para las interfaces mostradas previamente. Se han diseñado todos en una misma línea estética para no romper el diseño de cada interfaz.
 Son botones básicos que muestran la acción a realizar en texto dentro del propio botón, un ejemplo es el botón de "Iniciar Sesion".
 
 ![](IMAGENES/BotonIS.png)
 
-*Ilustración 33: Botón de iniciar sesión*
+*Ilustración 34: Botón de iniciar sesión*
 
 Los únicos botones que se han diseñado de diferente forma son los botones que llevan a la pantalla de perfil y el botón que viaja a la pantalla anterior, que se han diseñado con símbolos ya que son intuitivos y más estéticos que el texto.
 
 ![](IMAGENES/BotonAtrasFlecha.png)
 
-*Ilustración 34: Botón de atrás*
+*Ilustración 35: Botón de atrás*
 
 ![](IMAGENES/LogoUusuarioDEF.png)
 
-*Ilustración 35: Botón de perfil*
+*Ilustración 36: Botón de perfil*
 
 Además, para los campos de texto se ha escogido una tipografía concreta para indicar la accióna realizar en dicho campo.
 
 ![](IMAGENES/LetrasNuevaContraseña.png)
 
-*Ilustración 36: Tipografía del menú*
+*Ilustración 37: Tipografía del menú*
+
+Por otro lado, se han añadido botones de mejora de las alertas que da el juego en diferentes ocasiones.
+
+![](AlienRush\src\main\resources\static\assets\BorrarCuenta\AlertaCompletaCampos.png)
+![](AlienRush\src\main\resources\static\assets\BorrarCuenta\AlertaContraIncorrecta.png)
+![](AlienRush\src\main\resources\static\assets\BorrarCuenta\AlertaContraNoCoincide.png)
+![](AlienRush\src\main\resources\static\assets\RegScene\AlertaUsuarioRegistrado.png)
+![](AlienRush\src\main\resources\static\assets\CambiarContraseña\BotonX.png)
+
+*Ilustración 38: Alertas del juego*
 
 ## <a name="_ofghojrc3ozq"></a>**11. POTENCIADORES**
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
@@ -453,33 +469,39 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 
 ![](IMAGENES/Cohete.png)
 
-*Ilustración 37: Multiplicador de velocidad*
+*Ilustración 39: Multiplicador de velocidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.2. MULTIPLICADOR DE PUNTOS**
 
 ![](IMAGENES/Multiplicador.png)
 
-*Ilustración 38: Multiplicador de puntos*
+*Ilustración 40: Multiplicador de puntos*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.3. AUMENTO DE CAPACIDAD**
 
 ![](IMAGENES/CapacidadAumentada.png)
 
-*Ilustración 39: Aumento de capacidad*
+*Ilustración 41: Aumento de capacidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.4. BLOQUEADOR**
 
 ![](IMAGENES/Bloqueo.png)
 
-*Ilustración 40: Bloqueador*
+*Ilustración 42: Bloqueador*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.5. RALENTIZADOR**
 
 ![](IMAGENES/Congelado.png)
 
-*Ilustración 41: Ralentizador*
+*Ilustración 43: Ralentizador*
 
 ---
+
+# <a name="_atpo95cjn57p"></a>**WEBSOCKETS**
+
+
+---
+
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
 “***Alien Rush***!” contará con músicas de fondo tanto en el menú como en la propia partida, con la intención de no hacer aburrida la escena ni el recorrido entre las diferentes pantallas.
 
@@ -492,7 +514,7 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
 ![](IMAGENES/FlujogramaF3.png)
-*Ilustración 42: Flujograma*
+*Ilustración 44: Flujograma*
 
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
