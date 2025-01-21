@@ -4,7 +4,7 @@
 ---
 
 
-### GRUPO 10: GG TEAM
+### GRUPO 7: GG TEAM
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.001.png)
 ### **INTEGRANTES**
 
