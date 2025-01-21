@@ -38,8 +38,16 @@ public class Jugador {
 
     // Getters y Setters
     public float getX() { return x; }
-    public void setXPositiva() { this.x += speed; };
-    public void setXNegativa() { this.x -= speed; }
+    public void setXPositiva() { 
+    	if(this.x < 1640) {
+    		this.x += speed; 
+    		}
+    	}
+    public void setXNegativa() {
+    	if(this.x > 110) {
+    		this.x -= speed; 
+    		}
+    	}
     public void setX(float x) { this.x = x; }
 
     public int getPartidaId() {
@@ -53,8 +61,16 @@ public class Jugador {
     
 
     public float getY() { return y; }
-    public void setYPositiva() { this.y += speed; }
-    public void setYNegativa() { this.y -= speed; }
+    public void setYPositiva() { 
+    	if(this.y < 770) {
+    		this.y += speed; 
+    		}
+    	}
+    public void setYNegativa() {
+    	if(this.y > 110) {
+    		this.y -= speed; 
+    		}
+    	}    	
     public void setY(float y) { this.y = y; }
 
     public int getScore() { return score; }

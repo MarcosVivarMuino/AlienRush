@@ -480,7 +480,6 @@ var MainGameMultijugador = new Phaser.Class({
 				player1.canPU = true;
 				PowerUp1.alpha = 0;
 			} else if (player2Name == data.playerName) {
-				alert("Entra")
 				player2.tipoPU = ''
 				player2.canPU = true;
 				PowerUp2.alpha = 0;
@@ -839,45 +838,8 @@ var MainGameMultijugador = new Phaser.Class({
 		}
 
 		this.endGame();
-		this.setIntervals();
 
 
-	},
-
-
-	checkConexion: function() {
-		let local = this;
-		$.ajax({
-			method: "GET",
-			url: "/conexion",
-			error: function() {
-				iconoWifi.setTexture("noWifi").setScale(0.2);
-				local.stopIntervals();
-				local.reConnect();
-			},
-		});
-	},
-
-	setIntervals: function() {
-		intervalConexion = setInterval(() => {
-			this.checkConexion();
-		}, 1000);
-	},
-
-	stopIntervals: function() {
-		clearInterval(intervalConexion);
-	},
-
-	reConnect: function() {
-		this.scene.launch("MenuSinConexion", { "sceneName": "MainGameMultijugador" });
-		this.scene.bringToTop("MenuSinConexion");
-		this.scene.pause();
-	},
-	onResume: function() {
-		iconoWifi.setTexture("Wifi").setScale(0.2);
-		this.setIntervals();
-		this.scene.bringToTop("MenuScene");
-		this.input.enabled = true;
 	},
 
 
