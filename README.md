@@ -422,29 +422,35 @@ Perfil del jugador.
 
 *Ilustración 32: Pantalla de perfil*
 
+### <a name="_v1gmtfbu50b7"></a>**9.6. LOBBY**
+Pantalla de lobby a la que se conectarán ambos jugadores.
+![](IMAGENES/PantallaLobby.png)
+
+*Ilustración 33: Pantalla de Lobby*
+
 ## <a name="_ofghojrc3ozq"></a>**10. BOTONES DE INTERFAZ**
 Estos son los botones diseñados para las interfaces mostradas previamente. Se han diseñado todos en una misma línea estética para no romper el diseño de cada interfaz.
 Son botones básicos que muestran la acción a realizar en texto dentro del propio botón, un ejemplo es el botón de "Iniciar Sesion".
 
 ![](IMAGENES/BotonIS.png)
 
-*Ilustración 33: Botón de iniciar sesión*
+*Ilustración 34: Botón de iniciar sesión*
 
 Los únicos botones que se han diseñado de diferente forma son los botones que llevan a la pantalla de perfil y el botón que viaja a la pantalla anterior, que se han diseñado con símbolos ya que son intuitivos y más estéticos que el texto.
 
 ![](IMAGENES/BotonAtrasFlecha.png)
 
-*Ilustración 34: Botón de atrás*
+*Ilustración 35: Botón de atrás*
 
 ![](IMAGENES/LogoUusuarioDEF.png)
 
-*Ilustración 35: Botón de perfil*
+*Ilustración 36: Botón de perfil*
 
 Además, para los campos de texto se ha escogido una tipografía concreta para indicar la accióna realizar en dicho campo.
 
 ![](IMAGENES/LetrasNuevaContraseña.png)
 
-*Ilustración 36: Tipografía del menú*
+*Ilustración 37: Tipografía del menú*
 
 ## <a name="_ofghojrc3ozq"></a>**11. POTENCIADORES**
 Se han realizado los diseños finales que tendrán los potenciadores de cara al juego final, estos diseños son:
@@ -453,33 +459,52 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 
 ![](IMAGENES/Cohete.png)
 
-*Ilustración 37: Multiplicador de velocidad*
+*Ilustración 38: Multiplicador de velocidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.2. MULTIPLICADOR DE PUNTOS**
 
 ![](IMAGENES/Multiplicador.png)
 
-*Ilustración 38: Multiplicador de puntos*
+*Ilustración 39: Multiplicador de puntos*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.3. AUMENTO DE CAPACIDAD**
 
 ![](IMAGENES/CapacidadAumentada.png)
 
-*Ilustración 39: Aumento de capacidad*
+*Ilustración 40: Aumento de capacidad*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.4. BLOQUEADOR**
 
 ![](IMAGENES/Bloqueo.png)
 
-*Ilustración 40: Bloqueador*
+*Ilustración 41: Bloqueador*
 
 ### <a name="_v1gmtfbu50b7"></a>**11.5. RALENTIZADOR**
 
 ![](IMAGENES/Congelado.png)
 
-*Ilustración 41: Ralentizador*
+*Ilustración 42: Ralentizador*
 
 ---
+
+# <a name="_atpo95cjn57p"></a>**12. WEBSOCKETS**
+
+Para el desarrollo de websockets se destacan varios ámbitos de utilización dentro del juego. Desde la gestión de usuarios fuera de la partida hasta la gestión de atributos dentro de la propia partida. Para ello principalmente se siguen 3 pasos para la actualización de cada jugador:
+- Se actualiza el atributo en el servidor.
+- Se cambian las características en el servidor.
+- Los jugadores reciben la información del cambio.
+
+## 12.1. LOBBY
+Para el lobby se ha necesitado la gestión de usuarios mediante websockeets, de tal forma que los usuarios pudieran tener la opción de crear o de unirse a una sala.
+Para ello, cuando un jugador inicia una sala, se unirá a una lobby en la que estará solo, esa sala tendrá un id que deberá compartir con otros jugadores para que puedan unirse, una vez un segundo jugador decide unirse e introduce el id de la sala a la que quiere unirse, se mete a los 2 jugadores dentro del lobby para esperar a que ambos confirmen que están listos para empezar.
+
+## 12.2. PARTIDA
+Dentro de la partida, se gestionan todos los atributos relativos a las características de cada jugador (vida de la nave, puntuación...), el tiempo que dura la partida y los personajes y objetos que se encuentran en el escenario (humanos, vacas, chatarra...), actualizando cosntantemente las posiciones de cada personaje y cad jugador, el uso de potenciadores, las puntuaciones en tiempo real y demás. Por último era necesario gestionar los eventos de muerte de las naves y finalización de partida.
+
+## 12.3. GESTIÓN DE MENÚS
+Se debían gestionar las diferentes posibilidades en cada menú, como las conexiones y desconexiones de los jugadores en mitad de partida desde el menú de pausa, donde se finaliza para ambos jugadores la partida, o las conexiones de jugadores en el lobby.
+---
+
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
 “***Alien Rush***!” contará con músicas de fondo tanto en el menú como en la propia partida, con la intención de no hacer aburrida la escena ni el recorrido entre las diferentes pantallas.
 
@@ -491,8 +516,8 @@ Además, contará con efectos de sonido para expresar diferentes acciones. Algun
 ---
 # <a name="_n409q3vvp6wr"></a>**FLUJOGRAMA**
 
-![](IMAGENES/FlujogramaF3.png)
-*Ilustración 42: Flujograma*
+![](IMAGENES/FlujogramaF4.png)
+*Ilustración 43: Flujograma*
 
 
 [ref1]: IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.002.png
