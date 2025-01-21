@@ -24,6 +24,8 @@
 
 ![](IMAGENES/Aspose.Words.fa9ba589-423c-453e-9d00-5d9b19b066f3.006.jpeg)
 
+URL de GitHub:
+ - https://github.com/MarcosVivarMuino/AlienRush
 
 ## 1. ALERTAS DEL JUEGO
 En base a las alertas que lanzaba el juego cuando ocurría un conflicto en algunas acciones como en registro de usuarios, de contraseñas... se han añadido botones de mejora de esas alertas que saltaban directamente del propio navegador, para convertirlas en cuadros de diálogo con la temática del juego, de modo que no se pierda la coherencia estética, esas alertas son las siguientes:
