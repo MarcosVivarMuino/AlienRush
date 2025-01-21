@@ -13,7 +13,6 @@ public class Partida {
 	// Datos de los jugadores
 	private Jugador jugador1;
 	private Jugador jugador2;
-
 	// Objetos en la escena
 	private Objeto[] humanos;
 	private Objeto[] vacas;

@@ -25,8 +25,7 @@ var MenuSinConexion = new Phaser.Class({
         	method: "GET",
         	url: "/conexion",
         	success: function () {
-            	local.scene.resume(sceneName);
-            	local.scene.get(sceneName).onResume();
+            	local.scene.start("MenuScene")
             	local.scene.stop('MenuSinConexion');
         	},
     		});

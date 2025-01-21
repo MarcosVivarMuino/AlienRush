@@ -5,6 +5,9 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -316,9 +319,14 @@ public class PartidaController {
 				posiciones.put("tipoP", tipoId);
 				playerScore = 30;
 			} else if (tipoId == 2) {
-				newPos(partida.getMilitares()[objetoId]);
-				posiciones.put("PosX", partida.getMilitares()[objetoId].getX());
-				posiciones.put("posY", partida.getMilitares()[objetoId].getY());
+				if (playerName.equals(partida.getJugador1().getNombre())) {
+					partida.getJugador1().matarVidas();
+				} else if (playerName.equals(partida.getJugador2().getNombre())) {
+					partida.getJugador2().matarVidas();
+				}
+				newPos(partida.getEscombros()[objetoId]);
+				posiciones.put("PosX", partida.getEscombros()[objetoId].getX());
+				posiciones.put("posY", partida.getEscombros()[objetoId].getY());
 				posiciones.put("objetoId", objetoId);
 				posiciones.put("tipoP", tipoId);
 			} else if (tipoId == 3) {
@@ -334,6 +342,7 @@ public class PartidaController {
 				posiciones.put("tipoP", tipoId);
 			} else if (tipoId == 4) {
 				newPos(partida.getPUHumanos()[objetoId]);
+				
 				posiciones.put("PosX", partida.getPUHumanos()[objetoId].getX());
 				posiciones.put("posY", partida.getPUHumanos()[objetoId].getY());
 				posiciones.put("objetoId", objetoId);
@@ -363,4 +372,153 @@ public class PartidaController {
 		obj.setX(randomX);
 		obj.setY(randomY);
 	}
+	
+	@MessageMapping("/recibirPU")
+	public void recibirPU(@Payload Map<String, Object> payload) {
+		try {
+			// Extraer el lobbyId del payload
+			int newLobbyId = Integer.parseInt(payload.get("lobbyId").toString());
+			String playerName = payload.get("playerName").toString();
+			int newTipoPU = Integer.parseInt(payload.get("tipoPU").toString());
+			Map<String, Object> posiciones = new HashMap<>();
+
+			// Buscar la partida en la lista de partidas
+			Partida partida = partidas.get(newLobbyId);
+
+			if (partida == null) {
+				System.out.println("Error: No se encontró una partida con el ID: " + newLobbyId);
+				return;
+			}
+			if(playerName.equals(partida.getJugador1().getNombre()) && partida.getJugador1().isCanPU()) {
+				partida.getJugador1().setTipoPU(newTipoPU);
+				System.out.println("Recibido: "+newTipoPU);
+				System.out.println("PostCambio: "+partida.getJugador1().getTipoPU());
+				partida.getJugador1().setCanPU(false);
+			}else if(playerName.equals(partida.getJugador2().getNombre()) && partida.getJugador2().isCanPU()) {
+				partida.getJugador2().setTipoPU(newTipoPU);
+				partida.getJugador2().setCanPU(false);
+			}
+			posiciones.put("tipoPU", newTipoPU);
+			posiciones.put("playerName", playerName);
+			
+
+			// Enviar las listas de objetos al cliente (o suscriptores)
+			messagingTemplate.convertAndSend("/topic/recibirPU/" + newLobbyId, posiciones);
+		} catch (Exception e) {
+			// Captura cualquier excepción y muestra el error
+			System.out.println("Error inesperado al procesar actuObjetos: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	@MessageMapping("/usarPU")
+	public void usarPU(@Payload Map<String, Object> payload) {
+	    try {
+	        // Extraer el lobbyId del payload
+	        int newLobbyId = Integer.parseInt(payload.get("lobbyId").toString());
+	        String playerName = payload.get("playerName").toString();
+	        Map<String, Object> posiciones = new HashMap<>();
+
+	        // Buscar la partida en la lista de partidas
+	        Partida partida = partidas.get(newLobbyId);
+
+	        if (partida == null) {
+	            System.out.println("Error: No se encontró una partida con el ID: " + newLobbyId);
+	            return;
+	        }
+
+	        // Programador para restablecer estadísticas
+	        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+	        if (playerName.equals(partida.getJugador1().getNombre()) && !partida.getJugador1().isCanPU()) {
+	            int originalSpeed = partida.getJugador1().getSpeed();
+	            float originalSize = partida.getJugador1().getSize();
+	            int originalMultiplicador = partida.getJugador1().getMultiplicador();
+
+	            switch (partida.getJugador1().getTipoPU()) {
+	                case 1:
+	                    partida.getJugador1().setSize(1);
+	                    partida.getJugador1().setCanPU(true);
+	                    break;
+	                case 2:
+	                    partida.getJugador2().setSpeed(0);
+	                    partida.getJugador1().setCanPU(true);
+	                    break;
+	                case 3:
+	                    partida.getJugador1().setSpeed(15);
+	                    partida.getJugador1().setCanPU(true);
+	                    break;
+	                case 4:
+	                    partida.getJugador1().setMultiplicador(2);
+	                    partida.getJugador1().setCanPU(true);
+	                    break;
+	                case 5:
+	                    partida.getJugador2().setSpeed(5);
+	                    partida.getJugador1().setCanPU(true);
+	                    break;
+	            }
+
+	            scheduler.schedule(() -> {
+	                partida.getJugador1().setSpeed(originalSpeed);
+	                partida.getJugador2().setSpeed(originalSpeed);
+	                partida.getJugador1().setSize(originalSize);
+	                partida.getJugador1().setMultiplicador(originalMultiplicador);
+
+	            }, 5, TimeUnit.SECONDS);
+
+	        } else if (playerName.equals(partida.getJugador2().getNombre()) && !partida.getJugador2().isCanPU()) {
+	            int originalSpeed = partida.getJugador2().getSpeed();
+	            float originalSize = partida.getJugador2().getSize();
+	            int originalMultiplicador = partida.getJugador2().getMultiplicador();
+
+	            switch (partida.getJugador2().getTipoPU()) {
+	                case 1:
+	                    partida.getJugador2().setSize(1);
+	                    partida.getJugador2().setCanPU(true);
+	                    break;
+	                case 2:
+	                    partida.getJugador1().setSpeed(0);
+	                    partida.getJugador2().setCanPU(true);
+	                    break;
+	                case 3:
+	                    partida.getJugador2().setSpeed(15);
+	                    partida.getJugador2().setCanPU(true);
+	                    break;
+	                case 4:
+	                    partida.getJugador2().setMultiplicador(2);
+	                    partida.getJugador2().setCanPU(true);
+	                    break;
+	                case 5:
+	                    partida.getJugador1().setSpeed(5);
+	                    partida.getJugador2().setCanPU(true);
+	                    break;
+	            }
+
+	            scheduler.schedule(() -> {
+	                partida.getJugador2().setSpeed(originalSpeed);
+	                partida.getJugador1().setSpeed(originalSpeed);
+	                partida.getJugador2().setSize(originalSize);
+	                partida.getJugador2().setMultiplicador(originalMultiplicador);
+	                
+	            }, 5, TimeUnit.SECONDS);
+	        }
+
+	        // Actualización inicial de las estadísticas
+	        posiciones.put("sizePlayer1", partida.getJugador1().getSize());
+	        posiciones.put("sizePlayer2", partida.getJugador2().getSize());
+	        posiciones.put("speedPlayer1", partida.getJugador1().getSpeed());
+	        posiciones.put("speedPlayer2", partida.getJugador2().getSpeed());
+	        posiciones.put("multPlayer1", partida.getJugador1().getMultiplicador());
+	        posiciones.put("multPlayer2", partida.getJugador2().getMultiplicador());
+	        posiciones.put("playerName", playerName);
+
+	        messagingTemplate.convertAndSend("/topic/usarPU/" + newLobbyId, posiciones);
+
+	    } catch (Exception e) {
+	        // Captura cualquier excepción y muestra el error
+	        System.out.println("Error inesperado al procesar actuObjetos: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	}
+
 }

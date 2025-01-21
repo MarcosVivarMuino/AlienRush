@@ -11,7 +11,8 @@ public class Jugador {
     private int multiplicador = 1;
     private boolean canPU = true;
     private String nombre;
-    private int partidaId; // Nuevo campo para almacenar el ID de la partida
+    private int partidaId; 
+    private int tipoPU;
     
     public void inicializar(String nombre, int partidaId) {
         this.nombre = nombre;
@@ -48,6 +49,8 @@ public class Jugador {
     public void setPartidaId(int partidaId) {
         this.partidaId = partidaId;
     }
+    
+    
 
     public float getY() { return y; }
     public void setYPositiva() { this.y += speed; }
@@ -59,6 +62,7 @@ public class Jugador {
 
     public int getVidas() { return vidas; }
     public void setVidas() { this.vidas--; }
+    public void matarVidas() {this.vidas = 0;}
 
     public int getSpeed() { return speed; }
     public void setSpeed(int speed) { this.speed = speed; }
@@ -71,6 +75,9 @@ public class Jugador {
 
     public boolean isCanPU() { return canPU; }
     public void setCanPU(boolean canPU) { this.canPU = canPU; }
+    
+    public int getTipoPU() { return tipoPU; }
+    public void setTipoPU(int newTipoPU) { this.tipoPU = newTipoPU; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }

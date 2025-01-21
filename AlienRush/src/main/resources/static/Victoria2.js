@@ -9,7 +9,6 @@ var Victoria2 = new Phaser.Class({
         this.player1Score = data.player1Score;
         this.player2Score = data.player2Score;
         this.fondo = data.fondo;
-        this.nombreUsuario = data.nombreUsuario;
     },
 
     preload: function () {
@@ -22,6 +21,8 @@ var Victoria2 = new Phaser.Class({
 
     create: function () {
         /************************* FONDO *************************/
+        const player1Name = this.registry.get('player1Name') || 'Jugador1';
+		const player2Name = this.registry.get('player2Name') || 'Jugador2';
         //IMAGEN
         if(this.fondo = "fondoGranja"){
             this.add.image(875, 440, 'PantallaPuntuacionGranjaRojo');
@@ -31,7 +32,7 @@ var Victoria2 = new Phaser.Class({
         }
 
         //TEXTO
-        this.add.text(510, 400, `${this.nombreUsuario} 2`, {
+        this.add.text(510, 400, `${player2Name}`, {
         fontSize: '80px',
         color: '#FFFFFF',
         fontFamily: 'Impact, fantasy'
@@ -43,7 +44,7 @@ var Victoria2 = new Phaser.Class({
             fontFamily: 'Impact, fantasy'
         }).setOrigin(0.5);
 
-        this.add.text(510, 650, `${this.nombreUsuario} 1`, {
+        this.add.text(510, 650, `${player1Name}`, {
             fontSize: '80px',
             color: '#FFFFFF',
             fontFamily: 'Impact, fantasy'

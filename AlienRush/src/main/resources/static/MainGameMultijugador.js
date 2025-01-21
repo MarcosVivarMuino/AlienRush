@@ -124,9 +124,6 @@ var MainGameMultijugador = new Phaser.Class({
 			const player1Name = this.registry.get('player1Name') || 'Jugador1';
 			const player2Name = this.registry.get('player2Name') || 'Jugador2';
 
-			console.log("Nombre jugador 1: " + player1Name);
-			console.log("Nombre jugador 2: " + player2Name);
-
 			// Suscribirse a las actualizaciones de la partida
 			stompClient.subscribe(`/topic/partida/actualizada/${lobbyId}`, (message) => {
 				const partida = JSON.parse(message.body);
@@ -166,12 +163,25 @@ var MainGameMultijugador = new Phaser.Class({
 				const data = JSON.parse(message.body);
 				actuDelete(data);
 			});
+
+			// Suscribirse a las actualizaciones del lobby
+			stompClient.subscribe('/topic/recibirPU/' + lobbyId, function(message) {
+				const data = JSON.parse(message.body);
+				asignarPU(data);
+			});
+
+			// Suscribirse a las actualizaciones del lobby
+			stompClient.subscribe('/topic/usarPU/' + lobbyId, function(message) {
+				const data = JSON.parse(message.body);
+				usarPU(data);
+			});
 		});
 
 
 		this.stompClient = stompClient;
 
 		function moverJugadores(data) {
+			let numJug;
 			let userName = self.registry.get('userName') || 'Jugador';
 
 			if (data) {
@@ -183,12 +193,14 @@ var MainGameMultijugador = new Phaser.Class({
 
 					player2.setPosition(data.jugador2X, data.jugador2Y);
 					player2.score = data.player2Score;
+					numJug = 1
 				} else if (data.player2Name == userName) {
 					player1.setPosition(data.jugador2X, data.jugador2Y);
 					player1.score = data.player2Score;
 
 					player2.setPosition(data.jugador1X, data.jugador1Y);
 					player2.score = data.player1Score;
+					numJug = 2
 				} else {
 					console.log("Error: No se ha encontrado un jugador coincidente.");
 				}
@@ -211,11 +223,9 @@ var MainGameMultijugador = new Phaser.Class({
 					}
 					player2.vidas = data.playerLife2;
 				}
-				console.log("Vidas jugador 1: " + player1.vidas);
-				console.log("Vidas jugador 2: " + player2.vidas);
 
 				// Actualizar la puntuación visual
-				self.actuScore();
+				self.actuScore(numJug);
 			} else {
 				console.log("Error: Los datos recibidos son inválidos o nulos.");
 			}
@@ -351,7 +361,7 @@ var MainGameMultijugador = new Phaser.Class({
 
 			// Si el tiempo se agota, termina la partida
 			if (data <= 0) {
-				this.temporizadorEvento.remove(); // Detener el temporizador
+				self.temporizadorEvento.remove(); // Detener el temporizador
 
 				// Decidir el resultado del juego
 				if (player1.score > player2.score) {
@@ -380,7 +390,6 @@ var MainGameMultijugador = new Phaser.Class({
 		}
 
 		function actuDelete(data) {
-			let userName = self.registry.get('userName') || 'Jugador';
 			if (data.tipoP == 0) {
 				let humano = humanosMap.get(data.objetoId);
 				humano.x = data.PosX;
@@ -392,9 +401,6 @@ var MainGameMultijugador = new Phaser.Class({
 				vaca.y = data.PosX
 				vacasMap.set(data.objetoId, vaca);
 			} else if (data.tipoP == 2) {
-				let militar = this.add.sprite(data.PosX, data.PosY, 'militar').setScale(0.2);
-				militar.play('caminar_militar');
-				militaresMap.set(data.objetoId, militar); // El id es la clave y el objeto es el valor
 			} else if (data.tipoP == 3) {
 				let escombro = escombrosMap.get(data.objetoId);
 				escombro.x = data.PosX;
@@ -405,6 +411,79 @@ var MainGameMultijugador = new Phaser.Class({
 				PUHuman.x = data.PosX;
 				PUHuman.y = data.PosX
 				puHumanosMap.set(data.objetoId, PUHuman); // El id es la clave y el objeto es el valor
+			}
+		}
+
+		function asignarPU(data) {
+			if (player1Name == data.playerName) {
+				switch (data.tipoPU) {
+					case 1:
+						PowerUp1.setTexture('ACPU');
+						PowerUp1.alpha = 1;
+						break;
+					case 2:
+						PowerUp1.setTexture('BPU');
+						PowerUp1.alpha = 1;
+						break;
+					case 3:
+						PowerUp1.setTexture('MRPU');
+						PowerUp1.alpha = 1;
+						break;
+					case 4:
+						PowerUp1.setTexture('MPPU');
+						PowerUp1.alpha = 1;
+						break;
+					case 5:
+						PowerUp1.setTexture('RPU');
+						PowerUp1.alpha = 1;
+						break;
+				}
+			} else if (player2Name == data.playerName) {
+				switch (data.tipoPU) {
+					case 1:
+						PowerUp2.setTexture('ACPU');
+						PowerUp2.alpha = 1;
+						break;
+					case 2:
+						PowerUp2.setTexture('BPU');
+						PowerUp2.alpha = 1;
+						break;
+					case 3:
+						PowerUp2.setTexture('MRPU');
+						PowerUp2.alpha = 1;
+						break;
+					case 4:
+						PowerUp2.setTexture('MPPU');
+						PowerUp2.alpha = 1;
+						break;
+					case 5:
+						PowerUp2.setTexture('RPU');
+						PowerUp2.alpha = 1;
+						break;
+				}
+			}
+		}
+
+		function usarPU(data) {
+			player1.size = data.sizePlayer1;
+			console.log("tamaño antiguo: " + player1.size + ", tamaño nuevo: " + data.sizePlayer1);
+			player2.size = data.sizePlayer2;
+			player1.speed = data.speedPlayer1;
+			console.log("velocidad1 antiguo: " + player1.size + ", velocidad1 nuevo: " + data.sizePlayer1);
+			player2.speed = data.speedPlayer2;
+			console.log("velocidad2 antiguo: " + player1.size + ", velocidad2 nuevo: " + data.sizePlayer1);
+			player1.multiplicador = data.multPlayer1;
+			console.log("mult antiguo: " + player1.size + ", mult nuevo: " + data.sizePlayer1);
+			player2.multiplicador = data.multPlayer2;
+			if (player1Name == data.playerName) {
+				player1.tipoPU = ''
+				player1.canPU = true;
+				PowerUp1.alpha = 0;
+			} else if (player2Name == data.playerName) {
+				alert("Entra")
+				player2.tipoPU = ''
+				player2.canPU = true;
+				PowerUp2.alpha = 0;
 			}
 		}
 
@@ -444,9 +523,10 @@ var MainGameMultijugador = new Phaser.Class({
 		this.gameStarted = false; // El juego no comienza hasta pulsar ESP
 		this.temporizadorEvento = null; // Guardará el evento del temporizador
 
-		let fondoElegido = this.registry.get('fondoGranja');
 		this.add.image(875, 440, 'fondoGranja').setScale(1); // Creacion del fondo
 		this.pantallaEsp = this.add.image(875, 440, 'pulsaEsp').setDepth(10); // Mostrar pantalla inicial
+		
+		iconoWifi = this.add.image(1680, 825, 'Wifi').setScale(0.2);
 
 
 		//AUDIO
@@ -575,16 +655,19 @@ var MainGameMultijugador = new Phaser.Class({
 		player2.setBounce(1); // Limites del jugador
 		player2.setCollideWorldBounds(true);
 
+		const player1Name = this.registry.get('player1Name') || 'Jugador1';
+		const player2Name = this.registry.get('player2Name') || 'Jugador2';
 		// Instanciacion vidas
+		namePlayer1 = this.registry.get();
 		this.add.image(150, 90, 'hud1').setScale(0.5).setDepth(10);
-		this.add.text(80, 90, 'Jugador 1', { fontSize: '25px', color: '#ffffff' });
+		this.add.text(140, 85, player1Name, { fontSize: '50px', color: '#ffffff', fontFamily: 'Impact, fantasy' }).setDepth(11);
 		for (let i = 0; i < player1.vidas; i++) {
 			let corazon = this.add.image(120 + i * 40, 60 + i * -3, 'Vida1').setScale(0.5).setDepth(10);
 			corazones1.push(corazon);
 		}
 
 		this.add.image(1600, 90, 'hud2').setScale(0.5).setDepth(10);
-		this.add.text(1530, 90, 'Jugador 2', { fontSize: '25px', color: '#ffffff' });
+		this.add.text(1580, 85, player2Name, { fontSize: '50px', color: '#ffffff', fontFamily: 'Impact, fantasy' }).setDepth(11);
 		for (let i = 0; i < player2.vidas; i++) {
 			let corazon = this.add.image(1630 - i * 40, 60 + i * -3, 'Vida2').setScale(0.5).setDepth(10);
 			corazones2.push(corazon);
@@ -754,8 +837,47 @@ var MainGameMultijugador = new Phaser.Class({
 			} else {
 			}
 		}
-		
+
 		this.endGame();
+		this.setIntervals();
+
+
+	},
+
+
+	checkConexion: function() {
+		let local = this;
+		$.ajax({
+			method: "GET",
+			url: "/conexion",
+			error: function() {
+				iconoWifi.setTexture("noWifi").setScale(0.2);
+				local.stopIntervals();
+				local.reConnect();
+			},
+		});
+	},
+
+	setIntervals: function() {
+		intervalConexion = setInterval(() => {
+			this.checkConexion();
+		}, 1000);
+	},
+
+	stopIntervals: function() {
+		clearInterval(intervalConexion);
+	},
+
+	reConnect: function() {
+		this.scene.launch("MenuSinConexion", { "sceneName": "MainGameMultijugador" });
+		this.scene.bringToTop("MenuSinConexion");
+		this.scene.pause();
+	},
+	onResume: function() {
+		iconoWifi.setTexture("Wifi").setScale(0.2);
+		this.setIntervals();
+		this.scene.bringToTop("MenuScene");
+		this.input.enabled = true;
 	},
 
 
@@ -821,15 +943,24 @@ var MainGameMultijugador = new Phaser.Class({
 
 	// Detecta acciones de los jugadores
 	detectarAcciones: function() {
-		if (Phaser.Input.Keyboard.JustDown(this.keySPC)) this.absorberObjeto(player1);
-		if (Phaser.Input.Keyboard.JustDown(this.keyE)) this.usarPU(player1);
+		let player1Name = this.registry.get('player1Name') || 'Jugador1';
+		let player2Name = this.registry.get('player2Name') || 'Jugador2';
+		let userName = this.registry.get('userName') || 'Jugador';
+		if (userName == player1Name) {
+			if (Phaser.Input.Keyboard.JustDown(this.keySPC)) this.absorberObjeto(player1);
+			if (Phaser.Input.Keyboard.JustDown(this.keyE)) this.usarPU(player1);
+		} else if (userName == player2Name) {
+			if (Phaser.Input.Keyboard.JustDown(this.keySPC)) this.absorberObjeto(player1);
+			if (Phaser.Input.Keyboard.JustDown(this.keyE)) this.usarPU(player1);
+		}
 	},
 
 	// Absorbe objetos cercanos a un jugador
 	absorberObjeto: function(player) {
 		let userName = this.registry.get('userName') || 'Jugador';
 		let lobbyId = this.registry.get('lobbyId') || 0;
-		console.log(player.score);
+		const player1Name = this.registry.get('player1Name') || 'Jugador1';
+		const player2Name = this.registry.get('player2Name') || 'Jugador2';
 		// Detectar y absorber objetos de Humanos
 		this.detectarColision(player, humanosMap, 95, (humano, id) => {
 			player.score += 10 * player.multiplicador;
@@ -869,7 +1000,11 @@ var MainGameMultijugador = new Phaser.Class({
 		if (player.canPU) {
 			this.detectarColision(player, puHumanosMap, 95, (PUHuman, id) => {
 				this.mostrarFeedback(PUHuman.x, PUHuman.y, 'masPU');
-				this.darPowerUp(player);
+				if (userName == player1Name) {
+					this.darPowerUp(player1);
+				} else if (userName == player2Name) {
+					this.darPowerUp(player2);
+				}
 				cogerPowerUp.play();
 				let payload = { lobbyId: lobbyId, objetoId: id, tipoId: 4, playerName: userName };
 				stompClient.send('/app/actuDelete', {}, JSON.stringify(payload));
@@ -878,9 +1013,8 @@ var MainGameMultijugador = new Phaser.Class({
 
 		// Detectar colisión con Militares
 		this.detectarColision(player, militaresMap, 60, () => {
-			//let payload = { lobbyId: lobbyId, objetoId: id, tipoId: 2 };
-			//stompClient.send('/app/actuDelete', {}, JSON.stringify(payload));
-			//this.terminarPartida(player); // Terminar la partida si colisiona con un militar
+			let payload = { lobbyId: lobbyId, objetoId: 0, tipoId: 2, playerName: userName };
+			stompClient.send('/app/actuDelete', {}, JSON.stringify(payload));
 		});
 	},
 
@@ -900,10 +1034,12 @@ var MainGameMultijugador = new Phaser.Class({
 			}
 		});
 	},
-	
-	endGame: function(){
-		if(player1.vidas == 0 || player2.vidas == 0){
-		this.terminarPartida(player);
+
+	endGame: function() {
+		if (player1.vidas == 0) {
+			this.terminarPartida(player1);
+		} else if (player2.vidas == 0) {
+			this.terminarPartida(player2);
 		}
 	},
 
@@ -962,12 +1098,20 @@ var MainGameMultijugador = new Phaser.Class({
 	},
 
 	// Actualiza la puntuación en pantalla
-	actuScore: function() {
-		Score1.setText(` ${player1.score}`);
-		Score2.setText(` ${player2.score}`);
+	actuScore: function(numJug) {
+		if (numJug == 1) {
+			Score1.setText(` ${player1.score}`);
+			Score2.setText(` ${player2.score}`);
+		} else if (numJug == 2) {
+			Score1.setText(` ${player2.score}`);
+			Score2.setText(` ${player1.score}`);
+		}
 	},
 
 	darPowerUp: function(player) {
+		let userName = this.registry.get('userName') || 'Jugador';
+		let lobbyId = this.registry.get('lobbyId') || 0;
+		let payload;
 		const powerUps = [
 			'AumentoCapacidadPU',
 			'BloqueadorPU',
@@ -981,136 +1125,38 @@ var MainGameMultijugador = new Phaser.Class({
 
 		switch (player.tipoPU) {
 			case 'AumentoCapacidadPU':
-				if (player == player1) {
-					PowerUp1.setTexture('ACPU');
-					PowerUp1.alpha = 1;
-				} else {
-					PowerUp2.setTexture('ACPU');
-					PowerUp2.alpha = 1;
-				}
+				// Crear un objeto con el lobbyId
+				payload = { lobbyId: lobbyId, playerName: userName, tipoPU: 1 };
+				stompClient.send('/app/recibirPU', {}, JSON.stringify(payload));
 				break;
 			case 'BloqueadorPU':
-				if (player == player1) {
-					PowerUp1.setTexture('BPU');
-					PowerUp1.alpha = 1;
-				} else {
-					PowerUp2.setTexture('BPU');
-					PowerUp2.alpha = 1;
-				}
+				// Crear un objeto con el lobbyId
+				payload = { lobbyId: lobbyId, playerName: userName, tipoPU: 2 };
+				stompClient.send('/app/recibirPU', {}, JSON.stringify(payload));
 				break;
 			case 'MovimientoRapido':
-				if (player == player1) {
-					PowerUp1.setTexture('MRPU');
-					PowerUp1.alpha = 1;
-				} else {
-					PowerUp2.setTexture('MRPU');
-					PowerUp2.alpha = 1;
-				}
+				// Crear un objeto con el lobbyId
+				payload = { lobbyId: lobbyId, playerName: userName, tipoPU: 3 };
+				stompClient.send('/app/recibirPU', {}, JSON.stringify(payload));
 				break;
 			case 'MultiplicadorPuntos':
-				if (player == player1) {
-					PowerUp1.setTexture('MPPU');
-					PowerUp1.alpha = 1;
-				} else {
-					PowerUp2.setTexture('MPPU');
-					PowerUp2.alpha = 1;
-				}
+				// Crear un objeto con el lobbyId
+				payload = { lobbyId: lobbyId, playerName: userName, tipoPU: 4 };
+				stompClient.send('/app/recibirPU', {}, JSON.stringify(payload));
 				break;
 			case 'Ralentizador':
-				if (player == player1) {
-					PowerUp1.setTexture('RPU');
-					PowerUp1.alpha = 1;
-				} else {
-					PowerUp2.setTexture('RPU');
-					PowerUp2.alpha = 1;
-				}
+				// Crear un objeto con el lobbyId
+				payload = { lobbyId: lobbyId, playerName: userName, tipoPU: 5 };
+				stompClient.send('/app/recibirPU', {}, JSON.stringify(payload));
 				break;
 		}
 	},
 
-	usarPU: function(player, escena) {
-		switch (player.tipoPU) {
-			case 'AumentoCapacidadPU':
-				lanzarAumentoCapacidad.play();
-				player.tipoPU = ' '
-				if (player == player1) {
-					PowerUp1.alpha = 0
-				} else {
-					PowerUp2.alpha = 0
-				}
-				player.size = 1.0;
-				this.time.delayedCall(5000, () => {
-					player.size = 0.8;
-					player.canPU = true
-				});
-				break;
-			case 'BloqueadorPU':
-				lanzarBloqueo.play();
-				player.tipoPU = ''
-				if (player == player1) {
-					PowerUp1.alpha = 0
-					player2.speed = 0
-					this.time.delayedCall(5000, () => {
-						player2.speed = 10;
-						player.canPU = true
-					});
-				} else {
-					PowerUp2.alpha = 0
-					player1.speed = 0
-					this.time.delayedCall(5000, () => {
-						player1.speed = 10;
-						player.canPU = true
-					});
-				}
-				break;
-			case 'MovimientoRapido':
-				lanzarVelocidad.play();
-				player.tipoPU = ''
-				if (player == player1) {
-					PowerUp1.alpha = 0
-				} else {
-					PowerUp2.alpha = 0
-				}
-				player.speed = 15;
-				this.time.delayedCall(5000, () => {
-					player.speed = 10;
-					player.canPU = true
-				});
-				break;
-			case 'MultiplicadorPuntos':
-				lanzarX2.play();
-				player.tipoPU = ''
-				if (player == player1) {
-					PowerUp1.alpha = 0
-				} else {
-					PowerUp2.alpha = 0
-				}
-				player.multiplicador = 1.5;
-				this.time.delayedCall(5000, () => {
-					player.multiplicador = 1;
-					player.canPU = true
-				});
-				break;
-			case 'Ralentizador':
-				lanzarHielo.play();
-				player.tipoPU = ''
-				if (player == player1) {
-					PowerUp1.alpha = 0
-					player2.speed = 5
-					this.time.delayedCall(5000, () => {
-						player2.speed = 10;
-						player.canPU = true
-					});
-				} else {
-					PowerUp2.alpha = 0
-					player1.speed = 5
-					this.time.delayedCall(5000, () => {
-						player1.speed = 10;
-						player.canPU = true
-					});
-				}
-				break;
-		}
+	usarPU: function(player) {
+		let userName = this.registry.get('userName') || 'Jugador';
+		let lobbyId = this.registry.get('lobbyId') || 0;
+		payload = { lobbyId: lobbyId, playerName: userName };
+		stompClient.send('/app/usarPU', {}, JSON.stringify(payload));
 	},
 
 	shutdown: function() {
