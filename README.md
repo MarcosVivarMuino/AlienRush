@@ -489,7 +489,10 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 
 # <a name="_atpo95cjn57p"></a>**12. WEBSOCKETS**
 
-Para el desarrollo de websockets se destacan varios ámbitos de utilización dentro del juego. Desde la gestión de usuarios fuera de la partida hasta la gestión de atributos dentro de la propia aprtida.
+Para el desarrollo de websockets se destacan varios ámbitos de utilización dentro del juego. Desde la gestión de usuarios fuera de la partida hasta la gestión de atributos dentro de la propia partida. Para ello principalmente se siguen 3 pasos para la actualización de cada jugador:
+- Se actualiza el atributo en el servidor.
+- Se cambian las características en el servidor.
+- Los jugadores reciben la información del cambio.
 
 ## 12.1. LOBBY
 Para el lobby se ha necesitado la gestión de usuarios mediante websockeets, de tal forma que los usuarios pudieran tener la opción de crear o de unirse a una sala.
