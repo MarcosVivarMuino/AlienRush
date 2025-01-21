@@ -32,7 +32,6 @@ public class LobbyController {
         contLobbys++;
         lobbys.add(newLobby);
         if(joined) {
-        	 System.out.println("Jugador " + user + " creo el lobby " + newLobby.getId());
              messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + newLobby.getId(), newLobby);
         }
         return newLobby;
@@ -42,8 +41,6 @@ public class LobbyController {
     public void unirseLobby(@Payload Map<String, String> payload) {
         String user = payload.get("user");
         int lobbyId = Integer.parseInt(payload.get("lobbyId"));
-        
-        System.out.println("Usuario: " + user + " intentando unirse al lobbyId: " + lobbyId);
 
         Lobby lobby = lobbys.stream()
                 .filter(l -> l.getId() == lobbyId)
@@ -58,7 +55,6 @@ public class LobbyController {
         
         boolean joined = lobby.agregarJugador(user);
         if (joined) {
-            System.out.println("Jugador " + user + " se unió al lobby " + lobbyId);
             messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId, lobby);
         } else {
             System.out.println("El lobby está lleno");
@@ -81,10 +77,6 @@ public class LobbyController {
             return;
         }
         lobby.marcarListo(user);
-
-        // Debugging
-        System.out.println("Info lobby: usuario 1: " + lobby.getPlayer1Name() + ", listo?: " + lobby.isPlayer1Listo()
-                + ", usuario 2: " + lobby.getPlayer2Name() + ", listo?: " + lobby.isPlayer2Listo());
 
         // Enviar actualización del lobby
         messagingTemplate.convertAndSend("/topic/lobbyActualizado/" + lobbyId, lobby);

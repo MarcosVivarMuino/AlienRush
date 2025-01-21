@@ -92,6 +92,15 @@ public class Lobby {
         return (player2 != null) ? player2 : "Esperando...";  // Devolvemos el nombre directamente
     }
     
+    public void setPlayer1Name(String name) {
+    	player1 = name;
+    }
+
+    public void setPlayer2Name(String name) {
+        player2 = name;
+    }
+    
+    
     public boolean estaVacio() {
         return contJug == 0;
     }
