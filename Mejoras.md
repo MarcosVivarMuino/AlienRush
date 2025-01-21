@@ -85,4 +85,14 @@ Ahora, cuando alguno de los jugadores abduce cualquier humano, vaca u objeto, se
 Alien Rush ha sido subido a varias plataformas de juegos online, de tal forma que sea un juego público en red en perfecto funcionamiento que todos los usurios puedan probar y disfrutar.
 Esas plataformas son:
 
+### GAME JOLT
+https://gamejolt.com/games/AlienRush/967041
+
 ### ITCH.IO
+https://gg-team.itch.io/alien-rush
+
+### NEW GROUNDS
+https://www.newgrounds.com/portal/view/965374
+
+### INDIEB
+https://www.indiedb.com/games/alienrush/downloads/alienrush
