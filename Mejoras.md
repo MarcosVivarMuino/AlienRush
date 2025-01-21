@@ -96,5 +96,5 @@ https://gg-team.itch.io/alien-rush
 ### NEW GROUNDS
 https://www.newgrounds.com/portal/view/965374
 
-### INDIEB
+### INDIEDB
 https://www.indiedb.com/games/alienrush/downloads/alienrush
