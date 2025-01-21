@@ -489,7 +489,17 @@ Se han realizado los diseños finales que tendrán los potenciadores de cara al 
 
 # <a name="_atpo95cjn57p"></a>**12. WEBSOCKETS**
 
+Para el desarrollo de websockets se destacan varios ámbitos de utilización dentro del juego. Desde la gestión de usuarios fuera de la partida hasta la gestión de atributos dentro de la propia aprtida.
 
+## 12.1. LOBBY
+Para el lobby se ha necesitado la gestión de usuarios mediante websockeets, de tal forma que los usuarios pudieran tener la opción de crear o de unirse a una sala.
+Para ello, cuando un jugador inicia una sala, se unirá a una lobby en la que estará solo, esa sala tendrá un id que deberá compartir con otros jugadores para que puedan unirse, una vez un segundo jugador decide unirse e introduce el id de la sala a la que quiere unirse, se mete a los 2 jugadores dentro del lobby para esperar a que ambos confirmen que están listos para empezar.
+
+## 12.2. PARTIDA
+Dentro de la partida, se gestionan todos los atributos relativos a las características de cada jugador (vida de la nave, puntuación...), el tiempo que dura la partida y los personajes y objetos que se encuentran en el escenario (humanos, vacas, chatarra...), actualizando cosntantemente las posiciones de cada personaje y cad jugador, el uso de potenciadores, las puntuaciones en tiempo real y demás. Por último era necesario gestionar los eventos de muerte de las naves y finalización de partida.
+
+## 12.3. GESTIÓN DE MENÚS
+Se debían gestionar las diferentes posibilidades en cada menú, como las conexiones y desconexiones de los jugadores en mitad de partida desde el menú de pausa, donde se finaliza para ambos jugadores la partida, o las conexiones de jugadores en el lobby.
 ---
 
 # <a name="_atpo95cjn57p"></a>**MÚSICA Y SONIDOS**
